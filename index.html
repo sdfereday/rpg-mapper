@@ -9,19 +9,25 @@
 </head>
 <body>
 
-    <div id="preview" data-bind="css: { foundationEnabled: !propMode(), foundationDisabled: propMode() }">
-      <span data-bind="foreach: grid">
-        <div class="sq" data-bind="style: positionCSS, css: { occupied: occupied() }, click: !$parent.propMode() ? clicked : null, text: decorType()"></div>
-      </span>
-    </div>
-
-    <div id="prop-preview" data-bind="css: { foundationEnabled: propMode(), foundationDisabled: !propMode() }">
-      <span data-bind="foreach: propGrid">
-        <div class="sq" data-bind="style: positionCSS, css: { occupied: occupied() }, click: $parent.propMode() ? clicked : null, text: decorType()"></div>
-      </span>
-    </div>
+<div class="container">
 
     <div id="ui">
+
+      <p><strong>Map Options (fill these in before starting):</strong></p>
+      <p>Dimensions (in units):</p>
+      <form class="start-form" data-bind="css: { disabled: generated() }">
+        <span>
+          Width:
+          <input type="text" id="mapWidth" value="11" data-bind="value: width, enable: !generated()" />
+        </span>
+        <span>
+          Height:
+          <input type="text" id="mapHeight" value="11" data-bind="value: height, enable: !generated()" />
+        </span>
+      </form>
+
+      <p><strong>Initialize Map</strong></p>
+      <button data-bind="enable: !generated()" id="generate">Start</button>
 
       <p><strong>Build ROT Foundations?</strong></p>
       <button data-bind="click: generateUsingROT">Generate</button>
@@ -56,6 +62,26 @@
       <div id="output" contenteditable="true" data-bind="text: exportedData"></div>
 
     </div>
+
+    <div id="map" class="col-6">
+
+        <p><strong>Map Preview:</strong></p>
+
+        <div id="preview" data-bind="css: { foundationEnabled: !propMode(), foundationDisabled: propMode() }">
+          <span data-bind="foreach: grid">
+            <div class="sq" data-bind="style: positionCSS, css: { occupied: occupied() }, click: !$parent.propMode() ? clicked : null"></div>
+          </span>
+        </div>
+
+        <div id="prop-preview" data-bind="css: { foundationEnabled: propMode(), foundationDisabled: !propMode() }">
+          <span data-bind="foreach: propGrid">
+            <div class="sq" data-bind="style: positionCSS, css: { occupied: occupied() }, click: $parent.propMode() ? clicked : null, text: decorType()"></div>
+          </span>
+        </div>
+
+    </div>
+
+</div>
 
     <!-- required -->
     <script src="require.conf.js"></script>

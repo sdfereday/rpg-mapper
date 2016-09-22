@@ -6,11 +6,21 @@ body {
   background: #ccc;
 }
 
+.container {
+  max-width: 1024px;
+}
+
+.col-6 {
+  width: 50%;
+  float: left;
+  position: relative;
+}
+
 .sq {
   width: $tileWidth + px;
   height: $tileHeight + px;
   position: absolute;
-  background: #333;
+  background: #9CBA7F;
   cursor: pointer;
   text-align: center;
 }
@@ -20,17 +30,28 @@ body {
 }
 
 .sq.occupied {
-  background: green;
+  background: #333;
 }
 
 #ui {
-  width: 100%;
-  clear: both;
-  padding-top: $tileHeight * $tileNum + 32 + px;
+  float: left;
+  padding: 1em 3em 0 2em;
+  // padding-top: $tileHeight * $tileNum + 32 + px;
+}
+
+#map {
+  padding: 1.2em 0 0;
 }
 
 form {
-  opacity: 0.5;
+  //opacity: 0.5;
+}
+
+.start-form {
+  opacity: 1;
+  &.disabled {
+    opacity: 0.5;
+  }
 }
 
 .enabled {
@@ -48,19 +69,20 @@ form span {
   // width: 100%;
   height: $tileHeight * $tileNum + px;
   position: absolute;
-  top: 2em;
-  left: 2em;
+  top: 5em;
+  left: 0;
 }
 
 #prop-preview {
   .sq {
-    background: #EEE;
+    padding-top: 0.6em;
+    background: none;
   }
 }
 
 // Needs sorting a bit
 .foundationDisabled {
-  opacity: 0.5;
+  //opacity: 0;
   z-index: 0;
 }
 
@@ -71,7 +93,9 @@ form span {
 
 #output {
   max-height: 200px;
-  border: 1px solid #ccc;
+  max-width: 200px;
+  border: 1px solid #777;
   padding: 1em;
+  background: #fff;
   overflow-y: auto;
 }

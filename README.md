@@ -13,4 +13,4 @@ RPG Mapper is basically a tool that generates a map array with multiple layers. 
 * Exporting to electron so it can be run as a desktop app.
 * Ability to assign graphics to each tile type.
 * Save to text file and pretty print for export data.
-* Some initial config options such as width and height, as this is currently hard coded to 6x6 units.
+* On map config change, ability to apply new options (such as resize)

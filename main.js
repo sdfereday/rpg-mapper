@@ -98,9 +98,10 @@ require(['ko', 'ROT'], function (ko, ROT) {
     // ...
     var Mapper = function(w, h) {
 
-      // In units
+      // In units (convert to observable 'if' you want resize).
       this.width = w;
       this.height = h;
+      this.generated = ko.observable(true);
 
       // Selected tile types
       this.propMode = ko.observable(false);
@@ -202,8 +203,21 @@ require(['ko', 'ROT'], function (ko, ROT) {
 
     };
 
-    // Knockout start
-    ko.applyBindings(new Mapper(6, 6));
 
+    // Startup
+    function generate(w, h){
+
+      // Knockout start
+      ko.applyBindings(new Mapper(w, h));
+
+    }
+
+    var startButton = document.getElementById("generate"),
+    mWidth = document.getElementById("mapWidth"),
+    mHeight = document.getElementById("mapHeight");
+
+    startButton.addEventListener("click", function(){
+      generate(mWidth.value, mHeight.value);
+    });
 
 });
