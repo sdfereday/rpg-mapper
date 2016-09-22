@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Mapper</title>
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+    <link href='css/core.css' rel='stylesheet' type='text/css'>
+</head>
+<body>
+
+    <div id="preview" data-bind="css: { foundationEnabled: !propMode(), foundationDisabled: propMode() }">
+      <span data-bind="foreach: grid">
+        <div class="sq" data-bind="style: positionCSS, css: { occupied: occupied() }, click: !$parent.propMode() ? clicked : null, text: decorType()"></div>
+      </span>
+    </div>
+
+    <div id="prop-preview" data-bind="css: { foundationEnabled: propMode(), foundationDisabled: !propMode() }">
+      <span data-bind="foreach: propGrid">
+        <div class="sq" data-bind="style: positionCSS, css: { occupied: occupied() }, click: $parent.propMode() ? clicked : null, text: decorType()"></div>
+      </span>
+    </div>
+
+    <div id="ui">
+
+      <p><strong>Build ROT Foundations?</strong></p>
+      <button data-bind="click: generateUsingROT">Generate</button>
+
+      <form id="entities" data-bind="css: { enabled: !propMode() }">
+        <p><strong>Foundation Tile Types</strong></p>
+        <span>
+        <input type="radio" name="entity" value="block" data-bind="checked: tileGraphic, enable: !propMode()"> Block
+        </span>
+      </form>
+
+      <p><strong>Placement mode:</strong>
+        <input type="checkbox" data-bind="checked: propMode, click: changeDefault" />
+      </p>
+      <form id="entities" data-bind="css: { enabled: propMode() }">
+        <p><strong>Entity Tile Types</strong></p>
+        <span>
+        <input type="radio" name="entity" value="enemy" data-bind="checked: tileGraphic, enable: propMode"> Enemy
+      </span>
+        <span>
+        <input type="radio" name="entity" value="chest" data-bind="checked: tileGraphic, enable: propMode"> Chest
+      </span>
+      </form>
+
+      <p>
+        <strong>Export data:</strong>
+      </p>
+      <button data-bind="click: exportData">Export</button>
+      <p>
+        <strong>Exported data output:</strong>
+      </p>
+      <div id="output" contenteditable="true" data-bind="text: exportedData"></div>
+
+    </div>
+
+    <!-- required -->
+    <script src="require.conf.js"></script>
+    <script data-main="main" src="bower_components/requirejs/require.js"></script>
+
+</body>
+</html>
