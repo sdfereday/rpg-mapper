@@ -4,84 +4,105 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Mapper</title>
-    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
     <link href='css/core.css' rel='stylesheet' type='text/css'>
+    
+    <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Raleway:400,300,700' rel='stylesheet' type='text/css'>
+
 </head>
 <body>
 
-<div class="container">
-
     <div id="ui">
 
-      <p><strong>Map Options (fill these in before starting):</strong></p>
-      <p>Dimensions (in units):</p>
+      <p class="lead">RPG Mapper <span>v0.1</span></p>
+      
       <form class="start-form" data-bind="css: { disabled: generated() }">
-        <span>
-          Width:
-          <input type="text" id="mapWidth" value="11" data-bind="value: width, enable: !generated()" />
-        </span>
-        <span>
-          Height:
-          <input type="text" id="mapHeight" value="11" data-bind="value: height, enable: !generated()" />
-        </span>
+        <p><strong>Map Options (fill these in before starting):</strong></p>
+        <p>Dimensions (in units):</p>
+        <div class="node">
+          <span>
+            Width:
+            <input type="text" id="mapWidth" value="11" data-bind="value: width, enable: !generated()" />
+          </span>
+          <span>
+            Height:
+            <input type="text" id="mapHeight" value="11" data-bind="value: height, enable: !generated()" />
+          </span>
+        </div>
+        <p><strong>Initialize Map</strong></p>
+        <button data-bind="enable: !generated()" id="generate">Start</button>
       </form>
-
-      <p><strong>Initialize Map</strong></p>
-      <button data-bind="enable: !generated()" id="generate">Start</button>
-
-      <p><strong>Build ROT Foundations?</strong></p>
-      <button data-bind="click: generateUsingROT">Generate</button>
 
       <form id="entities" data-bind="css: { enabled: !propMode() }">
+        <p><strong>Build ROT Foundations?</strong></p>
+        <button data-bind="click: generateUsingROT">Generate</button>
         <p><strong>Foundation Tile Types</strong></p>
-        <span>
-        <input type="radio" name="entity" value="block" data-bind="checked: tileGraphic, enable: !propMode()"> Block
+        <span class="radio">
+          <input type="radio" id="f-block" name="entity" value="block" data-bind="checked: tileGraphic, enable: !propMode()">
+          <label for="f-block">Block</label>
+          <div class="check"></div>
         </span>
       </form>
 
-      <p><strong>Placement mode:</strong>
-        <input type="checkbox" data-bind="checked: propMode, click: changeDefault" />
-      </p>
       <form id="entities" data-bind="css: { enabled: propMode() }">
+        <p><strong>Placements</strong></p>
+          <div class="checkbox">
+            <input type="checkbox" id="ch-default" data-bind="checked: propMode, click: changeDefault" />
+            <label for="ch-default"></label>
+            <span>Enable placement mode</span>
+          </div>
         <p><strong>Entity Tile Types</strong></p>
-        <span>
-        <input type="radio" name="entity" value="enemy" data-bind="checked: tileGraphic, enable: propMode"> Enemy
-      </span>
-        <span>
-        <input type="radio" name="entity" value="chest" data-bind="checked: tileGraphic, enable: propMode"> Chest
-      </span>
+        <span class="radio">
+          <input type="radio" id="f-enemy" name="entity" value="enemy" data-bind="checked: tileGraphic, enable: propMode">
+          <label for="f-enemy">Enemy</label>
+          <div class="check"></div>
+        </span>
+        <span class="radio">
+          <input type="radio" id="f-chest" name="entity" value="chest" data-bind="checked: tileGraphic, enable: propMode">
+          <label for="f-chest">Chest</label>
+          <div class="check"></div>
+        </span>
       </form>
 
       <p>
-        <strong>Export data:</strong>
+        <strong>Export data</strong>
       </p>
       <button data-bind="click: exportData">Export</button>
       <p>
-        <strong>Exported data output:</strong>
+        <strong></strong>
       </p>
-      <div id="output" contenteditable="true" data-bind="text: exportedData"></div>
+      <div id="output" contenteditable="true" data-bind="text: exportedData">
+        Exported data...
+      </div>
 
     </div>
 
-    <div id="map" class="col-6">
+    <div id="map">
 
-        <p><strong>Map Preview:</strong></p>
+      <div id="map-inner">
+        <p class="console">
+          <strong>Map console: ...</strong>
+          <span>x</span>
+        </p>
 
-        <div id="preview" data-bind="css: { foundationEnabled: !propMode(), foundationDisabled: propMode() }">
-          <span data-bind="foreach: grid">
-            <div class="sq" data-bind="style: positionCSS, css: { occupied: occupied() }, click: !$parent.propMode() ? clicked : null"></div>
-          </span>
+        <div id="previewers">
+          <div id="preview" data-bind="css: { foundationEnabled: !propMode(), foundationDisabled: propMode() }">
+            <span data-bind="foreach: grid">
+              <div class="sq" data-bind="style: positionCSS, css: { occupied: occupied() }, click: !$parent.propMode() ? clicked : null"></div>
+            </span>
+          </div>
+          <div id="prop-preview" data-bind="css: { foundationEnabled: propMode(), foundationDisabled: !propMode() }">
+            <span data-bind="foreach: propGrid">
+              <div class="sq" data-bind="style: positionCSS, css: { occupied: occupied() }, click: $parent.propMode() ? clicked : null, text: decorType()"></div>
+            </span>
+          </div>
         </div>
 
-        <div id="prop-preview" data-bind="css: { foundationEnabled: propMode(), foundationDisabled: !propMode() }">
-          <span data-bind="foreach: propGrid">
-            <div class="sq" data-bind="style: positionCSS, css: { occupied: occupied() }, click: $parent.propMode() ? clicked : null, text: decorType()"></div>
-          </span>
-        </div>
+      </div>
 
     </div>
-
-</div>
 
     <!-- required -->
     <script src="require.conf.js"></script>
