@@ -1,12 +1,21 @@
 require(['ko', 'ROT', 'drag'], function (ko, ROT, drag) {
 
-    // Tile graphical types
+    // Type data
     var tileTypes = {
       unset: 0,
       block: 1,
       enemy: 2,
       chest: 3
     };
+
+    var rotTypes = {
+      maze: {
+        type: "maze"
+      },
+      room: {
+        type: "room"
+      }
+    }
 
     // Tile type data (contains all graphical info, etc) - Expects each eType to always differ!
     var tileStaticData = [{
@@ -31,16 +40,18 @@ require(['ko', 'ROT', 'drag'], function (ko, ROT, drag) {
         return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
           s4() + '-' + s4() + s4() + s4();
       },
-      useROT: function(w, h, callback, asMaze) {
+      useROT: function(w, h, callback, rotMode) {
 
-        // Sanity check (10 is just a guess)
-        if(!asMaze && w < 10 || h < 10)
-          asMaze = true;
+        // Sanity check (24 is just a guess)
+        if(!rotMode && (w < 24 || h < 24)) {
+          console.warn("Reverting to maze mode to avoid generation failure.");
+          rotMode = true;
+        }
 
         // If not as maze, w and h need to be of certain amount about integer.
         // http://ondras.github.io/rot.js/hp/
         // ROT.RNG.setSeed(1234); // Only if you want a fixed seed per session.
-        var map = asMaze ? new ROT.Map.EllerMaze(w, h) : new ROT.Map.Digger(w, h);
+        var map = rotMode === rotTypes.maze.type ? new ROT.Map.EllerMaze(w, h) : new ROT.Map.Digger(w, h);
 
         if(typeof callback !== 'function') {
           console.warn("Requires a callback to function.");
@@ -105,6 +116,7 @@ require(['ko', 'ROT', 'drag'], function (ko, ROT, drag) {
 
       // Selected tile types
       this.propMode = ko.observable(false);
+      this.rotMode = ko.observable(rotTypes.maze.type);
       this.tileGraphic = ko.observable(helpers.getDataTileName(tileTypes.block));
 
       // Startup
@@ -166,7 +178,7 @@ require(['ko', 'ROT', 'drag'], function (ko, ROT, drag) {
           tile.occupied(true);
         }
 
-      }, true);
+      }, this.rotMode());
 
     };
 

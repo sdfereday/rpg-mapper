@@ -24,57 +24,78 @@
         <div class="node">
           <span>
             Width:
-            <input type="text" id="mapWidth" value="11" data-bind="value: width, enable: !generated()" />
+            <input type="text" id="mapWidth" value="24" data-bind="value: width, enable: !generated()" />
           </span>
           <span>
             Height:
-            <input type="text" id="mapHeight" value="11" data-bind="value: height, enable: !generated()" />
+            <input type="text" id="mapHeight" value="24" data-bind="value: height, enable: !generated()" />
           </span>
         </div>
         <p><strong>Initialize Map</strong></p>
         <button data-bind="enable: !generated()" id="generate">Start</button>
       </form>
 
-      <form id="entities" data-bind="css: { enabled: !propMode() }">
-        <p><strong>Build ROT Foundations?</strong></p>
-        <button data-bind="click: generateUsingROT">Generate</button>
-        <p><strong>Foundation Tile Types</strong></p>
-        <span class="radio">
-          <input type="radio" id="f-block" name="entity" value="block" data-bind="checked: tileGraphic, enable: !propMode()">
-          <label for="f-block">Block</label>
-          <div class="check"></div>
-        </span>
-      </form>
+      <div class="tools" data-bind="css: { enableTools: generated() }">
+        <form id="entities" data-bind="css: { enabled: !propMode(), disabled: propMode() }">
+          <p><strong>Build ROT Foundations?</strong></p>
+          <button data-bind="click: generateUsingROT">Generate</button>
+          <p><strong>ROT Mode:</strong></p>
+          <span class="radio">
+            <input type="radio" id="r-maze" name="rotMode" value="maze" data-bind="checked: rotMode, enable: !propMode()">
+            <label for="r-maze">Maze</label>
+            <div class="check"></div>
+          </span>
+          <span class="radio">
+            <input type="radio" id="r-room" name="rotMode" value="room" data-bind="checked: rotMode, enable: !propMode()">
+            <label for="r-room">Room</label>
+            <div class="check"></div>
+          </span>
+        </form>
 
-      <form id="entities" data-bind="css: { enabled: propMode() }">
-        <p><strong>Placements</strong></p>
+        <form id="entities">
+          
+          <div data-bind="css: { enabled: !propMode(), disabled: propMode() }">
+            <p><strong>Foundation Tile Types</strong></p>
+            <span class="radio">
+              <input type="radio" id="f-block" name="entity" value="block" data-bind="checked: tileGraphic, enable: !propMode()">
+              <label for="f-block">Block</label>
+              <div class="check"></div>
+            </span>
+          </div>
+
+          <p><strong>Placements</strong></p>
           <div class="checkbox">
             <input type="checkbox" id="ch-default" data-bind="checked: propMode, click: changeDefault" />
             <label for="ch-default"></label>
             <span>Enable placement mode</span>
           </div>
-        <p><strong>Entity Tile Types</strong></p>
-        <span class="radio">
-          <input type="radio" id="f-enemy" name="entity" value="enemy" data-bind="checked: tileGraphic, enable: propMode">
-          <label for="f-enemy">Enemy</label>
-          <div class="check"></div>
-        </span>
-        <span class="radio">
-          <input type="radio" id="f-chest" name="entity" value="chest" data-bind="checked: tileGraphic, enable: propMode">
-          <label for="f-chest">Chest</label>
-          <div class="check"></div>
-        </span>
-      </form>
 
-      <p>
-        <strong>Export data</strong>
-      </p>
-      <button data-bind="click: exportData">Export</button>
-      <p>
-        <strong></strong>
-      </p>
-      <div id="output" contenteditable="true" data-bind="text: exportedData">
-        Exported data...
+          <div data-bind="css: { enabled: propMode(), disabled: !propMode() }">
+            <p><strong>Entity Tile Types</strong></p>
+            <span class="radio">
+              <input type="radio" id="f-enemy" name="entity" value="enemy" data-bind="checked: tileGraphic, enable: propMode">
+              <label for="f-enemy">Enemy</label>
+              <div class="check"></div>
+            </span>
+            <span class="radio">
+              <input type="radio" id="f-chest" name="entity" value="chest" data-bind="checked: tileGraphic, enable: propMode">
+              <label for="f-chest">Chest</label>
+              <div class="check"></div>
+            </span>
+          </div>
+
+        </form>
+
+        <p>
+          <strong>Export data</strong>
+        </p>
+        <button data-bind="click: exportData">Export</button>
+        <p>
+          <strong></strong>
+        </p>
+        <div id="output" contenteditable="true" data-bind="text: exportedData">
+          Exported data...
+        </div>
       </div>
 
     </div>
