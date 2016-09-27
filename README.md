@@ -8,12 +8,12 @@ RPG Mapper is basically a tool that generates a map array with multiple layers. 
 * It also assumes that the formatting of the array is what you'll be using. If something more is required then either a different tool should be used, or a different method of parsing it.
 
 **Things still to add or fix (wip list):**
-
 * Code and SCSS cleanup.
 * Optimisations of code upon generation (currently slows down about about 60x60 size, presumably dom-related).
-* Ability to use different ROT configurations (not just maze).
-* Save out option to a JSON file as well as just the exporter.
-* An orthographic representation of the mapping for visual sugar.
-* Exporting to electron so it can be run as a desktop app.
 * Ability to assign graphics to each tile type, or at least some sort of icon.
 * On map config change, ability to apply new options (such as resize).
+
+**Nice to haves or features to add:**
+* An orthographic representation of the mapping for visual sugar.
+* Exporting to electron so it can be run as a desktop app.
+* Save out option to a JSON file as well as just the exporter.
