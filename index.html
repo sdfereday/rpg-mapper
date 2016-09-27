@@ -81,11 +81,14 @@
 
     <div id="map">
 
-      <div id="map-inner">
+      <div class="dragdealer" id="map-inner">
+
         <p class="console">
           <strong>Map console: ...</strong>
           <span>x</span>
         </p>
+
+        <div class="handle" id="map-handle">
 
         <div id="previewers">
           <div id="preview" data-bind="css: { foundationEnabled: !propMode(), foundationDisabled: propMode() }">
@@ -98,6 +101,8 @@
               <div class="sq" data-bind="style: positionCSS, css: { occupied: occupied() }, click: $parent.propMode() ? clicked : null, text: decorType()"></div>
             </span>
           </div>
+        </div>
+
         </div>
 
       </div>

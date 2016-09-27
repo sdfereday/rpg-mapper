@@ -46,6 +46,8 @@ body {
     width: 100%;
     height: 100%;
     position: relative;
+    overflow: hidden;
+    cursor: move; // Better to allow only when click pressed.
   }
 }
 
@@ -347,4 +349,9 @@ form span {
     font-size: 1.5em;
     cursor: pointer;
   }
+}
+
+// Draggable
+.handle {
+  overflow: hidden;
 }

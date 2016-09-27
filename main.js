@@ -1,4 +1,4 @@
-require(['ko', 'ROT'], function (ko, ROT) {
+require(['ko', 'ROT', 'drag'], function (ko, ROT, drag) {
 
     // Tile graphical types
     var tileTypes = {
@@ -203,7 +203,6 @@ require(['ko', 'ROT'], function (ko, ROT) {
 
     };
 
-
     // Startup
     function generate(w, h){
 
@@ -212,32 +211,31 @@ require(['ko', 'ROT'], function (ko, ROT) {
 
     }
 
-    function alignMapCenter(el, parent, opts){
-      
-      if(!opts)
-        opts = { w: 0, h: 0 };
-
-      el.style.left = parent.offsetWidth / 2 + "px";
-      el.style.marginLeft = -(opts.w / 2) + "px";
-      el.style.top = parent.offsetHeight / 2 + "px";
-      el.style.marginTop = -(opts.h / 2) + "px";
-
-    }
-
     var startButton = document.getElementById("generate"),
     mWidth = document.getElementById("mapWidth"),
     mHeight = document.getElementById("mapHeight");
 
-    var previewers = document.getElementById("previewers"),
-    previewerParent = document.getElementById("map-inner");
-    alignMapCenter(previewers, previewerParent);
-
     startButton.addEventListener("click", function(){
+      
       generate(mWidth.value, mHeight.value);
-      alignMapCenter(previewers, previewerParent, {
-        w: mWidth.value * 32,
-        h: mHeight.value * 32
+
+      var mapHandle = document.getElementById("map-handle");
+      mapHandle.style.width = Math.round(mWidth.value * 32) + "px";
+      mapHandle.style.height = Math.round(mHeight.value * 32) + "px";
+
+      new drag('map-inner', {
+        x: 0.5,
+        y: 0.5,
+        top: 32,
+        bottom: 32,
+        left: 32,
+        right: 32,
+        vertical: true,
+        speed: 0.2,
+        loose: true,
+        requestAnimationFrame: true
       });
+
     });
 
 });
