@@ -1,0 +1,16 @@
+.console {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 99;
+  padding: 1em;
+  color: $white;
+  background: rgba(33,33,33,0.5);
+  width: 100%;
+  span {
+    margin-top: -3px;
+    float: right;
+    font-size: 1.5em;
+    cursor: pointer;
+  }
+}
