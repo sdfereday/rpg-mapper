@@ -41,6 +41,12 @@
       <form id="entities" data-bind="css: { enabled: !propMode(), disabled: propMode() }">
         <p><strong>Build ROT Foundations?</strong></p>
         <button data-bind="click: generateUsingROT">Generate</button>
+        <p><strong>Swap:</strong></p>
+        <div class="checkbox">
+          <input type="checkbox" id="multi-mode" data-bind="checked: invert, click: changeBlockMode" />
+          <label for="multi-mode"></label>
+          <span>Swap space and blocks</span>
+        </div>
         <p><strong>ROT Mode:</strong></p>
         <span class="radio">
             <input type="radio" id="r-maze" name="rotMode" value="maze" data-bind="checked: rotMode, enable: !propMode()">
@@ -94,8 +100,8 @@
       <button data-bind="click: exportData">Export</button>
       <p><strong>Placements</strong></p>
       <div class="checkbox">
-        <input type="checkbox" id="multi-mode" data-bind="checked: multiMode, click: changeExportMode" />
-        <label for="multi-mode"></label>
+        <input type="checkbox" id="swap-mode" data-bind="checked: multiMode, click: changeExportMode" />
+        <label for="swap-mode"></label>
         <span>Export as MultiDimensional</span>
       </div>
       <div class="checkbox" data-bind="css: { enabled: multiMode(), disabled: !multiMode() }">

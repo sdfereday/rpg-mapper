@@ -17,6 +17,7 @@ define(['helpers', 'ko', 'TileModel', 'tileTypes', 'rotTypes'], function (helper
     this.propGrid = ko.observableArray(this.createGrid(w, h));
 
     // Exported
+    this.invert = ko.observable(false);
     this.multiMode = ko.observable(false);
     this.asCS = ko.observable(false);
     this.exportedData = ko.observable("");
@@ -52,9 +53,12 @@ define(['helpers', 'ko', 'TileModel', 'tileTypes', 'rotTypes'], function (helper
     // Note: Only works for foundation layer at this stage (probably always be that way too)
     var self = this, tile;
 
+    let emptyType = this.invert() ? tileTypes.block : tileTypes.unset;
+    let blockType = this.invert() ? tileTypes.unset : tileTypes.block;
+
     // Clear previous grid (may wish to leave decors alone)
     this.grid().forEach(function (item) {
-      item.decorType(tileTypes.unset);
+      item.decorType(emptyType);
       item.occupied(false);
     });
 
@@ -69,7 +73,8 @@ define(['helpers', 'ko', 'TileModel', 'tileTypes', 'rotTypes'], function (helper
 
       // 'v' should be equal to whatever your block enum is (could be more dynamic)...
       if (tile && v === tileTypes.block) {
-        tile.decorType(v);
+        // Since I need inverted, I set any blocks to unset here.
+        tile.decorType(blockType);
         tile.occupied(true);
       }
 
@@ -91,9 +96,7 @@ define(['helpers', 'ko', 'TileModel', 'tileTypes', 'rotTypes'], function (helper
     console.log(fLayer);
     console.log(eLayer);
 
-
-    if(this.multiMode())
-    {
+    if (this.multiMode()) {
       // ...
       this.extract();
       return;
@@ -133,9 +136,16 @@ define(['helpers', 'ko', 'TileModel', 'tileTypes', 'rotTypes'], function (helper
 
   };
 
+  Mapper.prototype.changeBlockMode = function () {
+
+    this.invert()
+
+    return true;
+
+  };
+
   // Inflate to two dimensional
   Mapper.prototype.getCellsByRow = function (arr, n) {
-    console.log(arr);
     return arr.filter(function (item) {
       return item.y() === n;
     });
@@ -152,7 +162,6 @@ define(['helpers', 'ko', 'TileModel', 'tileTypes', 'rotTypes'], function (helper
     let inflated = [];
 
     for (var i = 0; i < this.width; i++) {
-      console.log(i);
       let filteredCells = this.extractAsTypes(this.getCellsByRow(this.grid(), i));
       inflated.push(filteredCells);
     }
@@ -163,8 +172,8 @@ define(['helpers', 'ko', 'TileModel', 'tileTypes', 'rotTypes'], function (helper
     document.getElementById('output').innerHTML = '<pre>' + converted + '</pre>';
 
     //this.exportedData(JSON.stringify({
-      //foundationLayer: converted//,
-      //entityLayer: eLayer
+    //foundationLayer: converted//,
+    //entityLayer: eLayer
     //}));
 
   };
