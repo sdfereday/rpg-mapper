@@ -1,115 +1,125 @@
 <!doctype html>
 <html lang="en">
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Mapper</title>
 
-    <!-- Custom styles for this template -->
-    <link href='css/core.css' rel='stylesheet' type='text/css'>
-    
-    <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic' rel='stylesheet' type='text/css'>
-    <link href='http://fonts.googleapis.com/css?family=Raleway:400,300,700' rel='stylesheet' type='text/css'>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mapper</title>
+
+  <!-- Custom styles for this template -->
+  <link href='css/core.css' rel='stylesheet' type='text/css'>
+
+  <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Raleway:400,300,700' rel='stylesheet' type='text/css'>
 
 </head>
+
 <body>
 
-    <div id="ui">
+  <div id="ui">
 
-      <p class="lead">RPG Mapper <span>v0.1</span></p>
-      
-      <form class="start-form" data-bind="css: { disabled: generated() }">
-        <p><strong>Map Options (fill these in before starting):</strong></p>
-        <p>Dimensions (in units):</p>
-        <div class="node">
-          <span>
+    <p class="lead">RPG Mapper <span>v0.1</span></p>
+
+    <form class="start-form" data-bind="css: { disabled: generated() }">
+      <p><strong>Map Options (fill these in before starting):</strong></p>
+      <p>Dimensions (in units):</p>
+      <div class="node">
+        <span>
             Width:
-            <input type="text" id="mapWidth" value="24" data-bind="value: width, enable: !generated()" />
+            <input type="text" id="mapWidth" value="23" data-bind="value: width, enable: !generated()" />
           </span>
-          <span>
+        <span>
             Height:
-            <input type="text" id="mapHeight" value="24" data-bind="value: height, enable: !generated()" />
+            <input type="text" id="mapHeight" value="23" data-bind="value: height, enable: !generated()" />
           </span>
-        </div>
-        <p><strong>Initialize Map</strong></p>
-        <button data-bind="enable: !generated()" id="generate">Start</button>
-      </form>
+      </div>
+      <p><strong>Initialize Map</strong></p>
+      <button data-bind="enable: !generated()" id="generate">Start</button>
+    </form>
 
-      <div class="tools" data-bind="css: { enableTools: generated() }">
-        <form id="entities" data-bind="css: { enabled: !propMode(), disabled: propMode() }">
-          <p><strong>Build ROT Foundations?</strong></p>
-          <button data-bind="click: generateUsingROT">Generate</button>
-          <p><strong>ROT Mode:</strong></p>
-          <span class="radio">
+    <div class="tools" data-bind="css: { enableTools: generated() }">
+      <form id="entities" data-bind="css: { enabled: !propMode(), disabled: propMode() }">
+        <p><strong>Build ROT Foundations?</strong></p>
+        <button data-bind="click: generateUsingROT">Generate</button>
+        <p><strong>ROT Mode:</strong></p>
+        <span class="radio">
             <input type="radio" id="r-maze" name="rotMode" value="maze" data-bind="checked: rotMode, enable: !propMode()">
             <label for="r-maze">Maze</label>
             <div class="check"></div>
           </span>
-          <span class="radio">
+        <span class="radio">
             <input type="radio" id="r-room" name="rotMode" value="room" data-bind="checked: rotMode, enable: !propMode()">
             <label for="r-room">Room</label>
             <div class="check"></div>
           </span>
-        </form>
+      </form>
 
-        <form id="entities">
-          
-          <div data-bind="css: { enabled: !propMode(), disabled: propMode() }">
-            <p><strong>Foundation Tile Types</strong></p>
-            <span class="radio">
+      <form id="entities">
+
+        <div data-bind="css: { enabled: !propMode(), disabled: propMode() }">
+          <p><strong>Foundation Tile Types</strong></p>
+          <span class="radio">
               <input type="radio" id="f-block" name="entity" value="block" data-bind="checked: tileGraphic, enable: !propMode()">
               <label for="f-block">Block</label>
               <div class="check"></div>
             </span>
-          </div>
+        </div>
 
-          <p><strong>Placements</strong></p>
-          <div class="checkbox">
-            <input type="checkbox" id="ch-default" data-bind="checked: propMode, click: changeDefault" />
-            <label for="ch-default"></label>
-            <span>Enable placement mode</span>
-          </div>
+        <p><strong>Placements</strong></p>
+        <div class="checkbox">
+          <input type="checkbox" id="ch-default" data-bind="checked: propMode, click: changeDefault" />
+          <label for="ch-default"></label>
+          <span>Enable placement mode</span>
+        </div>
 
-          <div data-bind="css: { enabled: propMode(), disabled: !propMode() }">
-            <p><strong>Entity Tile Types</strong></p>
-            <span class="radio">
+        <div data-bind="css: { enabled: propMode(), disabled: !propMode() }">
+          <p><strong>Entity Tile Types</strong></p>
+          <span class="radio">
               <input type="radio" id="f-enemy" name="entity" value="enemy" data-bind="checked: tileGraphic, enable: propMode">
               <label for="f-enemy">Enemy</label>
               <div class="check"></div>
             </span>
-            <span class="radio">
+          <span class="radio">
               <input type="radio" id="f-chest" name="entity" value="chest" data-bind="checked: tileGraphic, enable: propMode">
               <label for="f-chest">Chest</label>
               <div class="check"></div>
             </span>
-          </div>
-
-        </form>
-
-        <p>
-          <strong>Export data</strong>
-        </p>
-        <button data-bind="click: exportData">Export</button>
-        <p>
-          <strong></strong>
-        </p>
-        <div id="output" contenteditable="true" data-bind="text: exportedData">
-          Exported data...
         </div>
-      </div>
 
+      </form>
+
+      <p>
+        <strong>Export data</strong>
+      </p>
+      <button data-bind="click: exportData">Export</button>
+      <p><strong>Placements</strong></p>
+      <div class="checkbox">
+        <input type="checkbox" id="multi-mode" data-bind="checked: multiMode, click: changeExportMode" />
+        <label for="multi-mode"></label>
+        <span>Export as MultiDimensional</span>
+      </div>
+      <div class="checkbox" data-bind="css: { enabled: multiMode(), disabled: !multiMode() }">
+        <input type="checkbox" id="cs-mode" data-bind="checked: asCS, click: changeCS" />
+        <label for="cs-mode"></label>
+        <span>Export as C# Matrix Array</span>
+      </div>
+      <div id="output" contenteditable="true" data-bind="text: exportedData">
+        Exported data...
+      </div>
     </div>
 
-    <div id="map">
+  </div>
 
-      <div class="dragdealer" id="map-inner">
+  <div id="map">
 
-        <p class="console">
-          <strong>Map console: ...</strong>
-          <span>x</span>
-        </p>
+    <div class="dragdealer" id="map-inner">
 
-        <div class="handle" id="map-handle">
+      <p class="console">
+        <strong>Map console: ...</strong>
+        <span>x</span>
+      </p>
+
+      <div class="handle" id="map-handle">
 
         <div id="previewers">
           <div id="preview" data-bind="css: { foundationEnabled: !propMode(), foundationDisabled: propMode() }">
@@ -124,15 +134,16 @@
           </div>
         </div>
 
-        </div>
-
       </div>
 
     </div>
 
-    <!-- required -->
-    <script src="require.conf.js"></script>
-    <script data-main="main" src="bower_components/requirejs/require.js"></script>
+  </div>
+
+  <!-- required -->
+  <script src="require.conf.js"></script>
+  <script data-main="main" src="bower_components/requirejs/require.js"></script>
 
 </body>
+
 </html>
