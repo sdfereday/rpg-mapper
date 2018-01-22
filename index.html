@@ -18,87 +18,129 @@
 
   <div id="ui">
 
-    <p class="lead">RPG Mapper <span>v0.1</span></p>
+    <p class="lead">Mapper
+      <span>v0.2</span>
+    </p>
 
     <form class="start-form" data-bind="css: { disabled: generated() }">
-      <p><strong>Map Options (fill these in before starting):</strong></p>
+      <p>
+        <strong>Map Options (fill these in before starting):</strong>
+      </p>
       <p>Dimensions (in units):</p>
       <div class="node">
         <span>
-            Width:
-            <input type="text" id="mapWidth" value="9" data-bind="value: width, enable: !generated()" />
-          </span>
+          Width:
+          <input type="text" id="mapWidth" value="9" data-bind="value: width, enable: !generated()" />
+        </span>
         <span>
-            Height:
-            <input type="text" id="mapHeight" value="9" data-bind="value: height, enable: !generated()" />
-          </span>
+          Height:
+          <input type="text" id="mapHeight" value="9" data-bind="value: height, enable: !generated()" />
+        </span>
       </div>
-      <p><strong>Initialize Map</strong></p>
+      <p>
+        <strong>Initialize Map</strong>
+      </p>
       <button data-bind="enable: !generated()" id="generate">Start</button>
     </form>
 
     <div class="tools" data-bind="css: { enableTools: generated() }">
-      <form id="entities" data-bind="css: { enabled: !propMode(), disabled: propMode() }">
-        <p><strong>Build ROT Foundations?</strong></p>
+      <form id="entities">
+        <p>
+          <strong>Build ROT Foundations?</strong>
+        </p>
         <button data-bind="click: generateUsingROT">Generate</button>
-        <p><strong>Swap:</strong></p>
+        <p>
+          <strong>Swap:</strong>
+        </p>
         <div class="checkbox">
           <input type="checkbox" id="multi-mode" data-bind="checked: invert, click: changeBlockMode" />
           <label for="multi-mode"></label>
           <span>Swap space and blocks</span>
         </div>
-        <p><strong>ROT Mode:</strong></p>
+        <p>
+          <strong>ROT Mode:</strong>
+        </p>
         <span class="radio">
-            <input type="radio" id="r-maze" name="rotMode" value="maze" data-bind="checked: rotMode, enable: !propMode()">
-            <label for="r-maze">Maze</label>
-            <div class="check"></div>
-          </span>
+          <input type="radio" id="r-maze" name="rotMode" value="maze" data-bind="checked: rotMode">
+          <label for="r-maze">Maze</label>
+          <div class="check"></div>
+        </span>
         <span class="radio">
-            <input type="radio" id="r-room" name="rotMode" value="room" data-bind="checked: rotMode, enable: !propMode()">
-            <label for="r-room">Room</label>
-            <div class="check"></div>
-          </span>
+          <input type="radio" id="r-room" name="rotMode" value="room" data-bind="checked: rotMode">
+          <label for="r-room">Room</label>
+          <div class="check"></div>
+        </span>
       </form>
 
       <form id="entities">
 
-        <div data-bind="css: { enabled: !propMode(), disabled: propMode() }">
-          <p><strong>Foundation Tile Types</strong></p>
-          <span class="radio">
-              <input type="radio" id="f-block" name="entity" value="block" data-bind="checked: tileGraphic, enable: !propMode()">
-              <label for="f-block">Block</label>
-              <div class="check"></div>
-            </span>
-        </div>
-
-        <p><strong>Placements</strong></p>
-        <div class="checkbox">
-          <input type="checkbox" id="ch-default" data-bind="checked: propMode, click: changeDefault" />
-          <label for="ch-default"></label>
-          <span>Enable placement mode</span>
-        </div>
-
-        <div data-bind="css: { enabled: propMode(), disabled: !propMode() }">
-          <p><strong>Entity Tile Types</strong></p>
-          <span class="radio">
-              <input type="radio" id="f-enemy" name="entity" value="enemy" data-bind="checked: tileGraphic, enable: propMode">
-              <label for="f-enemy">Enemy</label>
-              <div class="check"></div>
-            </span>
-          <span class="radio">
-              <input type="radio" id="f-chest" name="entity" value="chest" data-bind="checked: tileGraphic, enable: propMode">
-              <label for="f-chest">Chest</label>
-              <div class="check"></div>
-            </span>
-        </div>
-
+        <p>
+          <strong>Tile Types</strong>
+        </p>
+        <span class="radio">
+          <input type="radio" id="f-floor" name="entity" value="floor" data-bind="checked: tileGraphic">
+          <label for="f-floor">Floor</label>
+          <div class="check"></div>
+        </span>
+        <span class="radio">
+          <input type="radio" id="f-wall" name="entity" value="wall" data-bind="checked: tileGraphic">
+          <label for="f-wall">Wall</label>
+          <div class="check"></div>
+        </span>
+        <span class="radio">
+          <input type="radio" id="f-pillar" name="entity" value="pillar" data-bind="checked: tileGraphic">
+          <label for="f-pillar">Pillar</label>
+          <div class="check"></div>
+        </span>
+        <span class="radio">
+          <input type="radio" id="f-wallDecor" name="entity" value="wallDecor" data-bind="checked: tileGraphic">
+          <label for="f-wallDecor">Wall Decor</label>
+          <div class="check"></div>
+        </span>
+        <span class="radio">
+          <input type="radio" id="f-key" name="entity" value="key" data-bind="checked: tileGraphic">
+          <label for="f-key">Key</label>
+          <div class="check"></div>
+        </span>
+        <span class="radio">
+          <input type="radio" id="f-puzzle" name="entity" value="puzzle" data-bind="checked: tileGraphic">
+          <label for="f-puzzle">Puzzle</label>
+          <div class="check"></div>
+        </span>
+        <span class="radio">
+          <input type="radio" id="f-enemy" name="entity" value="enemy" data-bind="checked: tileGraphic">
+          <label for="f-enemy">Enemy</label>
+          <div class="check"></div>
+        </span>
+        <span class="radio">
+          <input type="radio" id="f-treasure" name="entity" value="treasure" data-bind="checked: tileGraphic">
+          <label for="f-treasure">Treasure</label>
+          <div class="check"></div>
+        </span>
+        <span class="radio">
+          <input type="radio" id="f-trap" name="entity" value="trap" data-bind="checked: tileGraphic">
+          <label for="f-trap">Trap</label>
+          <div class="check"></div>
+        </span>
+        <span class="radio">
+          <input type="radio" id="f-entrance" name="entity" value="entrance" data-bind="checked: tileGraphic">
+          <label for="f-entrance">Entrance</label>
+          <div class="check"></div>
+        </span>
+        <span class="radio">
+          <input type="radio" id="f-exit" name="entity" value="exit" data-bind="checked: tileGraphic">
+          <label for="f-exit">Exit</label>
+          <div class="check"></div>
+        </span>
       </form>
 
       <p>
         <strong>Export data</strong>
       </p>
       <button data-bind="click: exportData">Export</button>
-      <p><strong>Placements</strong></p>
+      <p>
+        <strong>Placements</strong>
+      </p>
       <div class="checkbox">
         <input type="checkbox" id="swap-mode" data-bind="checked: multiMode, click: changeExportMode" />
         <label for="swap-mode"></label>
@@ -128,14 +170,9 @@
       <div class="handle" id="map-handle">
 
         <div id="previewers">
-          <div id="preview" data-bind="css: { foundationEnabled: !propMode(), foundationDisabled: propMode() }">
+          <div id="preview">
             <span data-bind="foreach: grid">
-              <div class="sq" data-bind="style: positionCSS, css: { occupied: occupied() }, click: !$parent.propMode() ? clicked : null"></div>
-            </span>
-          </div>
-          <div id="prop-preview" data-bind="css: { foundationEnabled: propMode(), foundationDisabled: !propMode() }">
-            <span data-bind="foreach: propGrid">
-              <div class="sq" data-bind="style: positionCSS, css: { occupied: occupied() }, click: $parent.propMode() ? clicked : null, text: decorType()"></div>
+              <div class="sq" data-bind="style: positionCSS, css: { occupied: occupied() }, click: clicked, text: decorType()"></div>
             </span>
           </div>
         </div>

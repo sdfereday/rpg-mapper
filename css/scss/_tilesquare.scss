@@ -1,6 +1,7 @@
 .sq {
   width: $tileWidth + px;
   height: $tileHeight + px;
+  padding-top: 0.6em;
   position: absolute;
   background: #9CBA7F;
   cursor: pointer;
@@ -9,8 +10,10 @@
 
 .sq:hover {
   background: #555;
+  color: #fff;
 }
 
 .sq.occupied {
   background: #333;
+  color: #fff;
 }

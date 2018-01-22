@@ -2,10 +2,8 @@ require(['ko', 'ROT', 'drag', 'Mapper'], function (ko, ROT, drag, Mapper) {
 
     // Startup
     function generate(w, h){
-
       // Knockout start
       ko.applyBindings(new Mapper(w, h));
-
     }
 
     var startButton = document.getElementById("generate"),
@@ -13,7 +11,7 @@ require(['ko', 'ROT', 'drag', 'Mapper'], function (ko, ROT, drag, Mapper) {
     mHeight = document.getElementById("mapHeight");
 
     startButton.addEventListener("click", function(){
-      
+
       generate(mWidth.value, mHeight.value);
 
       var mapHandle = document.getElementById("map-handle");

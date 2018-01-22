@@ -1,4 +1,4 @@
-define(['ko', 'tileTypes', 'helpers'], function(ko, tileTypes, helpers){
+define(['ko', 'tileStaticData', 'tileTypes', 'helpers'], function(ko, tileStaticData, tileTypes, helpers){
 
     // Components / models for mapper to use
     var TileModel = function(x, y, occupied, d, parent) {
@@ -25,12 +25,13 @@ define(['ko', 'tileTypes', 'helpers'], function(ko, tileTypes, helpers){
 
     TileModel.prototype.clicked = function(data, event) {
 
+      // This should be pre-determined by what you select from the menu. If you're not in placement mode, it should revert to using the default block graphic (or set of)
+      const eType = tileStaticData.find(t => t.name == data.parent.tileGraphic()).eType;
+      this.decorType(eType);
+
       /// Can we make sure that only certain tiles can be placed in thin air / not in thin air? This is just to make it nicer.
       // Not entirely sure if this is allowed or if it buggers the memory...
-      this.occupied(!this.occupied());
-
-      // This should be pre-determined by what you select from the menu. If you're not in placement mode, it should revert to using the default block graphic (or set of)
-      this.decorType(tileTypes[data.parent.tileGraphic()]);
+      this.occupied(eType !== tileTypes.FLOOR_TILE);
 
     }
 

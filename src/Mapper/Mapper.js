@@ -8,18 +8,16 @@ define(['helpers', 'ko', 'TileModel', 'tileTypes', 'rotTypes'], function (helper
     this.generated = ko.observable(true);
 
     // Selected tile types
-    this.propMode = ko.observable(false);
     this.rotMode = ko.observable(rotTypes.maze.type);
-    this.tileGraphic = ko.observable(helpers.getDataTileName(tileTypes.block));
+    this.tileGraphic = ko.observable(helpers.getDataTileName(tileTypes.FLOOR_TILE));
 
     // Startup
     this.grid = ko.observableArray(this.createGrid(w, h));
-    this.propGrid = ko.observableArray(this.createGrid(w, h));
 
     // Exported
     this.invert = ko.observable(false);
-    this.multiMode = ko.observable(false);
-    this.asCS = ko.observable(false);
+    this.multiMode = ko.observable(true);
+    this.asCS = ko.observable(true);
     this.exportedData = ko.observable("");
 
   };
@@ -32,7 +30,7 @@ define(['helpers', 'ko', 'TileModel', 'tileTypes', 'rotTypes'], function (helper
     for (var c = 0; c < h; c++) {
       for (var r = 0; r < w; r++) {
         // Passing parent in here - may not be the ideal way to do it...
-        arr.push(new TileModel(r, c, false, tileTypes.unset, this));
+        arr.push(new TileModel(r, c, false, tileTypes.FLOOR_TILE, this));
       }
     }
 
@@ -53,8 +51,8 @@ define(['helpers', 'ko', 'TileModel', 'tileTypes', 'rotTypes'], function (helper
     // Note: Only works for foundation layer at this stage (probably always be that way too)
     var self = this, tile;
 
-    let emptyType = this.invert() ? tileTypes.block : tileTypes.unset;
-    let blockType = this.invert() ? tileTypes.unset : tileTypes.block;
+    let emptyType = this.invert() ? tileTypes.WALL_TILE : tileTypes.FLOOR_TILE;
+    let blockType = this.invert() ? tileTypes.FLOOR_TILE : tileTypes.WALL_TILE;
 
     // Clear previous grid (may wish to leave decors alone)
     this.grid().forEach(function (item) {
@@ -72,7 +70,7 @@ define(['helpers', 'ko', 'TileModel', 'tileTypes', 'rotTypes'], function (helper
       var tile = self.findOnGridAt(x, y);
 
       // 'v' should be equal to whatever your block enum is (could be more dynamic)...
-      if (tile && v === tileTypes.block) {
+      if (tile && v === tileTypes.WALL_TILE) {
         // Since I need inverted, I set any blocks to unset here.
         tile.decorType(blockType);
         tile.occupied(true);
@@ -82,12 +80,9 @@ define(['helpers', 'ko', 'TileModel', 'tileTypes', 'rotTypes'], function (helper
 
   };
 
-  Mapper.prototype.rotate = function(arr, n) {
-    var L = arr.length;
-    return arr.slice(L - n).concat(arr.slice(0, L - n));
-  };
-
   Mapper.prototype.transpose = function(matrix) {
+
+    // TODO: Make functional, no side-effects.
     // reverse the rows
     matrix = matrix.reverse();
 
@@ -107,16 +102,12 @@ define(['helpers', 'ko', 'TileModel', 'tileTypes', 'rotTypes'], function (helper
 
     var fLayer = this.grid().map(function (tile, i) {
       return tile.decorType();
-    }),
-    eLayer = this.propGrid().map(function (tile, i) {
-      return tile.decorType();
     });
 
     // Debug
     console.clear();
     console.log("Exporting...");
     console.log(fLayer);
-    console.log(eLayer);
 
     if (this.multiMode()) {
       console.log("Running in multi-mode.");
@@ -124,46 +115,25 @@ define(['helpers', 'ko', 'TileModel', 'tileTypes', 'rotTypes'], function (helper
       return;
     }
 
-    // Also need the other layes too.
     this.exportedData(JSON.stringify({
-      foundationLayer: fLayer//,
-      //entityLayer: eLayer
+      foundationLayer: fLayer
     }));
 
   };
 
-  Mapper.prototype.changeDefault = function () {
-
-    var defGraphic = !this.propMode() ? helpers.getDataTileName(tileTypes.block) : helpers.getDataTileName(tileTypes.enemy);
-
-    this.tileGraphic(defGraphic);
-
-    return true;
-
-  };
-
   Mapper.prototype.changeExportMode = function () {
-
     this.multiMode();
-
     return true;
-
   };
 
   Mapper.prototype.changeCS = function () {
-
     this.asCS();
-
     return true;
-
   };
 
   Mapper.prototype.changeBlockMode = function () {
-
     this.invert()
-
     return true;
-
   };
 
   // Inflate to two dimensional
@@ -191,7 +161,7 @@ define(['helpers', 'ko', 'TileModel', 'tileTypes', 'rotTypes'], function (helper
     // Rotate - TODO: make more functional by returning new array.
     this.transpose(inflated);
 
-    let converted = this.asCS() ? this.convert(inflated) : inflated;
+    const converted = this.asCS() ? this.convert(inflated) : inflated;
 
     // temp
     document.getElementById('output').innerHTML = '<pre>' + converted + '</pre>';
