@@ -1,5 +1,21 @@
 define(['helpers', 'ko', 'TileModel', 'tileTypes', 'rotTypes'], function (helpers, ko, TileModel, tileTypes, rotTypes) {
 
+  class Layer {
+
+    constructor(name, index) {
+      this.name = name + index;
+      this.index = index;
+      this.selected = ko.observable(true);
+    }
+
+    onLayerSelect(data) {
+      this.selected(true);
+      console.log(this.selected());
+      console.log(data);
+    }
+
+  }
+
   var Mapper = function (w, h) {
 
     // In units (convert to observable 'if' you want resize).
@@ -13,6 +29,7 @@ define(['helpers', 'ko', 'TileModel', 'tileTypes', 'rotTypes'], function (helper
 
     // Startup
     this.grid = ko.observableArray(this.createGrid(w, h));
+    this.layers = ko.observableArray(this.createLayers(1));
 
     // Exported
     this.invert = ko.observable(false);
@@ -20,6 +37,16 @@ define(['helpers', 'ko', 'TileModel', 'tileTypes', 'rotTypes'], function (helper
     this.asCS = ko.observable(true);
     this.exportedData = ko.observable("");
 
+  };
+
+  Mapper.prototype.createLayers = function(n) {
+    let layers = [];
+
+    for(let i = 0; i < n; i++) {
+      layers.push(new Layer('Layer-', i));
+    }
+    
+    return layers;
   };
 
   Mapper.prototype.createGrid = function (w, h) {
@@ -131,7 +158,7 @@ define(['helpers', 'ko', 'TileModel', 'tileTypes', 'rotTypes'], function (helper
   };
 
   Mapper.prototype.changeBlockMode = function () {
-    this.invert()
+    this.invert();
     return true;
   };
 

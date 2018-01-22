@@ -72,7 +72,22 @@
         </span>
       </form>
 
-      <form id="entities">
+      <form id="layers">
+
+        <p>
+          <strong>Layers</strong>
+        </p>
+        <span data-bind="foreach: layers">
+          <span class="radio" data-bind="click: onLayerSelect">
+            <input type="radio" data-bind="checked: selected, attr: { name: name, value: name, id: name }">
+            <label data-bind="text: name, for: name">None</label>
+            <div class="check"></div>
+          </span>
+        </span>
+
+      </form>
+
+      <form id="tileTypes">
 
         <p>
           <strong>Tile Types</strong>
