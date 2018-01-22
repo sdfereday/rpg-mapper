@@ -43,7 +43,7 @@ define(['ko', 'tileStaticData', 'tileTypes', 'helpers'], function(ko, tileStatic
 
       /// Can we make sure that only certain tiles can be placed in thin air / not in thin air? This is just to make it nicer.
       // Not entirely sure if this is allowed or if it buggers the memory...
-      this.occupied(eType !== tileTypes.FLOOR_TILE);
+      this.occupied(eType !== tileTypes.EMPTY);
 
     };
 

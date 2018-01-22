@@ -1,15 +1,16 @@
 define(function() {
   return {
-    FLOOR_TILE: 0,
-    WALL_TILE: 1,
-    PILLAR_DECOR: 2,
-    WALL_DECOR: 3,
-    KEY_SPAWN: 4,
-    PUZZLE_SPAWN: 5,
-    ENEMY_SPAWN: 6,
-    TREASURE_SPAWN: 7,
-    TRAP_SPAWN: 8,
-    ENTRANCE: 9,
-    EXIT: 10
+    EMPTY: 0,
+    FLOOR_TILE: 1,
+    WALL_TILE: 2,
+    PILLAR_DECOR: 3,
+    WALL_DECOR: 4,
+    KEY_SPAWN: 5,
+    PUZZLE_SPAWN: 6,
+    ENEMY_SPAWN: 7,
+    TREASURE_SPAWN: 8,
+    TRAP_SPAWN: 9,
+    ENTRANCE: 10,
+    EXIT: 11
   };
 });

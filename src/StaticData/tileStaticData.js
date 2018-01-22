@@ -2,6 +2,11 @@ define(['tileTypes'], function(tileTypes){
 
   // Tile type data (contains all graphical info, etc) - Expects each eType to always differ!
   return [{
+    name: "empty",
+    eType: tileTypes.EMPTY, // Corresponds to enums below.
+    asset: "empty.png"
+  },
+  {
     name: "floor",
     eType: tileTypes.FLOOR_TILE, // Corresponds to enums below.
     asset: "floor.png"
