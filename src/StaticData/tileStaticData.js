@@ -4,57 +4,57 @@ define(['tileTypes'], function(tileTypes){
   return [{
     name: "floor",
     eType: tileTypes.FLOOR_TILE, // Corresponds to enums below.
-    asset: "../blockimg.jpg"
+    asset: "floor.png"
   },
   {
     name: "wall",
     eType: tileTypes.WALL_TILE, // Corresponds to enums below.
-    asset: "../blockimg.jpg"
+    asset: "wall.png"
   },
   {
     name: "pillar",
     eType: tileTypes.PILLAR_DECOR, // Corresponds to enums below.
-    asset: "../enemyimg.jpg"
+    asset: "pillar.png"
   },
   {
     name: "wallDecor",
     eType: tileTypes.WALL_DECOR, // Corresponds to enums below.
-    asset: "../enemyimg.jpg"
+    asset: "wallDecor.png"
   },
   {
     name: "key",
     eType: tileTypes.KEY_SPAWN, // Corresponds to enums below.
-    asset: "../enemyimg.jpg"
+    asset: "key.png"
   },
   {
     name: "puzzle",
     eType: tileTypes.PUZZLE_SPAWN, // Corresponds to enums below.
-    asset: "../enemyimg.jpg"
+    asset: "puzzle.png"
   },
   {
     name: "enemy",
     eType: tileTypes.ENEMY_SPAWN, // Corresponds to enums below.
-    asset: "../enemyimg.jpg"
+    asset: "enemy.png"
   },
   {
     name: "treasure",
     eType: tileTypes.TREASURE_SPAWN, // Corresponds to enums below.
-    asset: "../enemyimg.jpg"
+    asset: "treasure.png"
   },
   {
     name: "trap",
     eType: tileTypes.TRAP_SPAWN, // Corresponds to enums below.
-    asset: "../enemyimg.jpg"
+    asset: "trap.png"
   },
   {
     name: "entrance",
     eType: tileTypes.ENTRANCE, // Corresponds to enums below.
-    asset: "../enemyimg.jpg"
+    asset: "entrance.png"
   },
   {
     name: "exit",
     eType: tileTypes.EXIT, // Corresponds to enums below.
-    asset: "../enemyimg.jpg"
+    asset: "exit.png"
   }
 ];
 

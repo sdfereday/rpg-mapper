@@ -172,7 +172,10 @@
         <div id="previewers">
           <div id="preview">
             <span data-bind="foreach: grid">
-              <div class="sq" data-bind="style: positionCSS, css: { occupied: occupied() }, click: clicked, text: decorType()"></div>
+              <div class="sq" data-bind="style: positionCSS, css: { occupied: occupied() }, click: clicked">
+                <span data-bind="text: decorType()"></span>
+                <span class="icon" data-bind="style: icon"></span>
+              </div>
             </span>
           </div>
         </div>

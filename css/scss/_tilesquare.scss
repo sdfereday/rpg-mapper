@@ -17,3 +17,19 @@
   background: #333;
   color: #fff;
 }
+
+.icon {
+  width: $tileWidth + px;
+  height: $tileHeight + px;
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-position: 50%;
+  background-size: 100%;
+  image-rendering: pixelated;
+  opacity: 0.8;
+  &:hover {
+    opacity: 1;
+  }
+}

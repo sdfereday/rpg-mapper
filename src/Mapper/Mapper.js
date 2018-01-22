@@ -72,8 +72,7 @@ define(['helpers', 'ko', 'TileModel', 'tileTypes', 'rotTypes'], function (helper
       // 'v' should be equal to whatever your block enum is (could be more dynamic)...
       if (tile && v === tileTypes.WALL_TILE) {
         // Since I need inverted, I set any blocks to unset here.
-        tile.decorType(blockType);
-        tile.occupied(true);
+        tile.setDecor(blockType);
       }
 
     }, this.rotMode());
