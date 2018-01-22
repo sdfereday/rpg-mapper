@@ -14,7 +14,7 @@ define(['ko', 'tileStaticData', 'tileTypes', 'helpers'], function(ko, tileStatic
 
       // Set initial icon (if any)
       const assetsRoot = 'icons/';
-      const { asset } = tileStaticData.find(t => t.eType == d);
+      const { asset } = tileStaticData.find(t => t.eType === d);
       this.asset = ko.observable(asset);
 
       // No idea how this works.
@@ -37,7 +37,7 @@ define(['ko', 'tileStaticData', 'tileTypes', 'helpers'], function(ko, tileStatic
     TileModel.prototype.clicked = function(data, event) {
 
       // This should be pre-determined by what you select from the menu. If you're not in placement mode, it should revert to using the default block graphic (or set of)
-      const { eType, asset } = tileStaticData.find(t => t.name == data.parent.tileGraphic());
+      const { eType, asset } = tileStaticData.find(t => t.name === data.parent.tileGraphic());
       this.decorType(eType);
       this.asset(asset);
 
@@ -48,13 +48,10 @@ define(['ko', 'tileStaticData', 'tileTypes', 'helpers'], function(ko, tileStatic
     };
 
     TileModel.prototype.setDecor = function(eType) {
-
-      const { asset } = tileStaticData.find(t => t.eType == eType);
-      this.decorType(eType);
+      const { asset } = tileStaticData.find(t => t.eType === eType);
       this.asset(asset);
-
-      this.occupied(true);
-
+      this.decorType(eType);
+      this.occupied(eType !== tileTypes.EMPTY);
     };
 
     return TileModel;

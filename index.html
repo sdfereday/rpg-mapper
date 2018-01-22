@@ -5,13 +5,9 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Mapper</title>
-
-  <!-- Custom styles for this template -->
   <link href='css/core.css' rel='stylesheet' type='text/css'>
-
   <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic' rel='stylesheet' type='text/css'>
   <link href='http://fonts.googleapis.com/css?family=Raleway:400,300,700' rel='stylesheet' type='text/css'>
-
 </head>
 
 <body>
@@ -19,7 +15,7 @@
   <div id="ui">
 
     <p class="lead">Mapper
-      <span>v0.2</span>
+      <span>v0.3</span>
     </p>
 
     <form class="start-form" data-bind="css: { disabled: generated() }">
@@ -77,12 +73,20 @@
         <p>
           <strong>Layers</strong>
         </p>
-        <span data-bind="foreach: layers">
-          <span class="radio" data-bind="click: onLayerSelect">
-            <input type="radio" data-bind="checked: selected, attr: { name: name, value: name, id: name }">
-            <label data-bind="text: name, for: name">None</label>
-            <div class="check"></div>
-          </span>
+        <div class="checkbox">
+            <input type="checkbox" id="onion-mode" data-bind="checked: onion" />
+            <label for="onion-mode"></label>
+            <span>Onion</span>
+          </div>
+        <span class="radio">
+          <input type="radio" id="f-layer-1" name="layer" value="0" data-bind="checked: selectedLayer">
+          <label for="f-layer-1">Layer 1</label>
+          <div class="check"></div>
+        </span>
+        <span class="radio">
+          <input type="radio" id="f-layer-2" name="layer" value="1" data-bind="checked: selectedLayer">
+          <label for="f-layer-2">Layer 2</label>
+          <div class="check"></div>
         </span>
 
       </form>
@@ -191,11 +195,15 @@
 
         <div id="previewers">
           <div id="preview">
-            <span data-bind="foreach: grid">
-              <div class="sq" data-bind="style: positionCSS, css: { occupied: occupied() }, click: clicked">
-                <span data-bind="text: decorType()"></span>
-                <span class="icon" data-bind="style: icon"></span>
-              </div>
+            <span data-bind="foreach: grids">
+              <span class="grid-outer" data-bind="css: { active: parseInt($index()) === parseInt($parent.selectedLayer()), onion: $parent.onion }">
+                <span class="grid-wrapper" data-bind="foreach: grid">
+                    <div class="sq" data-bind="style: positionCSS, css: { occupied: occupied() }, click: clicked">
+                      <span data-bind="text: decorType()"></span>
+                      <span class="icon" data-bind="style: icon"></span>
+                    </div>
+                </span>
+              </span>
             </span>
           </div>
         </div>

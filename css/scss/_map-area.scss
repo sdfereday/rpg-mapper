@@ -37,3 +37,15 @@
     background: none;
   }
 }
+
+.grid-outer {
+  position: relative;
+  z-index: 1;
+}
+
+.active {
+  z-index: 2;
+  &.onion {
+    opacity: 0.4;
+  }
+}

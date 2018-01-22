@@ -1,21 +1,5 @@
 define(['helpers', 'ko', 'TileModel', 'tileTypes', 'rotTypes'], function (helpers, ko, TileModel, tileTypes, rotTypes) {
 
-  class Layer {
-
-    constructor(name, index) {
-      this.name = name + index;
-      this.index = index;
-      this.selected = ko.observable(true);
-    }
-
-    onLayerSelect(data) {
-      this.selected(true);
-      console.log(this.selected());
-      console.log(data);
-    }
-
-  }
-
   var Mapper = function (w, h) {
 
     // In units (convert to observable 'if' you want resize).
@@ -25,13 +9,21 @@ define(['helpers', 'ko', 'TileModel', 'tileTypes', 'rotTypes'], function (helper
 
     // Selected tile types
     this.rotMode = ko.observable(rotTypes.maze.type);
-    this.tileGraphic = ko.observable(helpers.getDataTileName(tileTypes.FLOOR_TILE));
+    this.tileGraphic = ko.observable(helpers.getDataTileName(tileTypes.EMPTY));
 
     // Startup
-    this.grid = ko.observableArray(this.createGrid(w, h));
-    this.layers = ko.observableArray(this.createLayers(1));
+    this.grids = ko.observableArray([
+      {
+        grid: ko.observableArray(this.createGrid(w, h))
+      },
+      {
+        grid: ko.observableArray(this.createGrid(w, h))
+      }
+    ]);
 
-    // Exported
+    this.selectedLayer = ko.observable("0");
+
+    this.onion = ko.observable(false);
     this.invert = ko.observable(false);
     this.multiMode = ko.observable(true);
     this.asCS = ko.observable(true);
@@ -39,14 +31,8 @@ define(['helpers', 'ko', 'TileModel', 'tileTypes', 'rotTypes'], function (helper
 
   };
 
-  Mapper.prototype.createLayers = function(n) {
-    let layers = [];
-
-    for(let i = 0; i < n; i++) {
-      layers.push(new Layer('Layer-', i));
-    }
-    
-    return layers;
+  Mapper.prototype.getGridAt = function (i) {
+    return this.grids()[i].grid();
   };
 
   Mapper.prototype.createGrid = function (w, h) {
@@ -57,7 +43,7 @@ define(['helpers', 'ko', 'TileModel', 'tileTypes', 'rotTypes'], function (helper
     for (var c = 0; c < h; c++) {
       for (var r = 0; r < w; r++) {
         // Passing parent in here - may not be the ideal way to do it...
-        arr.push(new TileModel(r, c, false, tileTypes.FLOOR_TILE, this));
+        arr.push(new TileModel(r, c, false, tileTypes.EMPTY, this));
       }
     }
 
@@ -67,7 +53,7 @@ define(['helpers', 'ko', 'TileModel', 'tileTypes', 'rotTypes'], function (helper
 
   Mapper.prototype.findOnGridAt = function (x, y) {
 
-    return this.grid().find(function (item) {
+    return this.getGridAt(this.selectedLayer()).find(function (item) {
       return item.x() === x && item.y() === y;
     });
 
@@ -82,9 +68,8 @@ define(['helpers', 'ko', 'TileModel', 'tileTypes', 'rotTypes'], function (helper
     let blockType = this.invert() ? tileTypes.FLOOR_TILE : tileTypes.WALL_TILE;
 
     // Clear previous grid (may wish to leave decors alone)
-    this.grid().forEach(function (item) {
-      item.decorType(emptyType);
-      item.occupied(false);
+    this.getGridAt(this.selectedLayer()).forEach(function (item) {
+      item.setDecor(emptyType);
     });
 
     // Should have produced an array of stuff. Once done, we can now edit the grid automatically.
@@ -97,7 +82,7 @@ define(['helpers', 'ko', 'TileModel', 'tileTypes', 'rotTypes'], function (helper
       var tile = self.findOnGridAt(x, y);
 
       // 'v' should be equal to whatever your block enum is (could be more dynamic)...
-      if (tile && v === tileTypes.WALL_TILE) {
+      if (tile && v === tileTypes.FLOOR_TILE) {
         // Since I need inverted, I set any blocks to unset here.
         tile.setDecor(blockType);
       }
@@ -126,17 +111,11 @@ define(['helpers', 'ko', 'TileModel', 'tileTypes', 'rotTypes'], function (helper
 
   Mapper.prototype.exportData = function () {
 
-    var fLayer = this.grid().map(function (tile, i) {
+    const fLayer = this.getGridAt(this.selectedLayer()).map(function (tile, i) {
       return tile.decorType();
     });
 
-    // Debug
-    console.clear();
-    console.log("Exporting...");
-    console.log(fLayer);
-
     if (this.multiMode()) {
-      console.log("Running in multi-mode.");
       this.extract();
       return;
     }
@@ -177,30 +156,34 @@ define(['helpers', 'ko', 'TileModel', 'tileTypes', 'rotTypes'], function (helper
 
   Mapper.prototype.extract = function () {
 
-    let inflated = [];
+    let output = '';
+    document.getElementById('output').innerHTML = '';
 
-    for (var i = 0; i < this.width; i++) {
-      let filteredCells = this.extractAsTypes(this.getCellsByRow(this.grid(), i));
-      inflated.push(filteredCells);
+    for(let j = 0; j < this.grids().length; j++) {
+
+      let inflated = [];
+
+      for (var i = 0; i < this.width; i++) {
+        let filteredCells = this.extractAsTypes(this.getCellsByRow( this.getGridAt(j), i));
+        inflated.push(filteredCells);
+      }
+  
+      // Rotate - TODO: make more functional by returning new array.
+      this.transpose(inflated);
+  
+      let converted = this.asCS() ? this.convert(inflated, j) : inflated;
+  
+      // temp
+      output += '<pre>' + converted + '</pre>';
+
     }
 
-    // Rotate - TODO: make more functional by returning new array.
-    this.transpose(inflated);
-
-    const converted = this.asCS() ? this.convert(inflated) : inflated;
-
-    // temp
-    document.getElementById('output').innerHTML = '<pre>' + converted + '</pre>';
-
-    //this.exportedData(JSON.stringify({
-    //foundationLayer: converted//,
-    //entityLayer: eLayer
-    //}));
-
+    document.getElementById('output').innerHTML = output;
+    
   };
 
   // Converts to a c# matrix array
-  Mapper.prototype.convert = function (arr, dimensions) {
+  Mapper.prototype.convert = function (arr, index) {
 
     let built = '';
 
@@ -210,7 +193,7 @@ define(['helpers', 'ko', 'TileModel', 'tileTypes', 'rotTypes'], function (helper
 
     });
 
-    return 'int[,] yourArray = {' + built + '};';
+    return 'int[,] array' + index + ' = {\n' + built + '};';
 
   };
 
