@@ -82,22 +82,44 @@ define(['helpers', 'ko', 'TileModel', 'tileTypes', 'rotTypes'], function (helper
 
   };
 
+  Mapper.prototype.rotate = function(arr, n) {
+    var L = arr.length;
+    return arr.slice(L - n).concat(arr.slice(0, L - n));
+  };
+
+  Mapper.prototype.transpose = function(matrix) {
+    // reverse the rows
+    matrix = matrix.reverse();
+
+    // swap the symmetric elements
+    for (var i = 0; i < matrix.length; i++) {
+      for (var j = 0; j < i; j++) {
+        var temp = matrix[i][j];
+        matrix[i][j] = matrix[j][i];
+        matrix[j][i] = temp;
+      }
+    }
+
+    return matrix;
+  };
+
   Mapper.prototype.exportData = function () {
 
-    var fLayer = this.grid().map(function (tile) {
+    var fLayer = this.grid().map(function (tile, i) {
       return tile.decorType();
     }),
-      eLayer = this.propGrid().map(function (tile) {
-        return tile.decorType();
-      });
+    eLayer = this.propGrid().map(function (tile, i) {
+      return tile.decorType();
+    });
 
     // Debug
     console.clear();
+    console.log("Exporting...");
     console.log(fLayer);
     console.log(eLayer);
 
     if (this.multiMode()) {
-      // ...
+      console.log("Running in multi-mode.");
       this.extract();
       return;
     }
@@ -165,6 +187,9 @@ define(['helpers', 'ko', 'TileModel', 'tileTypes', 'rotTypes'], function (helper
       let filteredCells = this.extractAsTypes(this.getCellsByRow(this.grid(), i));
       inflated.push(filteredCells);
     }
+
+    // Rotate - TODO: make more functional by returning new array.
+    this.transpose(inflated);
 
     let converted = this.asCS() ? this.convert(inflated) : inflated;
 
