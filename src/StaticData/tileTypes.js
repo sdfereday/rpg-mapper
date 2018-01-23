@@ -11,6 +11,7 @@ define(function() {
     TREASURE_SPAWN: 8,
     TRAP_SPAWN: 9,
     ENTRANCE: 10,
-    EXIT: 11
+    EXIT: 11,
+    AI_WAYPOINT: 12
   };
 });

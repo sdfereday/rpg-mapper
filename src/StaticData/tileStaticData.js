@@ -60,6 +60,11 @@ define(['tileTypes'], function(tileTypes){
     name: "exit",
     eType: tileTypes.EXIT, // Corresponds to enums below.
     asset: "exit.png"
+  },
+  {
+    name: "aiWaypoint",
+    eType: tileTypes.AI_WAYPOINT, // Corresponds to enums below.
+    asset: "aiWaypoint.png"
   }
 ];
 
