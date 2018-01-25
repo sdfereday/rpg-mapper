@@ -65,6 +65,11 @@ define(['tileTypes'], function(tileTypes){
     name: "aiWaypoint",
     eType: tileTypes.AI_WAYPOINT, // Corresponds to enums below.
     asset: "aiWaypoint.png"
+  },
+  {
+    name: "smashableDecor",
+    eType: tileTypes.SMASHABLE_DECOR, // Corresponds to enums below.
+    asset: "smashableDecor.png"
   }
 ];
 

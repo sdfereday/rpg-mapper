@@ -12,6 +12,7 @@ define(function() {
     TRAP_SPAWN: 9,
     ENTRANCE: 10,
     EXIT: 11,
-    AI_WAYPOINT: 12
+    AI_WAYPOINT: 12,
+    SMASHABLE_DECOR: 13
   };
 });
