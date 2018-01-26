@@ -169,26 +169,30 @@ define(['helpers', 'ko', 'TileModel', 'tileTypes', 'rotTypes'], function (helper
     let output = '';
     document.getElementById('output').innerHTML = '';
 
+    // Whether or not to flip the values for unity's upside-down grid.
+    const unityFlip = true;
+
+    // flipped values for unity.
     const result = {
       "Items": [
         {
           "id": guid(),
           "themeSlot": 0,
           "dimensions": {
-            "width": 9,
-            "height": 9
+            "width": this.width,
+            "height": this.height
           },
           "floorLayer": this.getGridAt(0).map(({ x, y, decorType }) => {
             return {
               x: x(),
-              y: y(),
+              y: unityFlip ? this.height - y() : y(),
               tileType: decorType()
             };
           }),
           "entityLayer": this.getGridAt(1).map(({ x, y, decorType }) => {
             return {
               x: x(),
-              y: y(),
+              y: unityFlip ? this.height - y() : y(),
               tileType: decorType()
             };
           })
