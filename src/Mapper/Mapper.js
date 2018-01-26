@@ -170,28 +170,30 @@ define(['helpers', 'ko', 'TileModel', 'tileTypes', 'rotTypes'], function (helper
     document.getElementById('output').innerHTML = '';
 
     const result = {
-      "Items": {
-        "id": guid(),
-        "themeSlot": 0,
-        "dimensions": {
-          "width": 9,
-          "height": 9
-        },
-        "floorLayer": this.getGridAt(0).map(({ x, y, decorType }) => {
-          return {
-            x: x(),
-            y: y(),
-            tileType: decorType()
-          };
-        }),
-        "entityLayer": this.getGridAt(1).map(({ x, y, decorType }) => {
-          return {
-            x: x(),
-            y: y(),
-            tileType: decorType()
-          };
-        }),
-      }
+      "Items": [
+        {
+          "id": guid(),
+          "themeSlot": 0,
+          "dimensions": {
+            "width": 9,
+            "height": 9
+          },
+          "floorLayer": this.getGridAt(0).map(({ x, y, decorType }) => {
+            return {
+              x: x(),
+              y: y(),
+              tileType: decorType()
+            };
+          }),
+          "entityLayer": this.getGridAt(1).map(({ x, y, decorType }) => {
+            return {
+              x: x(),
+              y: y(),
+              tileType: decorType()
+            };
+          })
+        }
+      ]
     };
 
     document.getElementById('output').innerHTML = '<pre>' + JSON.stringify(result, null, 4) + '</pre>';
