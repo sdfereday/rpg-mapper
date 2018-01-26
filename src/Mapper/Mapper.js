@@ -1,5 +1,15 @@
 define(['helpers', 'ko', 'TileModel', 'tileTypes', 'rotTypes'], function (helpers, ko, TileModel, tileTypes, rotTypes) {
 
+  const guid = () => {
+    function s4() {
+      return Math.floor((1 + Math.random()) * 0x10000)
+        .toString(16)
+        .substring(1);
+    }
+    return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
+      s4() + '-' + s4() + s4() + s4();
+  };
+
   var Mapper = function (w, h) {
 
     // In units (convert to observable 'if' you want resize).
@@ -91,7 +101,7 @@ define(['helpers', 'ko', 'TileModel', 'tileTypes', 'rotTypes'], function (helper
 
   };
 
-  Mapper.prototype.transpose = function(matrix) {
+  Mapper.prototype.transpose = function (matrix) {
 
     // TODO: Make functional, no side-effects.
     // reverse the rows
@@ -159,60 +169,49 @@ define(['helpers', 'ko', 'TileModel', 'tileTypes', 'rotTypes'], function (helper
     let output = '';
     document.getElementById('output').innerHTML = '';
 
-    for(let j = 0; j < this.grids().length; j++) {
-
-      let inflated = [];
-
-      for (var i = 0; i < this.width; i++) {
-        let filteredCells = this.extractAsTypes(this.getCellsByRow( this.getGridAt(j), i));
-        inflated.push(filteredCells);
+    const result = {
+      "Items": {
+        "id": guid(),
+        "themeSlot": 0,
+        "dimensions": {
+          "width": 9,
+          "height": 9
+        },
+        "floorLayer": this.getGridAt(0).map(({ x, y, decorType }) => {
+          return {
+            x: x(),
+            y: y(),
+            tileType: decorType()
+          };
+        }),
+        "entityLayer": this.getGridAt(1).map(({ x, y, decorType }) => {
+          return {
+            x: x(),
+            y: y(),
+            tileType: decorType()
+          };
+        }),
       }
+    };
 
-      // Rotate - TODO: make more functional by returning new array.
-      this.transpose(inflated);
-
-      const converted = this.asCS() ?
-        this.convertAsCS(inflated, j) :
-        this.convertAsJSON(inflated, j, j === 0, j >= this.grids().length - 1);
-
-      // temp
-      output += '<pre>' + converted + '</pre>';
-
-    }
-
-    document.getElementById('output').innerHTML = output;
+    document.getElementById('output').innerHTML = '<pre>' + JSON.stringify(result, null, 4) + '</pre>';
 
   };
 
   // Converts to a c# matrix array
-  Mapper.prototype.convertAsCS = function (arr, index) {
+  // Mapper.prototype.convertAsCS = function (arr, index) {
 
-    let built = '';
+  //   let built = '';
 
-    arr.forEach(function (row, i) {
+  //   arr.forEach(function (row, i) {
 
-      built += i !== arr.length - 1 ? '{' + row.toString() + '},\n' : '{' + row.toString() + '}';
+  //     built += i !== arr.length - 1 ? '{' + row.toString() + '},\n' : '{' + row.toString() + '}';
 
-    });
+  //   });
 
-    return 'int[,] array' + index + ' = {\n' + built + '};';
+  //   return 'int[,] array' + index + ' = {\n' + built + '};';
 
-  };
-
-  // Converts to standard JSON
-  Mapper.prototype.convertAsJSON = function (arr, index, atStart, atEnd) {
-
-    let built = '';
-
-    arr.forEach(function (row, i) {
-
-      built += i !== arr.length - 1 ? '[' + row.toString() + '],\n' : '[' + row.toString() + ']';
-
-    });
-
-    return (atStart ? '{"level-n": {' : '') + '\n"layer' + index + '": [\n' + built + ']' + (atEnd ? '\n}\n}' : ',\n');
-
-  };
+  // };
 
   return Mapper;
 
