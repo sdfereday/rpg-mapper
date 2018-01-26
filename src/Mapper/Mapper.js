@@ -50,10 +50,10 @@ define(['helpers', 'ko', 'TileModel', 'tileTypes', 'rotTypes'], function (helper
     var tm, arr = [];
 
     // Remember to consider flipping
-    for (var c = 0; c < h; c++) {
-      for (var r = 0; r < w; r++) {
+    for (var r = 0; r < h; r++) {
+      for (var c = 0; c < w; c++) {
         // Passing parent in here - may not be the ideal way to do it...
-        arr.push(new TileModel(r, c, false, tileTypes.EMPTY, this));
+        arr.push(new TileModel(c, r, false, tileTypes.EMPTY, this));
       }
     }
 
