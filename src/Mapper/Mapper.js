@@ -26,7 +26,7 @@ define(['helpers', 'ko', 'TileModel', 'tileTypes', 'rotTypes'], function (helper
     this.onion = ko.observable(false);
     this.invert = ko.observable(false);
     this.multiMode = ko.observable(true);
-    this.asCS = ko.observable(true);
+    this.asCS = ko.observable(false);
     this.exportedData = ko.observable("");
 
   };
@@ -167,23 +167,25 @@ define(['helpers', 'ko', 'TileModel', 'tileTypes', 'rotTypes'], function (helper
         let filteredCells = this.extractAsTypes(this.getCellsByRow( this.getGridAt(j), i));
         inflated.push(filteredCells);
       }
-  
+
       // Rotate - TODO: make more functional by returning new array.
       this.transpose(inflated);
-  
-      let converted = this.asCS() ? this.convert(inflated, j) : inflated;
-  
+
+      const converted = this.asCS() ?
+        this.convertAsCS(inflated, j) :
+        this.convertAsJSON(inflated, j, j === 0, j >= this.grids().length - 1);
+
       // temp
       output += '<pre>' + converted + '</pre>';
 
     }
 
     document.getElementById('output').innerHTML = output;
-    
+
   };
 
   // Converts to a c# matrix array
-  Mapper.prototype.convert = function (arr, index) {
+  Mapper.prototype.convertAsCS = function (arr, index) {
 
     let built = '';
 
@@ -194,6 +196,21 @@ define(['helpers', 'ko', 'TileModel', 'tileTypes', 'rotTypes'], function (helper
     });
 
     return 'int[,] array' + index + ' = {\n' + built + '};';
+
+  };
+
+  // Converts to standard JSON
+  Mapper.prototype.convertAsJSON = function (arr, index, atStart, atEnd) {
+
+    let built = '';
+
+    arr.forEach(function (row, i) {
+
+      built += i !== arr.length - 1 ? '[' + row.toString() + '],\n' : '[' + row.toString() + ']';
+
+    });
+
+    return (atStart ? '{"level-n": {' : '') + '\n"layer' + index + '": [\n' + built + ']' + (atEnd ? '\n}\n}' : ',\n');
 
   };
 
