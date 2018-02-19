@@ -15,7 +15,7 @@
   <div id="ui">
 
     <p class="lead">Mapper
-      <span>v0.3</span>
+      <span>v0.31</span>
     </p>
 
     <form class="start-form" data-bind="css: { disabled: generated() }">
@@ -33,9 +33,6 @@
           <input type="text" id="mapHeight" value="9" data-bind="value: height, enable: !generated()" />
         </span>
       </div>
-      <p>
-        <strong>Initialize Map</strong>
-      </p>
       <button data-bind="enable: !generated()" id="generate">Start</button>
     </form>
 
@@ -78,16 +75,21 @@
             <label for="onion-mode"></label>
             <span>Onion</span>
           </div>
-        <span class="radio">
-          <input type="radio" id="f-layer-1" name="layer" value="0" data-bind="checked: selectedLayer">
-          <label for="f-layer-1">Layer 1</label>
-          <div class="check"></div>
-        </span>
-        <span class="radio">
-          <input type="radio" id="f-layer-2" name="layer" value="1" data-bind="checked: selectedLayer">
-          <label for="f-layer-2">Layer 2</label>
-          <div class="check"></div>
-        </span>
+          <span class="radio">
+            <input type="radio" id="f-layer-1" name="layer" value="0" data-bind="checked: selectedLayer">
+            <label for="f-layer-1">Bottom Layer</label>
+            <div class="check"></div>
+          </span>
+          <span class="radio">
+            <input type="radio" id="f-layer-2" name="layer" value="1" data-bind="checked: selectedLayer">
+            <label for="f-layer-2">Middle Layer</label>
+            <div class="check"></div>
+          </span>
+          <span class="radio">
+            <input type="radio" id="f-layer-3" name="layer" value="2" data-bind="checked: selectedLayer">
+            <label for="f-layer-3">Top Layer</label>
+            <div class="check"></div>
+          </span>
 
       </form>
 
@@ -173,17 +175,12 @@
       </p>
       <button data-bind="click: exportData">Export</button>
       <p>
-        <strong>Placements</strong>
+        <strong>Options</strong>
       </p>
       <div class="checkbox">
         <input type="checkbox" id="swap-mode" data-bind="checked: multiMode, click: changeExportMode" />
         <label for="swap-mode"></label>
-        <span>Export as MultiDimensional</span>
-      </div>
-      <div class="checkbox" data-bind="css: { enabled: multiMode(), disabled: !multiMode() }">
-        <input type="checkbox" id="cs-mode" data-bind="checked: asCS, click: changeCS" />
-        <label for="cs-mode"></label>
-        <span>Export as C# Matrix Array</span>
+        <span>Export as multi-dimensional</span>
       </div>
       <div id="output" contenteditable="true" data-bind="text: exportedData">
         Exported data...

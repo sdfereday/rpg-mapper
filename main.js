@@ -1,20 +1,18 @@
 require(['ko', 'ROT', 'drag', 'Mapper'], function (ko, ROT, drag, Mapper) {
 
-    // Startup
-    function generate(w, h){
-      // Knockout start
+    const generate = (w, h) => {
       ko.applyBindings(new Mapper(w, h));
     }
 
-    var startButton = document.getElementById("generate"),
+    const startButton = document.getElementById("generate"),
     mWidth = document.getElementById("mapWidth"),
     mHeight = document.getElementById("mapHeight");
 
-    startButton.addEventListener("click", function(){
+    startButton.addEventListener("click", () => {
 
       generate(mWidth.value, mHeight.value);
 
-      var mapHandle = document.getElementById("map-handle");
+      const mapHandle = document.getElementById("map-handle");
       mapHandle.style.width = Math.round(mWidth.value * 32) + "px";
       mapHandle.style.height = Math.round(mHeight.value * 32) + "px";
 

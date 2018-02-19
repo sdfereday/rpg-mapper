@@ -1,7 +1,8 @@
-define(['ko', 'tileStaticData', 'tileTypes', 'helpers'], function(ko, tileStaticData, tileTypes, helpers){
+define(['ko', 'tileStaticData', 'tileTypes', 'helpers'], function (ko, tileStaticData, tileTypes, helpers) {
 
-    // Components / models for mapper to use
-    var TileModel = function(x, y, occupied, d, parent) {
+  class TileModel {
+
+    constructor(x, y, occupied, d, parent) {
       this.w = 32;
       this.h = 32;
       this.x = ko.observable(x);
@@ -17,43 +18,40 @@ define(['ko', 'tileStaticData', 'tileTypes', 'helpers'], function(ko, tileStatic
       const { asset } = tileStaticData.find(t => t.eType === d);
       this.asset = ko.observable(asset);
 
-      // No idea how this works.
       // http://stackoverflow.com/questions/18560815/can-you-add-knockoutjs-style-binding-specifying-propertyvalue-together
-      this.positionCSS = ko.computed(function() {
+      this.positionCSS = ko.computed(function () {
         return {
           'left': this.x() * this.w + 'px',
           'top': this.y() * this.h + 'px'
         };
       }, this);
 
-      this.icon = ko.computed(function() {
+      this.icon = ko.computed(function () {
         return {
           'background-image': 'url(' + assetsRoot + this.asset() + ')'
         }
       }, this);
+    }
 
-    };
-
-    TileModel.prototype.clicked = function(data, event) {
-
+    clicked(data, event) {
       // This should be pre-determined by what you select from the menu. If you're not in placement mode, it should revert to using the default block graphic (or set of)
       const { eType, asset } = tileStaticData.find(t => t.name === data.parent.tileGraphic());
       this.decorType(eType);
       this.asset(asset);
-
       /// Can we make sure that only certain tiles can be placed in thin air / not in thin air? This is just to make it nicer.
       // Not entirely sure if this is allowed or if it buggers the memory...
       this.occupied(eType !== tileTypes.EMPTY);
-
     };
 
-    TileModel.prototype.setDecor = function(eType) {
+    setDecor(eType) {
       const { asset } = tileStaticData.find(t => t.eType === eType);
       this.asset(asset);
       this.decorType(eType);
       this.occupied(eType !== tileTypes.EMPTY);
     };
 
-    return TileModel;
+  }
+
+  return TileModel;
 
 });
