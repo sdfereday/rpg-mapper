@@ -3,6 +3,7 @@ define(['ko', 'tileStaticData', 'tileTypes', 'helpers'], function (ko, tileStati
   class TileModel {
 
     constructor(x, y, occupied, d, parent) {
+      this.id = helpers.guid();
       this.w = 32;
       this.h = 32;
       this.x = ko.observable(x);

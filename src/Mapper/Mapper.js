@@ -33,39 +33,32 @@ define(['helpers', 'ko', 'TileModel', 'tileTypes', 'rotTypes'], function (helper
       this.exportedData = ko.observable("");
     }
 
-
     getGridAt(i) {
       return this.grids()[i].grid();
     }
 
     createGrid(w, h) {
-
-      var tm, arr = [];
-
+      let tm, arr = [];
       // Remember to consider flipping
-      for (var r = 0; r < h; r++) {
-        for (var c = 0; c < w; c++) {
+      for (let r = 0; r < h; r++) {
+        for (let c = 0; c < w; c++) {
           // Passing parent in here - may not be the ideal way to do it...
           arr.push(new TileModel(c, r, false, tileTypes.EMPTY, this));
         }
       }
-
       return arr;
-
     }
 
     findOnGridAt(x, y) {
-
       return this.getGridAt(this.selectedLayer()).find(function (item) {
         return item.x() === x && item.y() === y;
       });
-
     }
 
     generateUsingROT() {
 
       // Note: Only works for foundation layer at this stage (probably always be that way too)
-      var self = this, tile;
+      const self = this;
 
       let emptyType = this.invert() ? tileTypes.WALL_TILE : tileTypes.FLOOR_TILE;
       let blockType = this.invert() ? tileTypes.FLOOR_TILE : tileTypes.WALL_TILE;
@@ -82,7 +75,7 @@ define(['helpers', 'ko', 'TileModel', 'tileTypes', 'rotTypes'], function (helper
       helpers.useROT(this.width, this.height, function (x, y, v) {
 
         // WIP: Knockout might just have its own way of doing this.
-        var tile = self.findOnGridAt(x, y);
+        const tile = self.findOnGridAt(x, y);
 
         // 'v' should be equal to whatever your block enum is (could be more dynamic)...
         if (tile && v === tileTypes.FLOOR_TILE) {
@@ -96,7 +89,7 @@ define(['helpers', 'ko', 'TileModel', 'tileTypes', 'rotTypes'], function (helper
 
     exportData() {
 
-      const fLayer = this.getGridAt(this.selectedLayer()).map(function (tile, i) {
+      const fLayer = this.getGridAt(this.selectedLayer()).map((tile, i) => {
         return tile.decorType();
       });
 
@@ -123,13 +116,13 @@ define(['helpers', 'ko', 'TileModel', 'tileTypes', 'rotTypes'], function (helper
 
     // Inflate to two dimensional
     getCellsByRow(arr, n) {
-      return arr.filter(function (item) {
+      return arr.filter((item) => {
         return item.y() === n;
       });
     }
 
     extractAsTypes(arr) {
-      return arr.map(function (item) {
+      return arr.map((item) => {
         return item.decorType();
       });
     }
@@ -149,24 +142,27 @@ define(['helpers', 'ko', 'TileModel', 'tileTypes', 'rotTypes'], function (helper
               "width": this.width,
               "height": this.height
             },
-            "topLayer": this.getGridAt(2).map(({ x, y, decorType }) => {
+            "topLayer": this.getGridAt(2).map(({ id, x, y, decorType }) => {
               return decorType() > 0 ? {
+                id,
                 x: x(),
                 y: this.unityFlip() ? this.height - y() : y(),
                 tileType: decorType(),
                 tileName: helpers.getDataTileName(decorType())
               } : null
             }).filter(x => x),
-            "middleLayer": this.getGridAt(1).map(({ x, y, decorType }) => {
+            "middleLayer": this.getGridAt(1).map(({ id, x, y, decorType }) => {
               return decorType() > 0 ? {
+                id,
                 x: x(),
                 y: this.unityFlip() ? this.height - y() : y(),
                 tileType: decorType(),
                 tileName: helpers.getDataTileName(decorType())
               } : null
             }).filter(x => x),
-            "bottomLayer": this.getGridAt(0).map(({ x, y, decorType }) => {
+            "bottomLayer": this.getGridAt(0).map(({ id, x, y, decorType }) => {
               return {
+                id,
                 x: x(),
                 y: this.unityFlip() ? this.height - y() : y(),
                 tileType: decorType(),
