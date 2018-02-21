@@ -1,5 +1,10 @@
 define(['helpers', 'ko', 'TileModel', 'tileTypes', 'rotTypes'], function (helpers, ko, TileModel, tileTypes, rotTypes) {
 
+  //...
+  const returnTilesByType = (tiles, type) => {
+    return tiles.filter(tile => tile.decorType() === type);
+  };
+
   class Mapper {
     constructor(w, h) {
       // In units (convert to observable 'if' you want resize).
@@ -23,6 +28,11 @@ define(['helpers', 'ko', 'TileModel', 'tileTypes', 'rotTypes'], function (helper
           grid: ko.observableArray(this.createGrid(w, h))
         }
       ]);
+
+      this.selectableTiles = ko.computed(() => {
+        const tiles = returnTilesByType(this.getGridAt(2), tileTypes.PUZZLE_SPAWN);
+        return tiles.map(tile => tile.x() + '-' + tile.y());
+      }, this);
 
       this.selectedLayer = ko.observable("0");
 

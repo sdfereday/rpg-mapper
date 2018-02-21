@@ -191,29 +191,41 @@
 
   <div id="map">
 
-    <div class="dragdealer" id="map-inner">
+    <div id="map-inner">
 
-      <p class="console">
+      <div class="console">
         <strong>Map console: ...</strong>
         <span>x</span>
-      </p>
 
-      <div class="handle" id="map-handle">
+        <div class="linker">
+          <h4>Tile Properties:</h4>
+          <p>Door</p>
+          <h4>Required To Open:</h4>
+          <select data-bind="options: selectableTiles"></select>
+        </div>
 
-        <div id="previewers">
-          <div id="preview">
-            <span data-bind="foreach: grids">
-              <span class="grid-outer" data-bind="css: { active: parseInt($index()) === parseInt($parent.selectedLayer()), onion: $parent.onion }">
-                <span class="grid-wrapper" data-bind="foreach: grid">
-                    <div class="sq" data-bind="style: positionCSS, css: { occupied: occupied() }, click: clicked">
-                      <span data-bind="text: decorType()"></span>
-                      <span class="icon" data-bind="style: icon"></span>
-                    </div>
+      </div>
+
+      <div class="dragdealer">
+
+        <div class="handle" id="map-handle-off">
+
+          <div id="previewers">
+            <div id="preview">
+              <span data-bind="foreach: grids">
+                <span class="grid-outer" data-bind="css: { active: parseInt($index()) === parseInt($parent.selectedLayer()), onion: $parent.onion }">
+                  <span class="grid-wrapper" data-bind="foreach: grid">
+                      <div class="sq" data-bind="style: positionCSS, css: { occupied: occupied() }, click: clicked">
+                        <span data-bind="text: decorType()"></span>
+                        <span class="icon" data-bind="style: icon"></span>
+                      </div>
+                  </span>
                 </span>
               </span>
-            </span>
+            </div>
           </div>
-        </div>
+
+      </div>
 
       </div>
 

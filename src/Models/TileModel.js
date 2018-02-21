@@ -1,7 +1,6 @@
 define(['ko', 'tileStaticData', 'tileTypes', 'helpers'], function (ko, tileStaticData, tileTypes, helpers) {
 
   class TileModel {
-
     constructor(x, y, occupied, d, parent) {
       this.id = helpers.guid();
       this.w = 32;
@@ -10,9 +9,12 @@ define(['ko', 'tileStaticData', 'tileTypes', 'helpers'], function (ko, tileStati
       this.y = ko.observable(y);
       this.occupied = ko.observable(occupied);
       this.decorType = ko.observable(d);
-      this.guid = ko.observable(helpers.guid());
       this.parent = parent;
       this.layer = null;
+
+      // Data experimentation
+      // Should only exist on certain types
+      this.requires = ko.observable([]);
 
       // Set initial icon (if any)
       const assetsRoot = 'icons/';
@@ -50,7 +52,6 @@ define(['ko', 'tileStaticData', 'tileTypes', 'helpers'], function (ko, tileStati
       this.decorType(eType);
       this.occupied(eType !== tileTypes.EMPTY);
     };
-
   }
 
   return TileModel;
