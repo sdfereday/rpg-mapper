@@ -2,20 +2,10 @@
 
 RPG Mapper is basically a tool that generates a map array with multiple layers. This is designed to take some of the complexity away from creating an array mapping of your level. It also has an ROT feature so you can use that to generate your level foundations.
 
-**It makes a few assumptions such as:**
+**Where has this project reached?**
 
-* It doesn't argue where you put the tiles over the top of the foundations. So you could stick an enemy in thin air if you wanted to. I could disable this, but I'll leave it up to the users discretion.
-* It also assumes that the formatting of the array is what you'll be using. If something more is required then either a different tool should be used, or a different method of parsing it.
+RPG Mapper started out as a simple tooling for myself to use on a game project. After recently updating it I realised that the thing is way out of date and is in dire need of a library swap. KO.js is just too old and too unmaintained to continue.
 
-**Things still to add or fix (wip list):**
+The plan is to convert this over to react since that's what I deal in mostly now. A lot of it was already remade in a prototype running React but could do with a better polish up and thus will be restarted with cleaner code written.
 
-* Code and SCSS cleanup.
-* Optimisations of code upon generation (currently slows down about about 60x60 size, presumably dom-related).
-* Ability to assign graphics to each tile type, or at least some sort of icon.
-* On map config change, ability to apply new options (such as resize).
-
-**Nice to haves or features to add:**
-
-* An orthographic representation of the mapping for visual sugar.
-* Exporting to electron so it can be run as a desktop app.
-* Save out option to a JSON file as well as just the exporter.
+This means I am concluding this readme update as the last commit for this version. Future versions will see moving over to React.
