@@ -6,8 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Mapper</title>
   <link href='css/core.css' rel='stylesheet' type='text/css'>
-  <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic' rel='stylesheet' type='text/css'>
-  <link href='http://fonts.googleapis.com/css?family=Raleway:400,300,700' rel='stylesheet' type='text/css'>
+  <!--<link href='http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Raleway:400,300,700' rel='stylesheet' type='text/css'>-->
 </head>
 
 <body>
@@ -98,76 +98,15 @@
         <p>
           <strong>Tile Types</strong>
         </p>
-        <span class="radio">
-          <input type="radio" id="f-empty" name="entity" value="empty" data-bind="checked: tileGraphic">
-          <label for="f-empty">Empty</label>
-          <div class="check"></div>
-        </span>
-        <span class="radio">
-          <input type="radio" id="f-floor" name="entity" value="floor" data-bind="checked: tileGraphic">
-          <label for="f-floor">Floor</label>
-          <div class="check"></div>
-        </span>
-        <span class="radio">
-          <input type="radio" id="f-wall" name="entity" value="wall" data-bind="checked: tileGraphic">
-          <label for="f-wall">Wall</label>
-          <div class="check"></div>
-        </span>
-        <span class="radio">
-          <input type="radio" id="f-pillar" name="entity" value="pillar" data-bind="checked: tileGraphic">
-          <label for="f-pillar">Pillar</label>
-          <div class="check"></div>
-        </span>
-        <span class="radio">
-          <input type="radio" id="f-wallDecor" name="entity" value="wallDecor" data-bind="checked: tileGraphic">
-          <label for="f-wallDecor">Wall Decor</label>
-          <div class="check"></div>
-        </span>
-        <span class="radio">
-          <input type="radio" id="f-key" name="entity" value="key" data-bind="checked: tileGraphic">
-          <label for="f-key">Key</label>
-          <div class="check"></div>
-        </span>
-        <span class="radio">
-          <input type="radio" id="f-puzzle" name="entity" value="puzzle" data-bind="checked: tileGraphic">
-          <label for="f-puzzle">Puzzle</label>
-          <div class="check"></div>
-        </span>
-        <span class="radio">
-          <input type="radio" id="f-enemy" name="entity" value="enemy" data-bind="checked: tileGraphic">
-          <label for="f-enemy">Enemy</label>
-          <div class="check"></div>
-        </span>
-        <span class="radio">
-          <input type="radio" id="f-treasure" name="entity" value="treasure" data-bind="checked: tileGraphic">
-          <label for="f-treasure">Treasure</label>
-          <div class="check"></div>
-        </span>
-        <span class="radio">
-          <input type="radio" id="f-trap" name="entity" value="trap" data-bind="checked: tileGraphic">
-          <label for="f-trap">Trap</label>
-          <div class="check"></div>
-        </span>
-        <span class="radio">
-          <input type="radio" id="f-entrance" name="entity" value="entrance" data-bind="checked: tileGraphic">
-          <label for="f-entrance">Entrance</label>
-          <div class="check"></div>
-        </span>
-        <span class="radio">
-          <input type="radio" id="f-exit" name="entity" value="exit" data-bind="checked: tileGraphic">
-          <label for="f-exit">Exit</label>
-          <div class="check"></div>
-        </span>
-        <span class="radio">
-          <input type="radio" id="f-aiWaypoint" name="entity" value="aiWaypoint" data-bind="checked: tileGraphic">
-          <label for="f-aiWaypoint">AI Waypoint</label>
-          <div class="check"></div>
-        </span>
-        <span class="radio">
-          <input type="radio" id="f-smashableDecor" name="entity" value="smashableDecor" data-bind="checked: tileGraphic">
-          <label for="f-smashableDecor">Smashable Decor</label>
-          <div class="check"></div>
-        </span>
+
+        <div data-bind="foreach: allowableTiles">
+            <span class="radio">
+                <input type="radio" data-bind="attr: { id: id, name: name, value: id }, checked: $root.tileGraphic">
+                <label data-bind="attr: { for: id }, text: name">Empty</label>
+                <div class="check"></div>
+              </span>
+        </div>
+
       </form>
 
       <form id="tileLinks">
@@ -177,11 +116,24 @@
         </p>
 
         <span data-bind="foreach: mapExits">
-          <span data-bind="text: decorType()"></span>
-          <span data-bind="foreach: puzzleTiles">
-            <label data-bind="text: id()"></label>
-            <input type="checkbox" />
-          </span>
+          <div class="exit-tile">
+            <span data-bind="text: name"></span>
+            <p>
+              <strong>Required to unlock:</strong>
+            </p>
+            <span data-bind="foreach: requires">
+              <span data-bind="text: $data"></span>
+            </span>
+            <p>
+              <strong>Available puzzle tiles:</strong>
+            </p>
+            <span data-bind="foreach: $root.puzzleTiles">
+              <div>
+                <input type="checkbox" data-bind="checked: $parent.requires, attr: { value: id }" />
+                <label data-bind="text: id"></label>
+              </div>
+            </span>
+          </div>
         </span>
 
       </form>

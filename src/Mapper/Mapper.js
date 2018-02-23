@@ -1,4 +1,4 @@
-define(['helpers', 'ko', 'TileModel', 'tileTypes', 'rotTypes'], function (helpers, ko, TileModel, tileTypes, rotTypes) {
+define(['helpers', 'ko', 'TileModel', 'tileTypes', 'rotTypes', 'tileStaticData'], function (helpers, ko, TileModel, tileTypes, rotTypes, tileStaticData) {
 
   //...
   const returnTilesByType = (tiles, type) => {
@@ -29,15 +29,22 @@ define(['helpers', 'ko', 'TileModel', 'tileTypes', 'rotTypes'], function (helper
         }
       ]);
 
-      this.selectableTiles = ko.computed(() => {
-        const tiles = returnTilesByType(this.getGridAt(2), tileTypes.PUZZLE_SPAWN);
-        return tiles.map(tile => tile.x() + '-' + tile.y());
+      this.selectedLayer = ko.observable("0");
+
+      this.puzzleTiles = ko.computed(() => {
+        return returnTilesByType(this.getGridAt(2), tileTypes.PUZZLE_SPAWN);
       }, this);
 
-      this.selectedLayer = ko.observable("0");
-      this.mapExits = ko.observable(this.getGridAt(2).filter(x => {
-        return ////
-      }));
+      this.mapExits = ko.computed(() => {
+        return returnTilesByType(this.getGridAt(2), tileTypes.EXIT);
+      }, this);
+
+      this.allowableTiles = ko.computed(() => {
+        return tileStaticData.filter(tileData =>
+          tileData.allowedLayer === null ||
+          tileData.allowedLayer === parseInt(this.selectedLayer())
+        );
+      }, this);
 
       this.onion = ko.observable(true);
       this.invert = ko.observable(false);
@@ -155,13 +162,24 @@ define(['helpers', 'ko', 'TileModel', 'tileTypes', 'rotTypes'], function (helper
               "width": this.width,
               "height": this.height
             },
-            "topLayer": this.getGridAt(2).map(({ id, x, y, decorType }) => {
+            "topLayer": this.getGridAt(2).map(({ id, x, y, decorType, requires }) => {
+
+              // Needs some work.
+              let additionalProps = {
+                // ...
+              }
+
+              if(requires().length > 0) {
+                additionalProps.requires = requires();
+              }
+
               return decorType() > 0 ? {
                 id,
                 x: x(),
                 y: this.unityFlip() ? this.height - y() : y(),
                 tileType: decorType(),
-                tileName: helpers.getDataTileName(decorType())
+                tileName: helpers.getDataTileName(decorType()),
+                ...additionalProps
               } : null
             }).filter(x => x),
             "middleLayer": this.getGridAt(1).map(({ id, x, y, decorType }) => {

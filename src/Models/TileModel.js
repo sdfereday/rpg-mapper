@@ -3,6 +3,7 @@ define(['ko', 'tileStaticData', 'tileTypes', 'helpers'], function (ko, tileStati
   class TileModel {
     constructor(x, y, occupied, d, parent) {
       this.id = helpers.guid();
+      this.name = ko.observable('');
       this.w = 32;
       this.h = 32;
       this.x = ko.observable(x);
@@ -14,7 +15,7 @@ define(['ko', 'tileStaticData', 'tileTypes', 'helpers'], function (ko, tileStati
 
       // Data experimentation
       // Should only exist on certain types
-      this.requires = ko.observable([]);
+      this.requires = ko.observableArray([]);
 
       // Set initial icon (if any)
       const assetsRoot = 'icons/';
@@ -38,8 +39,9 @@ define(['ko', 'tileStaticData', 'tileTypes', 'helpers'], function (ko, tileStati
 
     clicked(data, event) {
       // This should be pre-determined by what you select from the menu. If you're not in placement mode, it should revert to using the default block graphic (or set of)
-      const { eType, asset } = tileStaticData.find(t => t.name === data.parent.tileGraphic());
+      const { eType, asset, name } = tileStaticData.find(t => t.id === data.parent.tileGraphic());
       this.decorType(eType);
+      this.name(name);
       this.asset(asset);
       /// Can we make sure that only certain tiles can be placed in thin air / not in thin air? This is just to make it nicer.
       // Not entirely sure if this is allowed or if it buggers the memory...
@@ -47,11 +49,16 @@ define(['ko', 'tileStaticData', 'tileTypes', 'helpers'], function (ko, tileStati
     };
 
     setDecor(eType) {
-      const { asset } = tileStaticData.find(t => t.eType === eType);
+      const { asset, name } = tileStaticData.find(t => t.eType === eType);
+      this.name(name);
       this.asset(asset);
       this.decorType(eType);
       this.occupied(eType !== tileTypes.EMPTY);
     };
+
+    setRequired(v) {
+      console.log("boop", v);
+    }
   }
 
   return TileModel;

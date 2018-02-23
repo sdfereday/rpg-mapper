@@ -34,7 +34,7 @@ define(['ROT', 'tileStaticData', 'rotTypes'], function (ROT, tileStaticData, rot
       const found = tileStaticData.find(function (data) {
         return data.eType === eType;
       });
-      return found ? found.name : null;
+      return found ? found.id : null;
     }
   };
 

@@ -2,74 +2,102 @@ define(['tileTypes'], function(tileTypes){
 
   // Tile type data (contains all graphical info, etc) - Expects each eType to always differ!
   return [{
-    name: "empty",
+    id: "empty",
+    name: "Empty",
     eType: tileTypes.EMPTY, // Corresponds to enums below.
-    asset: "empty.png"
+    asset: "empty.png",
+    allowedLayer: null
   },
   {
-    name: "floor",
+    id: "floor",
+    name: "Floor",
     eType: tileTypes.FLOOR_TILE, // Corresponds to enums below.
-    asset: "floor.png"
+    asset: "floor.png",
+    allowedLayer: 0
   },
   {
-    name: "wall",
+    id: "wall",
+    name: "Wall",
     eType: tileTypes.WALL_TILE, // Corresponds to enums below.
-    asset: "wall.png"
+    asset: "wall.png",
+    allowedLayer: 1
   },
   {
-    name: "pillar",
+    id: "pillar",
+    name: "Pillar",
     eType: tileTypes.PILLAR_DECOR, // Corresponds to enums below.
-    asset: "pillar.png"
+    asset: "pillar.png",
+    allowedLayer: 2
   },
   {
-    name: "wallDecor",
+    id: "wallDecor",
+    name: "Wall Decor",
     eType: tileTypes.WALL_DECOR, // Corresponds to enums below.
-    asset: "wallDecor.png"
+    asset: "wallDecor.png",
+    allowedLayer: 2
   },
   {
-    name: "key",
+    id: "key",
+    name: "Key",
     eType: tileTypes.KEY_SPAWN, // Corresponds to enums below.
-    asset: "key.png"
+    asset: "key.png",
+    allowedLayer: 2
   },
   {
-    name: "puzzle",
+    id: "puzzle",
+    name: "Puzzle",
     eType: tileTypes.PUZZLE_SPAWN, // Corresponds to enums below.
-    asset: "puzzle.png"
+    asset: "puzzle.png",
+    allowedLayer: 2
   },
   {
-    name: "enemy",
+    id: "enemy",
+    name: "Enemy",
     eType: tileTypes.ENEMY_SPAWN, // Corresponds to enums below.
-    asset: "enemy.png"
+    asset: "enemy.png",
+    allowedLayer: 2
   },
   {
-    name: "treasure",
+    id: "treasure",
+    name: "Treasure",
     eType: tileTypes.TREASURE_SPAWN, // Corresponds to enums below.
-    asset: "treasure.png"
+    asset: "treasure.png",
+    allowedLayer: 2
   },
   {
-    name: "trap",
+    id: "trap",
+    name: "Trap",
     eType: tileTypes.TRAP_SPAWN, // Corresponds to enums below.
-    asset: "trap.png"
+    asset: "trap.png",
+    allowedLayer: 2
   },
   {
-    name: "entrance",
+    id: "entrance",
+    name: "Entrance",
     eType: tileTypes.ENTRANCE, // Corresponds to enums below.
-    asset: "entrance.png"
+    asset: "entrance.png",
+    allowedLayer: 2
   },
   {
-    name: "exit",
+    id: "exit",
+    name: "Exit",
     eType: tileTypes.EXIT, // Corresponds to enums below.
-    asset: "exit.png"
+    asset: "exit.png",
+    allowedLayer: 2
   },
   {
-    name: "aiWaypoint",
+    id: "aiWaypoint",
+    name: "AI Waypoint",
     eType: tileTypes.AI_WAYPOINT, // Corresponds to enums below.
-    asset: "aiWaypoint.png"
+    asset: "aiWaypoint.png",
+    allowedLayer: 2
   },
   {
-    name: "smashableDecor",
+    id: "smashableDecor",
+    name: "Smashable Decor",
     eType: tileTypes.SMASHABLE_DECOR, // Corresponds to enums below.
-    asset: "smashableDecor.png"
+    asset: "smashableDecor.png",
+    allowedLayer: 2
   }
 ];
 
