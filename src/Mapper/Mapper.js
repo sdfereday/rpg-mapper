@@ -35,6 +35,9 @@ define(['helpers', 'ko', 'TileModel', 'tileTypes', 'rotTypes'], function (helper
       }, this);
 
       this.selectedLayer = ko.observable("0");
+      this.mapExits = ko.observable(this.getGridAt(2).filter(x => {
+        return ////
+      }));
 
       this.onion = ko.observable(true);
       this.invert = ko.observable(false);

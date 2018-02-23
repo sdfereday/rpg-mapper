@@ -170,6 +170,22 @@
         </span>
       </form>
 
+      <form id="tileLinks">
+
+        <p>
+          <strong>Tile links</strong>
+        </p>
+
+        <span data-bind="foreach: mapExits">
+          <span data-bind="text: decorType()"></span>
+          <span data-bind="foreach: puzzleTiles">
+            <label data-bind="text: id()"></label>
+            <input type="checkbox" />
+          </span>
+        </span>
+
+      </form>
+
       <p>
         <strong>Export data</strong>
       </p>
@@ -193,22 +209,14 @@
 
     <div id="map-inner">
 
-      <div class="console">
+      <!-- <div class="console">
         <strong>Map console: ...</strong>
         <span>x</span>
-
-        <div class="linker">
-          <h4>Tile Properties:</h4>
-          <p>Door</p>
-          <h4>Required To Open:</h4>
-          <select data-bind="options: selectableTiles"></select>
-        </div>
-
-      </div>
+      </div> -->
 
       <div class="dragdealer">
 
-        <div class="handle" id="map-handle-off">
+        <div class="handle" id="map-handle">
 
           <div id="previewers">
             <div id="preview">
