@@ -1,11 +1,13 @@
-import React, {PropTypes} from 'react';
+import React from 'react';
 
 const Button = ({
     text,
+    isDisabled,
     onClick
 }) => {
+    const disabled = isDisabled ? 'disabled': '';
     return (
-        <button onClick={onClick}>{text}</button>
+        <button onClick={onClick} disabled={disabled}>{text}</button>
     )
 };
 

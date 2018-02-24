@@ -9,4 +9,9 @@ button {
   &:hover {
     background: #70B2EB;
   }
+  &:disabled {
+    background: #555;
+    color: #AAA;
+    cursor: not-allowed;
+  }
 }
