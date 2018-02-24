@@ -1,4 +1,7 @@
-export default TileTypeItemComponent = ({
+import React, {PropTypes} from 'react';
+import Radio from '../../../Common/Radio';
+
+const TileTypeItemComponent = ({
     id,
     name,
     isChecked,
@@ -14,3 +17,5 @@ export default TileTypeItemComponent = ({
         />
     )
 }
+
+export default TileTypeItemComponent;

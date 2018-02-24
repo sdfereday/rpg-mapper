@@ -1,4 +1,6 @@
-export default BoxComponent = ({
+import React, {PropTypes} from 'react';
+
+const BoxComponent = ({
     title,
     intro,
     children
@@ -15,3 +17,5 @@ export default BoxComponent = ({
         </div>
     )
 }
+
+export default BoxComponent;

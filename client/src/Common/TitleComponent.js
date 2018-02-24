@@ -1,4 +1,6 @@
-export default TitleComponent = ({
+import React, {PropTypes} from 'react';
+
+const TitleComponent = ({
     title,
     version
 }) => {
@@ -9,3 +11,5 @@ export default TitleComponent = ({
         </p>
     )
 }
+
+export default TitleComponent;

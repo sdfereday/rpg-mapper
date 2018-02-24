@@ -1,4 +1,6 @@
-export default Radio = ({
+import React, {PropTypes} from 'react';
+
+const Radio = ({
     id,
     name,
     value,
@@ -13,3 +15,5 @@ export default Radio = ({
         </div>
     )
 }
+
+export default Radio;

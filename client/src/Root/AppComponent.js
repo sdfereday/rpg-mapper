@@ -1,4 +1,13 @@
-export default AppComponent = ({
+import React from 'react';
+import BoxComponent from '../Common/BoxComponent';
+import TitleComponent from '../Common/TitleComponent';
+import SidebarComponent from '../Layout/Sidebar/Components/Sidebar';
+import DimensionsComponent from '../Layout/Sidebar/Components/Dimensions';
+import LayersComponent from '../Layout/Sidebar/Components/Layers';
+import TileTypesComponent from '../Layout/Sidebar/Components/TileTypes';
+import ExportComponent from '../Layout/Sidebar/Components/Export';
+
+const AppComponent = ({
     appTitle,
     version
 }) => {
@@ -23,3 +32,5 @@ export default AppComponent = ({
         </SidebarComponent>
     )
 }
+
+export default AppComponent;

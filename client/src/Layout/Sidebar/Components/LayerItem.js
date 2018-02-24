@@ -1,4 +1,7 @@
-export default LayerItemComponent = ({
+import React, {PropTypes} from 'react';
+import Checkbox from '../../../Common/Checkbox';
+
+const LayerItemComponent = ({
     name,
     index,
     selectedLayer,
@@ -13,3 +16,5 @@ export default LayerItemComponent = ({
         />
     )
 }
+
+export default LayerItemComponent;

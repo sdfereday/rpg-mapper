@@ -1,4 +1,6 @@
-export default ListComponent = ({
+import React, {PropTypes} from 'react';
+
+const ListComponent = ({
     collection,
     component,
     ...props
@@ -10,8 +12,8 @@ export default ListComponent = ({
             {collection && collection.length &&
                 collection.map((item, i) => {
                     return (
-                        <li>
-                            <Component {...item} key={i} />
+                        <li key={i}>
+                            <Component {...item} />
                         </li>
                     );
                 })
@@ -19,3 +21,5 @@ export default ListComponent = ({
         </ul>
     )
 }
+
+export default ListComponent;

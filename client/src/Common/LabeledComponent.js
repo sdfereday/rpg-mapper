@@ -1,4 +1,6 @@
-export default LabeledComponent = ({
+import React, {PropTypes} from 'react';
+
+const LabeledComponent = ({
     text,
     children,
 }) => {
@@ -9,3 +11,5 @@ export default LabeledComponent = ({
         </div>
     )
 };
+
+export default LabeledComponent;

@@ -1,4 +1,6 @@
-export default Button = ({
+import React, {PropTypes} from 'react';
+
+const Button = ({
     text,
     onClick
 }) => {
@@ -6,3 +8,5 @@ export default Button = ({
         <button onClick={onClick}>{text}</button>
     )
 };
+
+export default Button;

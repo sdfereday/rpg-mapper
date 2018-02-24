@@ -1,4 +1,6 @@
-export default Checkbox = ({
+import React, {PropTypes} from 'react';
+
+const Checkbox = ({
     id,
     label,
     checked,
@@ -12,3 +14,5 @@ export default Checkbox = ({
         </div>
     )
 }
+
+export default Checkbox;

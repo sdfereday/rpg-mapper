@@ -1,4 +1,6 @@
-export default SidebarComponent = ({
+import React, {PropTypes} from 'react';
+
+const SidebarComponent = ({
     id,
     children
 }) => {
@@ -8,3 +10,5 @@ export default SidebarComponent = ({
         </div>
     )
 }
+
+export default SidebarComponent;

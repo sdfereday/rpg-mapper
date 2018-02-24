@@ -1,4 +1,6 @@
-export default CellComponent = ({
+import React, {PropTypes} from 'react';
+
+const CellComponent = ({
     x,
     y,
     decorType,
@@ -20,3 +22,5 @@ export default CellComponent = ({
         <div className="sq" style={cellStyle} onClick={onCellClicked}>{decorType}</div>
     )
 }
+
+export default CellComponent;

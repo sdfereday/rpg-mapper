@@ -1,4 +1,7 @@
-export default TileTypesComponent = ({
+import React, {PropTypes} from 'react';
+import TileTypeItem from './TileTypeItem';
+
+const TileTypesComponent = ({
     tileTypes,
     currentTileType,
     onTileTypeSelected
@@ -8,7 +11,7 @@ export default TileTypesComponent = ({
             {tileTypes && tileTypes.length &&
                 tileTypes.map(({ type, name }, i) => {
                     return (
-                        <TileTypeItemComponent
+                        <TileTypeItem
                             key={i}
                             name={name}
                             checked={currentTileType === type}
@@ -20,3 +23,5 @@ export default TileTypesComponent = ({
         </div>
     )
 }
+
+export default TileTypesComponent;

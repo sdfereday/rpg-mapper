@@ -1,4 +1,6 @@
-export default GridComponent = ({
+import React, {PropTypes} from 'react';
+
+const GridComponent = ({
     cellData,
     selectedTileType,
     selectedLayer,
@@ -25,3 +27,5 @@ export default GridComponent = ({
         </div>
     )
 }
+
+export default GridComponent;

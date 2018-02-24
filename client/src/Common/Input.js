@@ -1,4 +1,6 @@
-export default Input = ({
+import React, {PropTypes} from 'react';
+
+const Input = ({
     id,
     value,
     onChange
@@ -7,3 +9,5 @@ export default Input = ({
         <input type="text" id={id} value={value} onChange={onChange} />
     )
 };
+
+export default Input;

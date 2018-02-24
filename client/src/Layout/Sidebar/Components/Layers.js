@@ -1,4 +1,8 @@
-export default LayersComponent = ({
+import React, {PropTypes} from 'react';
+import Checkbox from '../../../Common/Checkbox';
+import LayerItem from './LayerItem';
+
+const LayersComponent = ({
     layers,
     selectedLayer,
     onionMode,
@@ -9,16 +13,18 @@ export default LayersComponent = ({
         <Checkbox
             id="onion-mode"
             label="Onion"
+            key="onion-mode"
             checked={onionMode}
             onChange={onOnionSelected}
         />,
-        <div className="layersList">
+        <div className="layersList" key="layersList">
             {layers && layers.length &&
                 layers.map((layer, i) => {
                     return (
-                        <LayerItemComponent
+                        <LayerItem
                             name="layer"
                             index={i}
+                            key={i}
                             selectedLayer={selectedLayer}
                             onLayerSelected={onLayerSelected}
                         />
@@ -28,3 +34,5 @@ export default LayersComponent = ({
         </div>
     ]
 }
+
+export default LayersComponent;
