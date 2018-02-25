@@ -24,7 +24,7 @@ const AppComponent = ({
             <BoxComponent title="Map Information" intro="Fill in the required dimensions (in units):">
                 <Dimensions {...props} />
             </BoxComponent>
-            <BoxComponent title="Apply ROT Fill" intro="Use ROT.js to fill perform a tile placement:">
+            <BoxComponent title="Base Map Generation" intro="Generate the base map manually or by ROT.js:">
                 <GenerateComponent {...props} />
             </BoxComponent>
             <BoxComponent title="Layers">

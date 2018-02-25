@@ -3,22 +3,23 @@ import Checkbox from '../../../Common/Checkbox';
 
 import { TILE_MAPPINGS } from '../../../Consts/EditorConstants.js';
 
+const getTileNameByType = (t) => {
+    const { name } = TILE_MAPPINGS.find(({ type }) => type === t);
+    return name ? name : null; 
+};
+
 const ExitTileData = ({
-    exitTileTitle,
-    exitTilePos,
-    exitTileId
+    id, x, y, t
 }) => {
     return [
-        <span key="exitTileTitle">Name: {exitTileTitle}</span>,
-        <span key="exitTilePos">Position: {exitTilePos}</span>,
-        <span key="exitTileId">Id: {exitTileId}</span>
+        <span key="exitTileId">Id: {id}</span>,
+        <span key="exitTileTitle">Name: {getTileNameByType(t)}</span>,
+        <span key="exitTilePos">Position: ({x},{y})</span>
     ]
 }
 
 const TileLinksComponent = ({
-    exitTileTitle,
-    exitTilePos,
-    exitTileId,
+    exitTile,
     eligibleTiles,
     exitRequirements,
     onTileToggled
@@ -30,17 +31,11 @@ const TileLinksComponent = ({
             </p>
             <div className="primaryTile">
                 <p>
-                    {exitTileId ?
-                        <ExitTileData
-                            exitTileTitle={exitTileTitle}
-                            exitTilePos={exitTilePos}
-                            exitTileId={exitTileId}
-                        /> : 'No exit tile was found.'
-                    }
+                    {exitTile ? <ExitTileData {...exitTile} /> : 'No exit tile was found.'}
                 </p>
                 <ul>
-                    {eligibleTiles && eligibleTiles.map(({ id, name, position }, i) =>
-                        {
+                    {exitTile && eligibleTiles &&
+                        eligibleTiles.map(({ id, t, x, y }, i) => {
                             return (
                                 <li key={i}>
                                     <div className="left">
@@ -51,9 +46,9 @@ const TileLinksComponent = ({
                                         />
                                     </div>
                                     <div className="right">
-                                        <span>Name: {name}</span>
-                                        <span>Position: {position}</span>
-                                        <span>Id: {id}</span>
+                                        <span key="exitTileId">Id: {id}</span>
+                                        <span key="exitTileTitle">Name: {getTileNameByType(t)}</span>
+                                        <span key="exitTilePos">Position: ({x},{y})</span>
                                     </div>
                                 </li>
                             )

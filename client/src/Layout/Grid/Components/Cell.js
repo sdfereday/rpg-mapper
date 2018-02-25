@@ -1,5 +1,4 @@
 import React from 'react';
-import uniqueId from 'lodash/uniqueId';
 
 import {
     TILE_MAPPINGS,
@@ -13,6 +12,7 @@ const getAssetUrlByType = (t) => {
 };
 
 const CellComponent = ({
+    id,
     x,
     y,
     t,
@@ -31,7 +31,7 @@ const CellComponent = ({
 
     return (
         <div
-            id={uniqueId()}
+            id={id}
             t={t}
             x={x}
             y={y}

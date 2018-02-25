@@ -7,16 +7,21 @@ import Grid from '../Components/Grid';
 export default compose(
     withHandlers({
         onCellClicked: ({ selectedTileType, mapGridPlane, setMapGridPlane }) => ({ target }) => {
-            const tx = target.getAttribute('x');
-            const ty = target.getAttribute('y');
-            const tt = target.getAttribute('t');
-            console.log(tx, ty, tt);
+            const gridData = [].concat(mapGridPlane);
+            const targetId = target.id;
 
-            const updatedGrid = mapGridPlane.map(({ x, y }) => {
-                console.log(tile);
-                return x === tx && y === ty ? // ...
-            });
-
+            // Note to self: This isn't very optmised, could use quad-trees or something.
+            const updatedGrid = gridData
+                .map(tile => {
+                    const { id, ...tileProps } = tile;
+                    return id === targetId ? {
+                        id,
+                        ...tileProps,
+                        t: selectedTileType
+                    } : tile;
+                });
+ 
+            setMapGridPlane(updatedGrid);
         }
     })
 )

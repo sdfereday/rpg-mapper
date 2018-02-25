@@ -3,6 +3,7 @@ import withState from 'recompose/withState';
 import withHandlers from 'recompose/withHandlers';
 import defaultProps from 'recompose/defaultProps';
 import withPropsOnChange from 'recompose/withPropsOnChange';
+import uniqueId from 'lodash/uniqueId';
 import Generate from '../Components/Generate';
 import ROT from '../../../../../custom_libraries/rot.min.js';
 
@@ -60,7 +61,14 @@ export default compose(
                 return;
             }
 
-            const map = GEN_MAP[currentMode].create(mapWidth, mapHeight);
+            const map = GEN_MAP[currentMode]
+                .create(mapWidth, mapHeight)
+                .map(({ ...tileProps }) => {
+                    return {
+                        id: uniqueId(),
+                        ...tileProps
+                    }
+                });
 
             if(swapSpace) {
                 const swappedMap = [].concat(map).map(({ t, ...props }) => {

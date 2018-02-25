@@ -13,19 +13,18 @@ const GridComponent = ({
     return (
         <div id="map">
             <Draggable
-                axis="x"
                 handle=".handle"
                 defaultPosition={{x: 0, y: 0}}
                 position={null}
                 grid={[mapWidth, mapHeight]}
             >
                 <div id="map-inner">
-                    {mapGridPlane && mapGridPlane.length &&
-                        mapGridPlane.map(({ x, y, t }, i) => {
+                    {mapGridPlane && mapGridPlane.length ?
+                        mapGridPlane.map(({ id, x, y, t }, i) => {
                             return (
-                                <Cell x={x} y={y} t={t} key={i} onCellClicked={onCellClicked} />
+                                <Cell id={id} x={x} y={y} t={t} key={i} onCellClicked={onCellClicked} />
                             );
-                        })
+                        }) : <p>Please generate a base map to begin.</p>
                     }
                 </div>
             </Draggable>
