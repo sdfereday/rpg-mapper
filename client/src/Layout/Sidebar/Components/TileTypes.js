@@ -1,22 +1,25 @@
 import React from 'react';
 import TileTypeItem from './TileTypeItem';
 
+import { TILE_MAPPINGS } from '../../../Consts/EditorConstants.js';
+
 const TileTypesComponent = ({
-    tileTypes,
-    currentTileType,
+    selectedType,
+    selectedLayer,
     onTileTypeSelected
-}) => {
+}) => {    
     return (
         <div className="tileTypesList">
-            {tileTypes && tileTypes.length &&
-                tileTypes.map(({ type, name }, i) => {
+            {TILE_MAPPINGS.map(({ id, type, name, allowedLayer }, i) => {
                     return (
+                        allowedLayer === selectedLayer || allowedLayer === -1 ?
                         <TileTypeItem
                             key={i}
+                            tileType={type}
                             name={name}
-                            checked={currentTileType === type}
-                            onChange={onTileTypeSelected}
-                        />
+                            isChecked={selectedType === type}
+                            onChange={onTileTypeSelected} Why wont this fire???
+                        /> : null
                     );
                 })
             }

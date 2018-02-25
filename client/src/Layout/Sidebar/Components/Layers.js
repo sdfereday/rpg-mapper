@@ -1,9 +1,10 @@
 import React from 'react';
+import Radio from '../../../Common/Radio';
+import Button from '../../../Common/Button';
 import Checkbox from '../../../Common/Checkbox';
-import LayerItem from './LayerItem';
+import LabeledComponent from '../../../Common/LabeledComponent';
 
 const LayersComponent = ({
-    layers,
     selectedLayer,
     onionMode,
     onOnionSelected,
@@ -17,21 +18,26 @@ const LayersComponent = ({
             checked={onionMode}
             onChange={onOnionSelected}
         />,
-        <div className="layersList" key="layersList">
-            {layers && layers.length &&
-                layers.map((layer, i) => {
-                    return (
-                        <LayerItem
-                            name="layer"
-                            index={i}
-                            key={i}
-                            selectedLayer={selectedLayer}
-                            onLayerSelected={onLayerSelected}
-                        />
-                    );
-                })
-            }
-        </div>
+        <LabeledComponent text="Current Layer:" key="use-layer">
+            <Radio
+                id="0"
+                name="Bottom Layer"
+                checked={selectedLayer === 0}
+                onChange={onLayerSelected}
+            />
+            <Radio
+                id="1"
+                name="Middle Layer"
+                checked={selectedLayer === 1}
+                onChange={onLayerSelected}
+            />
+            <Radio
+                id="2"
+                name="Top Layer"
+                checked={selectedLayer === 2}
+                onChange={onLayerSelected}
+            />
+        </LabeledComponent>,
     ]
 }
 

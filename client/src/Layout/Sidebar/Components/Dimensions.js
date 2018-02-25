@@ -8,9 +8,7 @@ const DimensionsComponent = ({
     mapWidth,
     mapHeight,
     children,
-    useROT,
     invalidValues,
-    onUseROT,
     onMapWidthChanged,
     onMapHeightChanged,
     onMake
@@ -30,15 +28,7 @@ const DimensionsComponent = ({
                 onChange={onMapHeightChanged}
             />
         </LabeledComponent>,
-        <LabeledComponent key="use-rot">
-            <Checkbox
-                id="useRot"
-                label="Use ROT maze?"
-                checked={useROT}
-                onChange={onUseROT}
-            />
-        </LabeledComponent>,
-        <Button onClick={onMake} isDisabled={invalidValues} text="make" key="make" />
+        <Button onClick={onMake} isDisabled={invalidValues} text="Generate" key="make" />
     ]
 }
 

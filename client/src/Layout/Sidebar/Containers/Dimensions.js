@@ -6,7 +6,6 @@ import Dimensions from '../Components/Dimensions';
 import { createGrid } from '../../../utils/GridUtils.js';
 
 export default compose(
-    withState('useROT', 'setUseROT', false),
     withState('invalidValues', 'setInvalidValues', true),
     withHandlers({
         onMapWidthChanged: ({ setMapWidth, setInvalidValues, mapHeight }) => (proxy) => {
@@ -24,13 +23,6 @@ export default compose(
         },
         onMake: ({ onMapGridPlane, mapWidth, mapHeight, useROT }) => () => {
             const rawGrid = createGrid(mapWidth, mapHeight);
-
-            if(useROT) {
-                // Take ROT route instead.
-                // ...
-                return;
-            }
-
             onMapGridPlane(rawGrid);
         }
     })

@@ -7,6 +7,7 @@ export default compose(
     withState('mapWidth', 'setMapWidth', 0),
     withState('mapHeight', 'setMapHeight', 0),
     withState('mapGridPlane', 'setMapGridPlane', []),
+    withState('selectedLayer', 'setSelectedLayer', 0),
     withHandlers({
         onMapGridPlane: ({ setMapGridPlane }) => (gridData) => {
             setMapGridPlane(gridData);

@@ -5,13 +5,21 @@ const Radio = ({
     name,
     value,
     checked,
-    onChange
+    onChange,
+    ...props
 }) => {
     return (
         <div className="radio">
-            <input type="radio" id={id} onChange={onChange} name={name} checked={checked} value={id} />
+            <input type="radio"
+                id={id}
+                onChange={onChange}
+                name={name}
+                checked={checked}
+                value={id}
+                {...props}
+            />
             <label htmlFor={id}>{name}</label>
-            <div class="check"></div>
+            <div className="check"></div>
         </div>
     )
 }
