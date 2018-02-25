@@ -1,30 +1,36 @@
 import React from 'react';
+import Draggable from 'react-draggable';
+import Cell from '../Components/Cell';
 
 const GridComponent = ({
-    cellData,
+    mapWidth,
+    mapHeight,
+    mapGridPlane,
     selectedTileType,
     selectedLayer,
     onCellClicked
 }) => {
     return (
-        <div className="map">
-            {cellData && cellData.length &&
-                cellData.map(({ x, y, id }, i) => {
-                    return (
-                        <CellComponent
-                            key={i}
-                            selectedTileType={selectedTileType}
-                            selectedLayer={selectedLayer}
-                            tileScale={MAP_OPTIONS.TILE_SCALE}
-                            onCellClicked={onCellClicked}
-                            x={x}
-                            y={y}
-                            id={id}
-                        />
-                    );
-                })
-            }
+        <div id="map">
+            <Draggable
+                axis="x"
+                handle=".handle"
+                defaultPosition={{x: 0, y: 0}}
+                position={null}
+                grid={[mapWidth, mapHeight]}
+            >
+                <div id="map-inner">
+                    {mapGridPlane && mapGridPlane.length &&
+                        mapGridPlane.map(({ x, y, t }, i) => {
+                            return (
+                                <Cell x={x} y={y} t={t} key={i} onCellClicked={onCellClicked} />
+                            );
+                        })
+                    }
+                </div>
+            </Draggable>
         </div>
+      
     )
 }
 

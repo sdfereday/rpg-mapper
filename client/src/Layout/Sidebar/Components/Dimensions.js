@@ -1,17 +1,12 @@
 import React from 'react';
 import Input from '../../../Common/Input';
-import Button from '../../../Common/Button';
-import Checkbox from '../../../Common/Checkbox';
 import LabeledComponent from '../../../Common/LabeledComponent';
 
 const DimensionsComponent = ({
     mapWidth,
     mapHeight,
-    children,
-    invalidValues,
     onMapWidthChanged,
-    onMapHeightChanged,
-    onMake
+    onMapHeightChanged
 }) => {
     return [
         <LabeledComponent text="Width:" key="width">
@@ -27,8 +22,7 @@ const DimensionsComponent = ({
                 value={mapHeight}
                 onChange={onMapHeightChanged}
             />
-        </LabeledComponent>,
-        <Button onClick={onMake} isDisabled={invalidValues} text="Generate" key="make" />
+        </LabeledComponent>
     ]
 }
 

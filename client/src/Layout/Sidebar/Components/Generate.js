@@ -3,11 +3,12 @@ import Radio from '../../../Common/Radio';
 import Button from '../../../Common/Button';
 import Checkbox from '../../../Common/Checkbox';
 import LabeledComponent from '../../../Common/LabeledComponent';
-import { ROT_TYPES } from '../../../Consts/EditorConstants.js';
+import { GENERATOR_TYPES } from '../../../Consts/EditorConstants.js';
 
-const ROTComponent = ({
+const Generate = ({
     swapSpace,
     currentMode,
+    invalidValues,
     onChangeCurrentMode,
     onSwapSpace,
     onGenerate
@@ -15,15 +16,21 @@ const ROTComponent = ({
     return [
         <LabeledComponent text="Generation Mode:" key="use-rot">
             <Radio
-                id={ROT_TYPES.MAZE}
-                name="Maze Mode"
-                checked={currentMode === ROT_TYPES.MAZE}
+                id={GENERATOR_TYPES.BLANK}
+                name="Blank Mode"
+                checked={currentMode === GENERATOR_TYPES.BLANK}
                 onChange={onChangeCurrentMode}
             />
             <Radio
-                id={ROT_TYPES.ROOM}
+                id={GENERATOR_TYPES.MAZE}
+                name="Maze Mode"
+                checked={currentMode === GENERATOR_TYPES.MAZE}
+                onChange={onChangeCurrentMode}
+            />
+            <Radio
+                id={GENERATOR_TYPES.ROOM}
                 name="Room Mode"
-                checked={currentMode === ROT_TYPES.ROOM}
+                checked={currentMode === GENERATOR_TYPES.ROOM}
                 onChange={onChangeCurrentMode}
             />
         </LabeledComponent>,
@@ -35,8 +42,8 @@ const ROTComponent = ({
                 onChange={onSwapSpace}
             />
         </LabeledComponent>,
-        <Button onClick={onGenerate} text="Generate" key="make" />
+        <Button onClick={onGenerate} isDisabled={invalidValues} text="Generate" key="make" />
     ]
 }
 
-export default ROTComponent;
+export default Generate;

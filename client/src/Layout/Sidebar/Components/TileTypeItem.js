@@ -4,7 +4,7 @@ import Radio from '../../../Common/Radio';
 const TileTypeItemComponent = ({
     id,
     name,
-    tileType,
+    tiletype,
     isChecked,
     onChange
 }) => {
@@ -13,7 +13,7 @@ const TileTypeItemComponent = ({
             id={id}
             value={id}
             name={name}
-            tiletype={tileType}
+            tiletype={tiletype}
             checked={isChecked}
             onChange={onChange}
         />

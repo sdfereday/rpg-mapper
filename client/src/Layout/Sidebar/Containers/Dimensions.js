@@ -3,8 +3,6 @@ import withState from 'recompose/withState';
 import withHandlers from 'recompose/withHandlers';
 import Dimensions from '../Components/Dimensions';
 
-import { createGrid } from '../../../utils/GridUtils.js';
-
 export default compose(
     withState('invalidValues', 'setInvalidValues', true),
     withHandlers({
@@ -17,13 +15,6 @@ export default compose(
             const parsedHeight = parseInt(proxy.target.value);
             setInvalidValues(!parsedHeight || !mapWidth);
             setMapHeight(parsedHeight);
-        },
-        onUseROT: ({ useROT, setUseROT }) => () => {
-            setUseROT(!useROT);
-        },
-        onMake: ({ onMapGridPlane, mapWidth, mapHeight, useROT }) => () => {
-            const rawGrid = createGrid(mapWidth, mapHeight);
-            onMapGridPlane(rawGrid);
         }
     })
 )

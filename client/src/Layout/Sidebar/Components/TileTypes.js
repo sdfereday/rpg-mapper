@@ -4,7 +4,7 @@ import TileTypeItem from './TileTypeItem';
 import { TILE_MAPPINGS } from '../../../Consts/EditorConstants.js';
 
 const TileTypesComponent = ({
-    selectedType,
+    selectedTileType,
     selectedLayer,
     onTileTypeSelected
 }) => {    
@@ -14,11 +14,12 @@ const TileTypesComponent = ({
                     return (
                         allowedLayer === selectedLayer || allowedLayer === -1 ?
                         <TileTypeItem
+                            id={name+type}
                             key={i}
-                            tileType={type}
+                            tiletype={type}
                             name={name}
-                            isChecked={selectedType === type}
-                            onChange={onTileTypeSelected} Why wont this fire???
+                            isChecked={selectedTileType === type}
+                            onChange={onTileTypeSelected}
                         /> : null
                     );
                 })

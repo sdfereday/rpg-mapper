@@ -1,3 +1,5 @@
+export const TILE_SCALE = 32;
+
 export const TILE_TYPES = {
     EMPTY: 0,
     FLOOR_TILE: 1,
@@ -15,10 +17,12 @@ export const TILE_TYPES = {
     SMASHABLE_DECOR: 13
 };
 
-const MAZE = 'maze';
-const ROOM = 'room';
+export const BLANK = 'blank';
+export const MAZE = 'maze';
+export const ROOM = 'room';
 
-export const ROT_TYPES = {
+export const GENERATOR_TYPES = {
+    BLANK,
     MAZE,
     ROOM
 }
