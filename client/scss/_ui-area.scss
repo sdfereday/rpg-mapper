@@ -1,0 +1,51 @@
+#ui {
+  
+  width: 348px;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  float: left;
+  padding: 1em 3em 4em 2em;
+  overflow-y: auto;
+  z-index: 99;
+  background: $grey;
+  color: #919ba6;
+
+  .start-form {
+    opacity: 1;
+    &.disabled {
+      opacity: 0.5;
+    }
+  }
+
+  .enabled {
+    opacity: 1;
+  }
+
+  .disabled {
+    opacity: 0.5;
+  }
+  
+  .tools {
+    opacity: 0.3;
+    transition: all 0.2s ease;
+    pointer-events: none;
+
+    &.enableTools{
+      opacity: 1;
+      pointer-events: auto;
+    }
+    
+  }
+
+  .foundationDisabled {
+    z-index: 0;
+  }
+
+  .foundationEnabled {
+    opacity: 0.5;
+    z-index: 999;
+  }
+
+}

@@ -1,0 +1,36 @@
+.sq {
+  width: $tileWidth + px;
+  height: $tileHeight + px;
+  padding-top: 0.6em;
+  position: absolute;
+  background: #9CBA7F;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.2s ease;
+}
+
+.sq:hover {
+  background: #555;
+  color: #fff;
+}
+
+.sq.occupied {
+  background: #333;
+  color: #fff;
+}
+
+.icon {
+  width: $tileWidth + px;
+  height: $tileHeight + px;
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-position: 50%;
+  background-size: 100%;
+  image-rendering: pixelated;
+  opacity: 0.8;
+  &:hover {
+    opacity: 1;
+  }
+}

@@ -1,0 +1,18 @@
+.sidebarBox {
+    color: #AAAAAA;
+    position: relative;
+    padding: 1em;
+    margin-bottom: 1em;
+    border: 1px solid #999;
+}
+
+.sidebarBox .sidebarBoxContent {
+    margin-bottom: 1em;
+}
+
+.sidebarBox .node {
+    display: block;
+    clear: both;
+    width: 100%;
+    margin-bottom: 1em;
+}

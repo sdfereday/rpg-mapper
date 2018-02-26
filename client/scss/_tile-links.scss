@@ -1,0 +1,30 @@
+.tileLinks {
+    button {
+        width: 50%;
+        &.danger {
+            background: #990000;
+        }
+    }
+    ul
+    li {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        margin-top: 1em;
+        padding: 1em;
+        background: #888;
+    }
+    span {
+        display: block;
+    }
+}
+
+.primaryTile {
+    padding: 1em;
+    margin-top: 1em;
+    border: 1px solid #999;
+    background: #555;
+    &.active {
+        background: #777;
+    }
+}
