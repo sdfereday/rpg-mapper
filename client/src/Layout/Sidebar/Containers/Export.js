@@ -2,80 +2,71 @@ import compose from 'recompose/compose';
 import withState from 'recompose/withState';
 import withHandlers from 'recompose/withHandlers';
 import withPropsOnChange from 'recompose/withPropsOnChange';
+import uniqueId from 'lodash/uniqueId';
 import Export from '../Components/Export';
+
+const populateStructure = ({
+    width,
+    height,
+    themeSlot,
+    levelConditions,
+    entityLayer,
+    floorLayer
+}) => {
+    return {
+        Items: [
+            {
+                id: uniqueId(),
+                themeSlot,
+                levelConditions,
+                dimensions: {
+                    width,
+                    height
+                },
+                entityLayer,
+                floorLayer
+            }
+        ]
+    }
+};
 
 export default compose(
     withState('exportedData', 'setExportedData', '{}'),
+    withState('flipMode', 'setFlipMode', true),
+    withState('formatData', 'setFormatData', true),
     withHandlers({
-        onExportData: ({ setExportedData, mapGridPlane }) => () => {
-            const jsonData = mapGridPlane;
-            const formatted = JSON.stringify(jsonData);
-            setExportedData(formatted);
-            console.log(formatted);
+        onExportData: ({ setExportedData, formatData, flipMode, exitRequirements, mapGridPlane, mapWidth, mapHeight }) => () => {
+            const modifiedGrid = flipMode ? mapGridPlane.map(({ y, ...tileProps }) => {
+                return {
+                    ...tileProps,
+                    y: mapHeight - y
+                }
+            }) : [].concat(mapGridPlane);
+
+            // TODO: Layers to editor consts
+            const floorLayer = modifiedGrid.filter(tile => tile.selectedLayer === 0);
+            const entityLayer = modifiedGrid.filter(tile => tile.selectedLayer === 1);
+            
+            // TODO: Yet to implement
+            const themeSlot = 0;
+
+            const jsonData = populateStructure({
+                width: mapWidth,
+                height: mapHeight,
+                levelConditions: exitRequirements,
+                themeSlot,
+                entityLayer,
+                floorLayer
+            });
+            const data = formatData ? JSON.stringify(jsonData, null, 4) : JSON.stringify(jsonData);
+            setExportedData(data);
+        },
+        onFlipModeSelected: ({ setFlipMode, flipMode }) => () => {
+            setFlipMode(!flipMode);
+        },
+        onFormatSelected: ({ setFormatData, formatData }) => () => {
+            setFormatData(!formatData);
         }
     })
 )
 (Export);
-
-/// This is currently what is expected of the shape in Unity right now for map data. I believe this
-/// could quite easily be cleaned up somewhat!
-// extract() {
-
-//     let output = '';
-//     document.getElementById('output').innerHTML = '';
-
-//     // flipped values for unity.
-//     const result = {
-//       "Items": [
-//         {
-//           "id": helpers.guid(),
-//           "themeSlot": 0,
-//           "dimensions": {
-//             "width": this.width,
-//             "height": this.height
-//           },
-//           "topLayer": this.getGridAt(2).map(({ id, x, y, decorType, requires }) => {
-
-//             // Needs some work.
-//             let additionalProps = {
-//               // ...
-//             }
-
-//             if(requires().length > 0) {
-//               additionalProps.requires = requires();
-//             }
-
-//             return decorType() > 0 ? {
-//               id,
-//               x: x(),
-//               y: this.unityFlip() ? this.height - y() : y(),
-//               tileType: decorType(),
-//               tileName: helpers.getDataTileName(decorType()),
-//               ...additionalProps
-//             } : null
-//           }).filter(x => x),
-//           "middleLayer": this.getGridAt(1).map(({ id, x, y, decorType }) => {
-//             return decorType() > 0 ? {
-//               id,
-//               x: x(),
-//               y: this.unityFlip() ? this.height - y() : y(),
-//               tileType: decorType(),
-//               tileName: helpers.getDataTileName(decorType())
-//             } : null
-//           }).filter(x => x),
-//           "bottomLayer": this.getGridAt(0).map(({ id, x, y, decorType }) => {
-//             return {
-//               id,
-//               x: x(),
-//               y: this.unityFlip() ? this.height - y() : y(),
-//               tileType: decorType(),
-//               tileName: helpers.getDataTileName(decorType())
-//             };
-//           })
-//         }
-//       ]
-//     };
-
-//     document.getElementById('output').innerHTML = '<pre>' + JSON.stringify(result, null, 4) + '</pre>';
-
-//   }

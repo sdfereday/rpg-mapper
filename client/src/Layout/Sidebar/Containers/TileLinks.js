@@ -6,6 +6,8 @@ import TileLinks from '../Components/TileLinks';
 
 import { TILE_TYPES } from '../../../Consts/EditorConstants.js';
 
+// TODO: Make more generic so multiple 'things' can have requirements such as chests,
+// hidden doors, etc. For now however, just stick with exits.
 export default compose(
     withState('exitTile', 'setExitTile', null),
     withState('eligibleTiles', 'setEligibleTiles', []),

@@ -6,7 +6,7 @@ import Grid from '../Components/Grid';
 
 export default compose(
     withHandlers({
-        onCellClicked: ({ selectedTileType, mapGridPlane, setMapGridPlane }) => ({ target }) => {
+        onCellClicked: ({ selectedTileType, selectedLayer, mapGridPlane, setMapGridPlane }) => ({ target }) => {
             const gridData = [].concat(mapGridPlane);
             const targetId = target.id;
 
@@ -17,6 +17,7 @@ export default compose(
                     return id === targetId ? {
                         id,
                         ...tileProps,
+                        selectedLayer,
                         t: selectedTileType
                     } : tile;
                 });

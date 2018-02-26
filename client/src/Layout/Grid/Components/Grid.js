@@ -22,7 +22,7 @@ const GridComponent = ({
                     {mapGridPlane && mapGridPlane.length ?
                         mapGridPlane.map(({ id, x, y, t }, i) => {
                             return (
-                                <Cell id={id} x={x} y={y} t={t} key={i} onCellClicked={onCellClicked} />
+                                <Cell id={id} x={x} y={y} t={t} selectedLayer={selectedLayer} key={i} onCellClicked={onCellClicked} />
                             );
                         }) : <p>Please generate a base map to begin.</p>
                     }

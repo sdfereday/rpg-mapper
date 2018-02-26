@@ -16,18 +16,19 @@ const CellComponent = ({
     x,
     y,
     t,
+    selectedLayer,
     onCellClicked
 }) => {
     const tileX = x * TILE_SCALE + 'px';
     const tileY = y * TILE_SCALE + 'px';
 
     const cellStyle = {
-        top: tileX,
-        left: tileY,
+        top: tileY,
+        left: tileX,
         backgroundUrl: getAssetUrlByType(t)
     };
 
-    const className = t !== TILE_TYPES.EMPTY ? 'sq occupied' : 'sq';
+    const className = t !== TILE_TYPES.FLOOR_TILE && t !== TILE_TYPES.EMPTY ? 'sq occupied' : 'sq';
 
     return (
         <div
@@ -35,6 +36,7 @@ const CellComponent = ({
             t={t}
             x={x}
             y={y}
+            selectedlayer={selectedLayer}
             className={className}
             style={cellStyle}
             onClick={onCellClicked}>

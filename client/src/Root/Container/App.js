@@ -8,8 +8,8 @@ import {
 } from '../../Consts/EditorConstants.js';
 
 export default compose(
-    withState('mapWidth', 'setMapWidth', 13),
-    withState('mapHeight', 'setMapHeight', 13),
+    withState('mapWidth', 'setMapWidth', 25),
+    withState('mapHeight', 'setMapHeight', 25),
     withState('mapGridPlane', 'setMapGridPlane', []),
     withState('exitRequirements', 'setExitRequirements', []),
     withState('selectedLayer', 'setSelectedLayer', 0),
