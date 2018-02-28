@@ -5,9 +5,6 @@
   "repository": "https://github.com/sdfereday/rpg-mapper.git",
   "author": "Sam Fereday <sfereday@gmail.com>",
   "license": "MIT",
-  "scripts": {
-    "start": "webpack-dev-server"
-  },
   "dependencies": {
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
