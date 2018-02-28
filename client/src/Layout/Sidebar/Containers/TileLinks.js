@@ -11,14 +11,14 @@ import { TILE_TYPES } from '../../../Consts/EditorConstants.js';
 export default compose(
     withState('exitTile', 'setExitTile', null),
     withState('eligibleTiles', 'setEligibleTiles', []),
-    withPropsOnChange(['mapGridPlane'], (({ mapGridPlane, setExitTile, setEligibleTiles }) => {
-        const exitTile = mapGridPlane.find(x => x.t === TILE_TYPES.EXIT);
-        const eligible = mapGridPlane.filter(x => x.t === TILE_TYPES.PUZZLE_SPAWN);
+    withPropsOnChange(['mapEntityPlane'], (({ mapEntityPlane, setExitTile, setEligibleTiles }) => {
+        const exitTile = mapEntityPlane.find(x => x.t === TILE_TYPES.EXIT);
+        const eligible = mapEntityPlane.filter(x => x.t === TILE_TYPES.PUZZLE_SPAWN);
 
         if(exitTile) {
             setExitTile(exitTile);
         }
-        
+
         if(eligible.length > 0) {
             setEligibleTiles(eligible);
         }
@@ -28,7 +28,7 @@ export default compose(
             const targetId = target.id;
             const current = [].concat(exitRequirements);
             const exists = current.some(x => x === targetId);
-            
+
             if(exists) {
                 setExitRequirements(current.filter(x => x !== targetId));
                 return;
