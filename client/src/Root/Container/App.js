@@ -8,15 +8,25 @@ import {
 } from '../../Consts/EditorConstants.js';
 
 export default compose(
-    withState('mapWidth', 'setMapWidth', 25),
-    withState('mapHeight', 'setMapHeight', 25),
+    withState('mapWidth', 'setMapWidth', 5),
+    withState('mapHeight', 'setMapHeight', 5),
     withState('mapGridPlane', 'setMapGridPlane', []),
+    withState('mapEntityPlane', 'setMapEntityPlane', []),
     withState('exitRequirements', 'setExitRequirements', []),
     withState('selectedLayer', 'setSelectedLayer', 0),
     withState('selectedTileType', 'setSelectedTileType', TILE_TYPES.EMPTY),
     withHandlers({
-        onMapGridPlane: ({ setMapGridPlane }) => (gridData) => {
-            setMapGridPlane(gridData);
+        onMapGridPlane: ({ setMapGridPlane, setMapEntityPlane, selectedLayer }) => (gridData) => {
+            if(selectedLayer === 0) {
+                setMapGridPlane(gridData);
+            }
+        },
+        onUpdateGrid: ({ selectedLayer, setMapGridPlane, setMapEntityPlane }) => (gridData) => {
+            if(selectedLayer === 0) {
+                setMapGridPlane(gridData);
+            } else {
+                setMapEntityPlane(gridData);
+            }
         }
     })
 )

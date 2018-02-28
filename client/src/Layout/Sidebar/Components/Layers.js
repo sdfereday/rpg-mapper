@@ -27,7 +27,7 @@ const LayersComponent = ({
             <Radio
                 id="1"
                 name="Entity Layer"
-                checked={selectedLayer === 2}
+                checked={selectedLayer === 1}
                 onChange={onLayerSelected}
             />
         </LabeledComponent>,

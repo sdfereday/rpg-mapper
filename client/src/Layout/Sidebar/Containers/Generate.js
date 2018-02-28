@@ -34,7 +34,7 @@ const GEN_MAP = {
             return createGridAsBox(width, height, TILE_TYPES.FLOOR_TILE, TILE_TYPES.WALL_TILE);
         }
     },
-    [MAZE]: { 
+    [MAZE]: {
         create(width, height) {
             const cells = [];
             new ROT.Map.EllerMaze(width, height)
@@ -42,7 +42,7 @@ const GEN_MAP = {
             return cells;
         }
     },
-    [CELLULAR]: { 
+    [CELLULAR]: {
         create(width, height) {
             const cells = [];
             const iterations = 4;
@@ -56,11 +56,11 @@ const GEN_MAP = {
                     }
                 });
             }
-            
+
             return cells;
         }
     },
-    [ROOM]: { 
+    [ROOM]: {
         create(width, height) {
             const cells = [];
             new ROT.Map.Digger(width, height)
@@ -87,6 +87,7 @@ export default compose(
                 return;
             }
 
+            // Setup ground layer
             const map = GEN_MAP[currentMode]
                 .create(mapWidth, mapHeight)
                 .map((tile) => {
@@ -99,7 +100,7 @@ export default compose(
                     }
                 });
 
-            onMapGridPlane(map);
+            onMapGridPlane(map, 0);
         }
     })
 )

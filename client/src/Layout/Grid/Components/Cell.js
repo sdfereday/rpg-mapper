@@ -8,7 +8,7 @@ import {
 
 const getAssetUrlByType = (t) => {
     const { asset } = TILE_MAPPINGS.find(({ type }) => type === t);
-    return asset ? asset : null; 
+    return asset ? asset : null;
 };
 
 const CellComponent = ({

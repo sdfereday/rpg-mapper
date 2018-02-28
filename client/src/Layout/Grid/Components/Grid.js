@@ -6,10 +6,12 @@ const GridComponent = ({
     mapWidth,
     mapHeight,
     mapGridPlane,
+    mapEntityPlane,
     selectedTileType,
     selectedLayer,
     onCellClicked
 }) => {
+    const layerData = [mapGridPlane, mapEntityPlane];
     return (
         <div id="map">
             <Draggable
@@ -19,17 +21,24 @@ const GridComponent = ({
                 grid={[mapWidth, mapHeight]}
             >
                 <div id="map-inner">
-                    {mapGridPlane && mapGridPlane.length ?
-                        mapGridPlane.map(({ id, x, y, t }, i) => {
+                    {layerData && layerData.length ?
+                        layerData.map((layerGrid, layerIndex) => {
                             return (
-                                <Cell id={id} x={x} y={y} t={t} selectedLayer={selectedLayer} key={i} onCellClicked={onCellClicked} />
-                            );
-                        }) : <p>Please generate a base map to begin.</p>
+                                <div className="layer" key={layerIndex}>
+                                    {layerGrid.map(({ id, x, y, t }, i) => {
+                                        return (
+                                            <Cell id={id} x={x} y={y} t={t} selectedLayer={selectedLayer} key={i} onCellClicked={onCellClicked} />
+                                        );
+                                    })
+                                }
+                                </div>
+                            )
+                        }) : null
                     }
                 </div>
             </Draggable>
         </div>
-      
+
     )
 }
 

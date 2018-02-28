@@ -35,18 +35,21 @@ export default compose(
     withState('flipMode', 'setFlipMode', true),
     withState('formatData', 'setFormatData', true),
     withHandlers({
-        onExportData: ({ setExportedData, formatData, flipMode, exitRequirements, mapGridPlane, mapWidth, mapHeight }) => () => {
-            const modifiedGrid = flipMode ? mapGridPlane.map(({ y, ...tileProps }) => {
+        onExportData: ({ setExportedData, formatData, flipMode, exitRequirements, mapGridPlane, mapEntityPlane, mapWidth, mapHeight }) => () => {
+            const floorLayer = flipMode ? mapGridPlane.map(({ y, ...tileProps }) => {
                 return {
                     ...tileProps,
                     y: mapHeight - y
                 }
             }) : [].concat(mapGridPlane);
 
-            // TODO: Layers to editor consts
-            const floorLayer = modifiedGrid.filter(tile => tile.selectedLayer === 0);
-            const entityLayer = modifiedGrid.filter(tile => tile.selectedLayer === 1);
-            
+            const entityLayer = flipMode ? mapEntityPlane.map(({ y, ...tileProps }) => {
+                return {
+                    ...tileProps,
+                    y: mapHeight - y
+                }
+            }) : [].concat(mapEntityPlane);
+
             // TODO: Yet to implement
             const themeSlot = 0;
 
