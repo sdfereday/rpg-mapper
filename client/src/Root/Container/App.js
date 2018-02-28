@@ -8,13 +8,14 @@ import {
 } from '../../Consts/EditorConstants.js';
 
 export default compose(
-    withState('mapWidth', 'setMapWidth', 5),
-    withState('mapHeight', 'setMapHeight', 5),
+    withState('mapWidth', 'setMapWidth', 9),
+    withState('mapHeight', 'setMapHeight', 9),
     withState('mapGridPlane', 'setMapGridPlane', []),
     withState('mapEntityPlane', 'setMapEntityPlane', []),
     withState('exitRequirements', 'setExitRequirements', []),
     withState('selectedLayer', 'setSelectedLayer', 0),
     withState('selectedTileType', 'setSelectedTileType', TILE_TYPES.EMPTY),
+    withState('onionMode', 'setOnionMode', true),
     withHandlers({
         onMapGridPlane: ({ setMapGridPlane, setMapEntityPlane, selectedLayer }) => (gridData) => {
             if(selectedLayer === 0) {
@@ -27,6 +28,9 @@ export default compose(
             } else {
                 setMapEntityPlane(gridData);
             }
+        },
+        onOnionSelected: ({ setOnionMode, onionMode }) => () => {
+            setOnionMode(!onionMode);
         }
     })
 )

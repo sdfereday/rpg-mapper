@@ -100,7 +100,7 @@ export default compose(
                     }
                 });
 
-            onMapGridPlane(map, 0);
+            onMapGridPlane(map);
         }
     })
 )

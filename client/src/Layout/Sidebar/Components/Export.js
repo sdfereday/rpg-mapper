@@ -6,9 +6,11 @@ const ExportComponent = ({
     exportedData,
     flipMode,
     formatData,
+    dropEmbedded,
     onExportData,
     onFlipModeSelected,
-    onFormatSelected
+    onFormatSelected,
+    onDropEmbedded
 }) => {
     return [
         <Checkbox
@@ -24,6 +26,13 @@ const ExportComponent = ({
             key="format-mode"
             checked={formatData}
             onChange={onFormatSelected}
+        />,
+        <Checkbox
+            id="drop-embedded"
+            label="Remove embedded walls?"
+            key="drop-embedded-mode"
+            checked={dropEmbedded}
+            onChange={onDropEmbedded}
         />,
         <Button onClick={onExportData} text="Export" key="button-export" />,
         <div id="output" key="output">

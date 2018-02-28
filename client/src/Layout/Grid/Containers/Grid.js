@@ -33,7 +33,12 @@ export default compose(
                     t: selectedTileType
                 });
 
-                onUpdateGrid(gridData);
+                if(selectedLayer !== 0)
+                {
+                    onUpdateGrid(gridData.filter(x => x.t !== TILE_TYPES.EMPTY));
+                } else {
+                    onUpdateGrid(gridData);
+                }
                 return;
             }
 
