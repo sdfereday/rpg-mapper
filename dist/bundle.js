@@ -275,6 +275,97 @@ process.umask = function() { return 0; };
 "use strict";
 
 
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+var TILE_SCALE = exports.TILE_SCALE = 32;
+
+var TILE_TYPES = exports.TILE_TYPES = {
+    EMPTY: 0,
+    FLOOR_TILE: 1,
+    WALL_TILE: 2
+
+};
+
+var ENTITY_TYPES = exports.ENTITY_TYPES = {
+    KEY: 1,
+    HEALTH: 2,
+    ENEMY: 3,
+    DOOR: 4,
+    TREASURE: 5
+};
+
+var BLANK = exports.BLANK = 'blank';
+var BOX = exports.BOX = 'box';
+var MAZE = exports.MAZE = 'maze';
+var CELLULAR = exports.CELLULAR = 'cellular';
+var ROOM = exports.ROOM = 'room';
+
+var GENERATOR_TYPES = exports.GENERATOR_TYPES = {
+    BLANK: BLANK,
+    BOX: BOX,
+    MAZE: MAZE,
+    CELLULAR: CELLULAR,
+    ROOM: ROOM
+};
+
+var TILE_MAPPINGS = exports.TILE_MAPPINGS = [{
+    id: "empty",
+    name: "Empty",
+    type: TILE_TYPES.EMPTY,
+    asset: "empty.png",
+    allowedLayer: -1
+}, {
+    id: "floor",
+    name: "Floor",
+    type: TILE_TYPES.FLOOR_TILE,
+    asset: "floor.png",
+    allowedLayer: 0
+}, {
+    id: "wall",
+    name: "Wall",
+    type: TILE_TYPES.WALL_TILE,
+    asset: "wall.png",
+    allowedLayer: 0
+}, {
+    id: "KEY",
+    name: "KEY",
+    type: ENTITY_TYPES.KEY,
+    asset: "KEY.png",
+    allowedLayer: 1
+}, {
+    id: "HEALTH",
+    name: "HEALTH",
+    type: ENTITY_TYPES.HEALTH,
+    asset: "HEALTH.png",
+    allowedLayer: 1
+}, {
+    id: "ENEMY",
+    name: "ENEMY",
+    type: ENTITY_TYPES.ENEMY,
+    asset: "ENEMY.png",
+    allowedLayer: 1
+}, {
+    id: "DOOR",
+    name: "DOOR",
+    type: ENTITY_TYPES.DOOR,
+    asset: "DOOR.png",
+    allowedLayer: 1
+}, {
+    id: "TREASURE",
+    name: "TREASURE",
+    type: ENTITY_TYPES.TREASURE,
+    asset: "TREASURE.png",
+    allowedLayer: 1
+}];
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
 exports.__esModule = true;
 exports.default = compose;
 function compose() {
@@ -300,7 +391,7 @@ function compose() {
 }
 
 /***/ }),
-/* 3 */
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -376,7 +467,7 @@ exports.default = withState;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 4 */
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -473,135 +564,6 @@ var withHandlers = function withHandlers(handlers) {
 
 exports.default = withHandlers;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
-
-/***/ }),
-/* 5 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-var TILE_SCALE = exports.TILE_SCALE = 32;
-
-var TILE_TYPES = exports.TILE_TYPES = {
-    EMPTY: 0,
-    FLOOR_TILE: 1,
-    WALL_TILE: 2,
-    PILLAR_DECOR: 3,
-    WALL_DECOR: 4,
-    KEY_SPAWN: 5,
-    PUZZLE_SPAWN: 6,
-    ENEMY_SPAWN: 7,
-    TREASURE_SPAWN: 8,
-    TRAP_SPAWN: 9,
-    ENTRANCE: 10,
-    EXIT: 11,
-    AI_WAYPOINT: 12,
-    SMASHABLE_DECOR: 13
-};
-
-var BLANK = exports.BLANK = 'blank';
-var BOX = exports.BOX = 'box';
-var MAZE = exports.MAZE = 'maze';
-var CELLULAR = exports.CELLULAR = 'cellular';
-var ROOM = exports.ROOM = 'room';
-
-var GENERATOR_TYPES = exports.GENERATOR_TYPES = {
-    BLANK: BLANK,
-    BOX: BOX,
-    MAZE: MAZE,
-    CELLULAR: CELLULAR,
-    ROOM: ROOM
-};
-
-var TILE_MAPPINGS = exports.TILE_MAPPINGS = [{
-    id: "empty",
-    name: "Empty",
-    type: TILE_TYPES.EMPTY,
-    asset: "empty.png",
-    allowedLayer: -1
-}, {
-    id: "floor",
-    name: "Floor",
-    type: TILE_TYPES.FLOOR_TILE,
-    asset: "floor.png",
-    allowedLayer: 0
-}, {
-    id: "wall",
-    name: "Wall",
-    type: TILE_TYPES.WALL_TILE,
-    asset: "wall.png",
-    allowedLayer: 0
-}, {
-    id: "pillar",
-    name: "Pillar",
-    type: TILE_TYPES.PILLAR_DECOR,
-    asset: "pillar.png",
-    allowedLayer: 1
-}, {
-    id: "wallDecor",
-    name: "Wall Decor",
-    type: TILE_TYPES.WALL_DECOR,
-    asset: "wallDecor.png",
-    allowedLayer: 1
-}, {
-    id: "key",
-    name: "Key",
-    type: TILE_TYPES.KEY_SPAWN,
-    asset: "key.png",
-    allowedLayer: 1
-}, {
-    id: "puzzle",
-    name: "Puzzle",
-    type: TILE_TYPES.PUZZLE_SPAWN,
-    asset: "puzzle.png",
-    allowedLayer: 1
-}, {
-    id: "enemy",
-    name: "Enemy",
-    type: TILE_TYPES.ENEMY_SPAWN,
-    asset: "enemy.png",
-    allowedLayer: 1
-}, {
-    id: "treasure",
-    name: "Treasure",
-    type: TILE_TYPES.TREASURE_SPAWN,
-    asset: "treasure.png",
-    allowedLayer: 1
-}, {
-    id: "trap",
-    name: "Trap",
-    type: TILE_TYPES.TRAP_SPAWN,
-    asset: "trap.png",
-    allowedLayer: 1
-}, {
-    id: "entrance",
-    name: "Entrance",
-    type: TILE_TYPES.ENTRANCE,
-    asset: "entrance.png",
-    allowedLayer: 1
-}, {
-    id: "exit",
-    name: "Exit",
-    type: TILE_TYPES.EXIT,
-    asset: "exit.png",
-    allowedLayer: 1
-}, {
-    id: "aiWaypoint",
-    name: "AI Waypoint",
-    type: TILE_TYPES.AI_WAYPOINT,
-    asset: "aiWaypoint.png",
-    allowedLayer: 1
-}, {
-    id: "smashableDecor",
-    name: "Smashable Decor",
-    type: TILE_TYPES.SMASHABLE_DECOR,
-    asset: "smashableDecor.png",
-    allowedLayer: 1
-}];
 
 /***/ }),
 /* 6 */
@@ -1122,6 +1084,40 @@ exports.default = LabeledComponent;
 /* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
+var toString = __webpack_require__(55);
+
+/** Used to generate unique IDs. */
+var idCounter = 0;
+
+/**
+ * Generates a unique ID. If `prefix` is given, the ID is appended to it.
+ *
+ * @static
+ * @since 0.1.0
+ * @memberOf _
+ * @category Util
+ * @param {string} [prefix=''] The value to prefix the ID with.
+ * @returns {string} Returns the unique ID.
+ * @example
+ *
+ * _.uniqueId('contact_');
+ * // => 'contact_104'
+ *
+ * _.uniqueId();
+ * // => '105'
+ */
+function uniqueId(prefix) {
+  var id = ++idCounter;
+  return toString(prefix) + id;
+}
+
+module.exports = uniqueId;
+
+
+/***/ }),
+/* 17 */
+/***/ (function(module, exports, __webpack_require__) {
+
 var root = __webpack_require__(57);
 
 /** Built-in value references. */
@@ -1131,7 +1127,7 @@ module.exports = Symbol;
 
 
 /***/ }),
-/* 17 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1185,7 +1181,7 @@ var Radio = function Radio(_ref) {
 exports.default = Radio;
 
 /***/ }),
-/* 18 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1215,7 +1211,7 @@ var Checkbox = function Checkbox(_ref) {
 exports.default = Checkbox;
 
 /***/ }),
-/* 19 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1282,7 +1278,7 @@ module.exports = checkPropTypes;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 20 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1328,7 +1324,7 @@ if (process.env.NODE_ENV === 'production') {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 21 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1367,7 +1363,7 @@ var ExecutionEnvironment = {
 module.exports = ExecutionEnvironment;
 
 /***/ }),
-/* 22 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1448,7 +1444,7 @@ module.exports = EventListener;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 23 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1490,7 +1486,7 @@ function getActiveElement(doc) /*?DOMElement*/{
 module.exports = getActiveElement;
 
 /***/ }),
-/* 24 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1533,7 +1529,7 @@ function containsNode(outerNode, innerNode) {
 module.exports = containsNode;
 
 /***/ }),
-/* 25 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1563,7 +1559,7 @@ function focusNode(node) {
 module.exports = focusNode;
 
 /***/ }),
-/* 26 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1599,40 +1595,6 @@ var defaultProps = function defaultProps(props) {
 
 exports.default = defaultProps;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
-
-/***/ }),
-/* 27 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var toString = __webpack_require__(55);
-
-/** Used to generate unique IDs. */
-var idCounter = 0;
-
-/**
- * Generates a unique ID. If `prefix` is given, the ID is appended to it.
- *
- * @static
- * @since 0.1.0
- * @memberOf _
- * @category Util
- * @param {string} [prefix=''] The value to prefix the ID with.
- * @returns {string} Returns the unique ID.
- * @example
- *
- * _.uniqueId('contact_');
- * // => 'contact_104'
- *
- * _.uniqueId();
- * // => '105'
- */
-function uniqueId(prefix) {
-  var id = ++idCounter;
-  return toString(prefix) + id;
-}
-
-module.exports = uniqueId;
-
 
 /***/ }),
 /* 28 */
@@ -1676,7 +1638,7 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactDom = __webpack_require__(20);
+var _reactDom = __webpack_require__(21);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
@@ -1748,7 +1710,7 @@ var emptyObject = __webpack_require__(8);
 var invariant = __webpack_require__(12);
 var warning = __webpack_require__(13);
 var emptyFunction = __webpack_require__(6);
-var checkPropTypes = __webpack_require__(19);
+var checkPropTypes = __webpack_require__(20);
 
 // TODO: this is special because it gets imported during build.
 
@@ -3122,7 +3084,7 @@ module.exports = ReactPropTypesSecret;
 /*
  Modernizr 3.0.0pre (Custom Build) | MIT
 */
-var aa=__webpack_require__(0),l=__webpack_require__(21),B=__webpack_require__(7),C=__webpack_require__(6),ba=__webpack_require__(22),da=__webpack_require__(23),ea=__webpack_require__(14),fa=__webpack_require__(24),ia=__webpack_require__(25),D=__webpack_require__(8);
+var aa=__webpack_require__(0),l=__webpack_require__(22),B=__webpack_require__(7),C=__webpack_require__(6),ba=__webpack_require__(23),da=__webpack_require__(24),ea=__webpack_require__(14),fa=__webpack_require__(25),ia=__webpack_require__(26),D=__webpack_require__(8);
 function E(a){for(var b=arguments.length-1,c="Minified React error #"+a+"; visit http://facebook.github.io/react/docs/error-decoder.html?invariant\x3d"+a,d=0;d<b;d++)c+="\x26args[]\x3d"+encodeURIComponent(arguments[d+1]);b=Error(c+" for the full message or use the non-minified dev environment for full errors and additional helpful warnings.");b.name="Invariant Violation";b.framesToPop=1;throw b;}aa?void 0:E("227");
 var oa={children:!0,dangerouslySetInnerHTML:!0,defaultValue:!0,defaultChecked:!0,innerHTML:!0,suppressContentEditableWarning:!0,suppressHydrationWarning:!0,style:!0};function pa(a,b){return(a&b)===b}
 var ta={MUST_USE_PROPERTY:1,HAS_BOOLEAN_VALUE:4,HAS_NUMERIC_VALUE:8,HAS_POSITIVE_NUMERIC_VALUE:24,HAS_OVERLOADED_BOOLEAN_VALUE:32,HAS_STRING_BOOLEAN_VALUE:64,injectDOMPropertyConfig:function(a){var b=ta,c=a.Properties||{},d=a.DOMAttributeNamespaces||{},e=a.DOMAttributeNames||{};a=a.DOMMutationMethods||{};for(var f in c){ua.hasOwnProperty(f)?E("48",f):void 0;var g=f.toLowerCase(),h=c[f];g={attributeName:g,attributeNamespace:null,propertyName:f,mutationMethod:null,mustUseProperty:pa(h,b.MUST_USE_PROPERTY),
@@ -3422,16 +3384,16 @@ if (process.env.NODE_ENV !== "production") {
 var React = __webpack_require__(0);
 var invariant = __webpack_require__(12);
 var warning = __webpack_require__(13);
-var ExecutionEnvironment = __webpack_require__(21);
+var ExecutionEnvironment = __webpack_require__(22);
 var _assign = __webpack_require__(7);
 var emptyFunction = __webpack_require__(6);
-var EventListener = __webpack_require__(22);
-var getActiveElement = __webpack_require__(23);
+var EventListener = __webpack_require__(23);
+var getActiveElement = __webpack_require__(24);
 var shallowEqual = __webpack_require__(14);
-var containsNode = __webpack_require__(24);
-var focusNode = __webpack_require__(25);
+var containsNode = __webpack_require__(25);
+var focusNode = __webpack_require__(26);
 var emptyObject = __webpack_require__(8);
-var checkPropTypes = __webpack_require__(19);
+var checkPropTypes = __webpack_require__(20);
 var hyphenateStyleName = __webpack_require__(37);
 var camelizeStyleName = __webpack_require__(39);
 
@@ -18966,15 +18928,15 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _compose = __webpack_require__(2);
+var _compose = __webpack_require__(3);
 
 var _compose2 = _interopRequireDefault(_compose);
 
-var _withState = __webpack_require__(3);
+var _withState = __webpack_require__(4);
 
 var _withState2 = _interopRequireDefault(_withState);
 
-var _withHandlers = __webpack_require__(4);
+var _withHandlers = __webpack_require__(5);
 
 var _withHandlers2 = _interopRequireDefault(_withHandlers);
 
@@ -18982,17 +18944,40 @@ var _App = __webpack_require__(45);
 
 var _App2 = _interopRequireDefault(_App);
 
-var _EditorConstants = __webpack_require__(5);
+var _EditorConstants = __webpack_require__(2);
 
 function _interopRequireDefault(obj) {
     return obj && obj.__esModule ? obj : { default: obj };
 }
 
-exports.default = (0, _compose2.default)((0, _withState2.default)('mapWidth', 'setMapWidth', 25), (0, _withState2.default)('mapHeight', 'setMapHeight', 25), (0, _withState2.default)('mapGridPlane', 'setMapGridPlane', []), (0, _withState2.default)('exitRequirements', 'setExitRequirements', []), (0, _withState2.default)('selectedLayer', 'setSelectedLayer', 0), (0, _withState2.default)('selectedTileType', 'setSelectedTileType', _EditorConstants.TILE_TYPES.EMPTY), (0, _withHandlers2.default)({
+exports.default = (0, _compose2.default)((0, _withState2.default)('mapWidth', 'setMapWidth', 15), (0, _withState2.default)('mapHeight', 'setMapHeight', 15), (0, _withState2.default)('mapGridPlane', 'setMapGridPlane', []), (0, _withState2.default)('mapEntityPlane', 'setMapEntityPlane', []), (0, _withState2.default)('exitRequirements', 'setExitRequirements', []), (0, _withState2.default)('selectedLayer', 'setSelectedLayer', 0), (0, _withState2.default)('selectedTileType', 'setSelectedTileType', _EditorConstants.TILE_TYPES.EMPTY), (0, _withState2.default)('onionMode', 'setOnionMode', true), (0, _withHandlers2.default)({
     onMapGridPlane: function onMapGridPlane(_ref) {
-        var setMapGridPlane = _ref.setMapGridPlane;
+        var setMapGridPlane = _ref.setMapGridPlane,
+            setMapEntityPlane = _ref.setMapEntityPlane,
+            selectedLayer = _ref.selectedLayer;
         return function (gridData) {
-            setMapGridPlane(gridData);
+            if (selectedLayer === 0) {
+                setMapGridPlane(gridData);
+            }
+        };
+    },
+    onUpdateGrid: function onUpdateGrid(_ref2) {
+        var selectedLayer = _ref2.selectedLayer,
+            setMapGridPlane = _ref2.setMapGridPlane,
+            setMapEntityPlane = _ref2.setMapEntityPlane;
+        return function (gridData) {
+            if (selectedLayer === 0) {
+                setMapGridPlane(gridData);
+            } else {
+                setMapEntityPlane(gridData);
+            }
+        };
+    },
+    onOnionSelected: function onOnionSelected(_ref3) {
+        var setOnionMode = _ref3.setOnionMode,
+            onionMode = _ref3.onionMode;
+        return function () {
+            setOnionMode(!onionMode);
         };
     }
 }))(_App2.default);
@@ -19244,15 +19229,15 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _compose = __webpack_require__(2);
+var _compose = __webpack_require__(3);
 
 var _compose2 = _interopRequireDefault(_compose);
 
-var _withState = __webpack_require__(3);
+var _withState = __webpack_require__(4);
 
 var _withState2 = _interopRequireDefault(_withState);
 
-var _withHandlers = __webpack_require__(4);
+var _withHandlers = __webpack_require__(5);
 
 var _withHandlers2 = _interopRequireDefault(_withHandlers);
 
@@ -19385,19 +19370,19 @@ var _extends = Object.assign || function (target) {
 
 var _GEN_MAP;
 
-var _compose = __webpack_require__(2);
+var _compose = __webpack_require__(3);
 
 var _compose2 = _interopRequireDefault(_compose);
 
-var _withState = __webpack_require__(3);
+var _withState = __webpack_require__(4);
 
 var _withState2 = _interopRequireDefault(_withState);
 
-var _withHandlers = __webpack_require__(4);
+var _withHandlers = __webpack_require__(5);
 
 var _withHandlers2 = _interopRequireDefault(_withHandlers);
 
-var _defaultProps = __webpack_require__(26);
+var _defaultProps = __webpack_require__(27);
 
 var _defaultProps2 = _interopRequireDefault(_defaultProps);
 
@@ -19405,7 +19390,7 @@ var _withPropsOnChange = __webpack_require__(11);
 
 var _withPropsOnChange2 = _interopRequireDefault(_withPropsOnChange);
 
-var _uniqueId = __webpack_require__(27);
+var _uniqueId = __webpack_require__(16);
 
 var _uniqueId2 = _interopRequireDefault(_uniqueId);
 
@@ -19419,7 +19404,7 @@ var _rotMin2 = _interopRequireDefault(_rotMin);
 
 var _GridUtils = __webpack_require__(69);
 
-var _EditorConstants = __webpack_require__(5);
+var _EditorConstants = __webpack_require__(2);
 
 function _interopRequireDefault(obj) {
     return obj && obj.__esModule ? obj : { default: obj };
@@ -19517,6 +19502,7 @@ exports.default = (0, _compose2.default)((0, _withState2.default)('currentMode',
                 return;
             }
 
+            // Setup ground layer
             var map = GEN_MAP[currentMode].create(mapWidth, mapHeight).map(function (tile) {
                 var t = tile.t,
                     tileProps = _objectWithoutProperties(tile, ['t']);
@@ -19609,7 +19595,7 @@ module.exports = toString;
 /* 56 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var Symbol = __webpack_require__(16),
+var Symbol = __webpack_require__(17),
     arrayMap = __webpack_require__(60),
     isArray = __webpack_require__(61),
     isSymbol = __webpack_require__(62);
@@ -19799,7 +19785,7 @@ module.exports = isSymbol;
 /* 63 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var Symbol = __webpack_require__(16),
+var Symbol = __webpack_require__(17),
     getRawTag = __webpack_require__(64),
     objectToString = __webpack_require__(65);
 
@@ -19833,7 +19819,7 @@ module.exports = baseGetTag;
 /* 64 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var Symbol = __webpack_require__(16);
+var Symbol = __webpack_require__(17);
 
 /** Used for built-in method references. */
 var objectProto = Object.prototype;
@@ -19959,7 +19945,7 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _Radio = __webpack_require__(17);
+var _Radio = __webpack_require__(18);
 
 var _Radio2 = _interopRequireDefault(_Radio);
 
@@ -19971,7 +19957,7 @@ var _LabeledComponent = __webpack_require__(15);
 
 var _LabeledComponent2 = _interopRequireDefault(_LabeledComponent);
 
-var _EditorConstants = __webpack_require__(5);
+var _EditorConstants = __webpack_require__(2);
 
 function _interopRequireDefault(obj) {
     return obj && obj.__esModule ? obj : { default: obj };
@@ -21244,19 +21230,19 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _compose = __webpack_require__(2);
+var _compose = __webpack_require__(3);
 
 var _compose2 = _interopRequireDefault(_compose);
 
-var _withState = __webpack_require__(3);
+var _withState = __webpack_require__(4);
 
 var _withState2 = _interopRequireDefault(_withState);
 
-var _withHandlers = __webpack_require__(4);
+var _withHandlers = __webpack_require__(5);
 
 var _withHandlers2 = _interopRequireDefault(_withHandlers);
 
-var _defaultProps = __webpack_require__(26);
+var _defaultProps = __webpack_require__(27);
 
 var _defaultProps2 = _interopRequireDefault(_defaultProps);
 
@@ -21294,11 +21280,11 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _Radio = __webpack_require__(17);
+var _Radio = __webpack_require__(18);
 
 var _Radio2 = _interopRequireDefault(_Radio);
 
-var _Checkbox = __webpack_require__(18);
+var _Checkbox = __webpack_require__(19);
 
 var _Checkbox2 = _interopRequireDefault(_Checkbox);
 
@@ -21330,7 +21316,7 @@ var LayersComponent = function LayersComponent(_ref) {
     }), _react2.default.createElement(_Radio2.default, {
         id: '1',
         name: 'Entity Layer',
-        checked: selectedLayer === 2,
+        checked: selectedLayer === 1,
         onChange: onLayerSelected
     }))];
 };
@@ -21348,15 +21334,15 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _compose = __webpack_require__(2);
+var _compose = __webpack_require__(3);
 
 var _compose2 = _interopRequireDefault(_compose);
 
-var _withState = __webpack_require__(3);
+var _withState = __webpack_require__(4);
 
 var _withState2 = _interopRequireDefault(_withState);
 
-var _withHandlers = __webpack_require__(4);
+var _withHandlers = __webpack_require__(5);
 
 var _withHandlers2 = _interopRequireDefault(_withHandlers);
 
@@ -21398,7 +21384,7 @@ var _TileTypeItem = __webpack_require__(74);
 
 var _TileTypeItem2 = _interopRequireDefault(_TileTypeItem);
 
-var _EditorConstants = __webpack_require__(5);
+var _EditorConstants = __webpack_require__(2);
 
 function _interopRequireDefault(obj) {
     return obj && obj.__esModule ? obj : { default: obj };
@@ -21443,7 +21429,7 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _Radio = __webpack_require__(17);
+var _Radio = __webpack_require__(18);
 
 var _Radio2 = _interopRequireDefault(_Radio);
 
@@ -21481,15 +21467,15 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _compose = __webpack_require__(2);
+var _compose = __webpack_require__(3);
 
 var _compose2 = _interopRequireDefault(_compose);
 
-var _withState = __webpack_require__(3);
+var _withState = __webpack_require__(4);
 
 var _withState2 = _interopRequireDefault(_withState);
 
-var _withHandlers = __webpack_require__(4);
+var _withHandlers = __webpack_require__(5);
 
 var _withHandlers2 = _interopRequireDefault(_withHandlers);
 
@@ -21501,7 +21487,7 @@ var _TileLinks = __webpack_require__(76);
 
 var _TileLinks2 = _interopRequireDefault(_TileLinks);
 
-var _EditorConstants = __webpack_require__(5);
+var _EditorConstants = __webpack_require__(2);
 
 function _interopRequireDefault(obj) {
     return obj && obj.__esModule ? obj : { default: obj };
@@ -21509,15 +21495,15 @@ function _interopRequireDefault(obj) {
 
 // TODO: Make more generic so multiple 'things' can have requirements such as chests,
 // hidden doors, etc. For now however, just stick with exits.
-exports.default = (0, _compose2.default)((0, _withState2.default)('exitTile', 'setExitTile', null), (0, _withState2.default)('eligibleTiles', 'setEligibleTiles', []), (0, _withPropsOnChange2.default)(['mapGridPlane'], function (_ref) {
-    var mapGridPlane = _ref.mapGridPlane,
+exports.default = (0, _compose2.default)((0, _withState2.default)('exitTile', 'setExitTile', null), (0, _withState2.default)('eligibleTiles', 'setEligibleTiles', []), (0, _withPropsOnChange2.default)(['mapEntityPlane'], function (_ref) {
+    var mapEntityPlane = _ref.mapEntityPlane,
         setExitTile = _ref.setExitTile,
         setEligibleTiles = _ref.setEligibleTiles;
 
-    var exitTile = mapGridPlane.find(function (x) {
+    var exitTile = mapEntityPlane.find(function (x) {
         return x.t === _EditorConstants.TILE_TYPES.EXIT;
     });
-    var eligible = mapGridPlane.filter(function (x) {
+    var eligible = mapEntityPlane.filter(function (x) {
         return x.t === _EditorConstants.TILE_TYPES.PUZZLE_SPAWN;
     });
 
@@ -21568,11 +21554,11 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _Checkbox = __webpack_require__(18);
+var _Checkbox = __webpack_require__(19);
 
 var _Checkbox2 = _interopRequireDefault(_Checkbox);
 
-var _EditorConstants = __webpack_require__(5);
+var _EditorConstants = __webpack_require__(2);
 
 function _interopRequireDefault(obj) {
     return obj && obj.__esModule ? obj : { default: obj };
@@ -21642,15 +21628,15 @@ var _extends = Object.assign || function (target) {
     }return target;
 };
 
-var _compose = __webpack_require__(2);
+var _compose = __webpack_require__(3);
 
 var _compose2 = _interopRequireDefault(_compose);
 
-var _withState = __webpack_require__(3);
+var _withState = __webpack_require__(4);
 
 var _withState2 = _interopRequireDefault(_withState);
 
-var _withHandlers = __webpack_require__(4);
+var _withHandlers = __webpack_require__(5);
 
 var _withHandlers2 = _interopRequireDefault(_withHandlers);
 
@@ -21658,13 +21644,15 @@ var _withPropsOnChange = __webpack_require__(11);
 
 var _withPropsOnChange2 = _interopRequireDefault(_withPropsOnChange);
 
-var _uniqueId = __webpack_require__(27);
+var _uniqueId = __webpack_require__(16);
 
 var _uniqueId2 = _interopRequireDefault(_uniqueId);
 
 var _Export = __webpack_require__(78);
 
 var _Export2 = _interopRequireDefault(_Export);
+
+var _EditorConstants = __webpack_require__(2);
 
 function _interopRequireDefault(obj) {
     return obj && obj.__esModule ? obj : { default: obj };
@@ -21699,32 +21687,56 @@ var populateStructure = function populateStructure(_ref) {
     };
 };
 
-exports.default = (0, _compose2.default)((0, _withState2.default)('exportedData', 'setExportedData', '{}'), (0, _withState2.default)('flipMode', 'setFlipMode', true), (0, _withState2.default)('formatData', 'setFormatData', true), (0, _withHandlers2.default)({
-    onExportData: function onExportData(_ref2) {
-        var setExportedData = _ref2.setExportedData,
-            formatData = _ref2.formatData,
-            flipMode = _ref2.flipMode,
-            exitRequirements = _ref2.exitRequirements,
-            mapGridPlane = _ref2.mapGridPlane,
-            mapWidth = _ref2.mapWidth,
-            mapHeight = _ref2.mapHeight;
+var findInTiles = function findInTiles(x, y, arr) {
+    return arr.find(function (tile) {
+        return tile.x === x && tile.y === y;
+    }) || { t: _EditorConstants.TILE_TYPES.EMPTY };
+};
+
+var removeEmbedded = function removeEmbedded(tileArray) {
+    return tileArray.filter(function (_ref2) {
+        var x = _ref2.x,
+            y = _ref2.y,
+            t = _ref2.t;
+
+        var score = 0;
+        score += findInTiles(x, y - 1, tileArray).t === _EditorConstants.TILE_TYPES.WALL_TILE ? 1 : 0;
+        score += findInTiles(x + 1, y, tileArray).t === _EditorConstants.TILE_TYPES.WALL_TILE ? 2 : 0;
+        score += findInTiles(x, y + 1, tileArray).t === _EditorConstants.TILE_TYPES.WALL_TILE ? 4 : 0;
+        score += findInTiles(x - 1, y, tileArray).t === _EditorConstants.TILE_TYPES.WALL_TILE ? 8 : 0;
+        return score < 15 && t === _EditorConstants.TILE_TYPES.WALL_TILE;
+    });
+};
+
+exports.default = (0, _compose2.default)((0, _withState2.default)('exportedData', 'setExportedData', '{}'), (0, _withState2.default)('flipMode', 'setFlipMode', true), (0, _withState2.default)('formatData', 'setFormatData', true), (0, _withState2.default)('dropEmbedded', 'setDropEmbedded', true), (0, _withHandlers2.default)({
+    onExportData: function onExportData(_ref3) {
+        var setExportedData = _ref3.setExportedData,
+            formatData = _ref3.formatData,
+            flipMode = _ref3.flipMode,
+            dropEmbedded = _ref3.dropEmbedded,
+            exitRequirements = _ref3.exitRequirements,
+            mapGridPlane = _ref3.mapGridPlane,
+            mapEntityPlane = _ref3.mapEntityPlane,
+            mapWidth = _ref3.mapWidth,
+            mapHeight = _ref3.mapHeight;
         return function () {
-            var modifiedGrid = flipMode ? mapGridPlane.map(function (_ref3) {
-                var y = _ref3.y,
-                    tileProps = _objectWithoutProperties(_ref3, ['y']);
+            var floorLayer = flipMode ? mapGridPlane.map(function (_ref4) {
+                var y = _ref4.y,
+                    tileProps = _objectWithoutProperties(_ref4, ['y']);
 
                 return _extends({}, tileProps, {
                     y: mapHeight - y
                 });
             }) : [].concat(mapGridPlane);
 
-            // TODO: Layers to editor consts
-            var floorLayer = modifiedGrid.filter(function (tile) {
-                return tile.selectedLayer === 0;
-            });
-            var entityLayer = modifiedGrid.filter(function (tile) {
-                return tile.selectedLayer === 1;
-            });
+            var entityLayer = flipMode ? mapEntityPlane.map(function (_ref5) {
+                var y = _ref5.y,
+                    tileProps = _objectWithoutProperties(_ref5, ['y']);
+
+                return _extends({}, tileProps, {
+                    y: mapHeight - y
+                });
+            }) : [].concat(mapEntityPlane);
 
             // TODO: Yet to implement
             var themeSlot = 0;
@@ -21735,26 +21747,37 @@ exports.default = (0, _compose2.default)((0, _withState2.default)('exportedData'
                 levelConditions: exitRequirements,
                 themeSlot: themeSlot,
                 entityLayer: entityLayer,
-                floorLayer: floorLayer
+                floorLayer: dropEmbedded ? removeEmbedded(floorLayer) : floorLayer
             });
+
             var data = formatData ? JSON.stringify(jsonData, null, 4) : JSON.stringify(jsonData);
             setExportedData(data);
         };
     },
-    onFlipModeSelected: function onFlipModeSelected(_ref4) {
-        var setFlipMode = _ref4.setFlipMode,
-            flipMode = _ref4.flipMode;
+    onFlipModeSelected: function onFlipModeSelected(_ref6) {
+        var setFlipMode = _ref6.setFlipMode,
+            flipMode = _ref6.flipMode;
         return function () {
             setFlipMode(!flipMode);
         };
     },
-    onFormatSelected: function onFormatSelected(_ref5) {
-        var setFormatData = _ref5.setFormatData,
-            formatData = _ref5.formatData;
+    onFormatSelected: function onFormatSelected(_ref7) {
+        var setFormatData = _ref7.setFormatData,
+            formatData = _ref7.formatData;
         return function () {
             setFormatData(!formatData);
         };
+    },
+    onDropEmbedded: function onDropEmbedded(_ref8) {
+        var setDropEmbedded = _ref8.setDropEmbedded,
+            dropEmbedded = _ref8.dropEmbedded;
+        return function () {
+            setDropEmbedded(!dropEmbedded);
+        };
     }
+}), (0, _withPropsOnChange2.default)(['mapGridPlane', 'mapEntityPlane'], function (_ref9) {
+    var onExportData = _ref9.onExportData;
+    return onExportData;
 }))(_Export2.default);
 
 /***/ }),
@@ -21776,7 +21799,7 @@ var _Button = __webpack_require__(28);
 
 var _Button2 = _interopRequireDefault(_Button);
 
-var _Checkbox = __webpack_require__(18);
+var _Checkbox = __webpack_require__(19);
 
 var _Checkbox2 = _interopRequireDefault(_Checkbox);
 
@@ -21788,9 +21811,11 @@ var ExportComponent = function ExportComponent(_ref) {
     var exportedData = _ref.exportedData,
         flipMode = _ref.flipMode,
         formatData = _ref.formatData,
+        dropEmbedded = _ref.dropEmbedded,
         onExportData = _ref.onExportData,
         onFlipModeSelected = _ref.onFlipModeSelected,
-        onFormatSelected = _ref.onFormatSelected;
+        onFormatSelected = _ref.onFormatSelected,
+        onDropEmbedded = _ref.onDropEmbedded;
 
     return [_react2.default.createElement(_Checkbox2.default, {
         id: 'flip-data',
@@ -21804,6 +21829,12 @@ var ExportComponent = function ExportComponent(_ref) {
         key: 'format-mode',
         checked: formatData,
         onChange: onFormatSelected
+    }), _react2.default.createElement(_Checkbox2.default, {
+        id: 'drop-embedded',
+        label: 'Remove embedded walls?',
+        key: 'drop-embedded-mode',
+        checked: dropEmbedded,
+        onChange: onDropEmbedded
     }), _react2.default.createElement(_Button2.default, { onClick: onExportData, text: 'Export', key: 'button-export' }), _react2.default.createElement('div', { id: 'output', key: 'output' }, _react2.default.createElement('pre', null, exportedData))];
 };
 
@@ -21830,15 +21861,15 @@ var _extends = Object.assign || function (target) {
     }return target;
 };
 
-var _compose = __webpack_require__(2);
+var _compose = __webpack_require__(3);
 
 var _compose2 = _interopRequireDefault(_compose);
 
-var _withState = __webpack_require__(3);
+var _withState = __webpack_require__(4);
 
 var _withState2 = _interopRequireDefault(_withState);
 
-var _withHandlers = __webpack_require__(4);
+var _withHandlers = __webpack_require__(5);
 
 var _withHandlers2 = _interopRequireDefault(_withHandlers);
 
@@ -21846,9 +21877,15 @@ var _withPropsOnChange = __webpack_require__(11);
 
 var _withPropsOnChange2 = _interopRequireDefault(_withPropsOnChange);
 
+var _uniqueId = __webpack_require__(16);
+
+var _uniqueId2 = _interopRequireDefault(_uniqueId);
+
 var _Grid = __webpack_require__(80);
 
 var _Grid2 = _interopRequireDefault(_Grid);
+
+var _EditorConstants = __webpack_require__(2);
 
 function _interopRequireDefault(obj) {
     return obj && obj.__esModule ? obj : { default: obj };
@@ -21865,12 +21902,42 @@ exports.default = (0, _compose2.default)((0, _withHandlers2.default)({
         var selectedTileType = _ref.selectedTileType,
             selectedLayer = _ref.selectedLayer,
             mapGridPlane = _ref.mapGridPlane,
-            setMapGridPlane = _ref.setMapGridPlane;
+            mapEntityPlane = _ref.mapEntityPlane,
+            onUpdateGrid = _ref.onUpdateGrid;
         return function (_ref2) {
             var target = _ref2.target;
 
-            var gridData = [].concat(mapGridPlane);
+            if (mapGridPlane.length === 0) {
+                console.error("Map grid plane should be generated before continuing.");
+                return;
+            }
+
             var targetId = target.id;
+            var gridData = selectedLayer === 0 ? [].concat(mapGridPlane) : [].concat(mapEntityPlane);
+            var existingTile = gridData.find(function (tile) {
+                return tile.id === targetId;
+            });
+
+            if (gridData.length === 0 || !existingTile) {
+                var tileProps = mapGridPlane.find(function (tile) {
+                    return tile.id === targetId;
+                });
+                gridData.push(_extends({
+                    id: (0, _uniqueId2.default)()
+                }, tileProps, {
+                    selectedLayer: selectedLayer,
+                    t: selectedTileType
+                }));
+
+                if (selectedLayer !== 0) {
+                    onUpdateGrid(gridData.filter(function (x) {
+                        return x.t !== _EditorConstants.TILE_TYPES.EMPTY;
+                    }));
+                } else {
+                    onUpdateGrid(gridData);
+                }
+                return;
+            }
 
             // Note to self: This isn't very optmised, could use quad-trees or something.
             var updatedGrid = gridData.map(function (tile) {
@@ -21885,7 +21952,15 @@ exports.default = (0, _compose2.default)((0, _withHandlers2.default)({
                 }) : tile;
             });
 
-            setMapGridPlane(updatedGrid);
+            // Ensure that empties are removed if not the ground layer (needs a little work this bit)
+            // TODO: use consts please for layers, perhaps make them more dynamic too.
+            if (selectedLayer !== 0) {
+                onUpdateGrid(updatedGrid.filter(function (x) {
+                    return x.t !== _EditorConstants.TILE_TYPES.EMPTY;
+                }));
+            } else {
+                onUpdateGrid(updatedGrid);
+            }
         };
     }
 }))(_Grid2.default);
@@ -21921,23 +21996,31 @@ var GridComponent = function GridComponent(_ref) {
     var mapWidth = _ref.mapWidth,
         mapHeight = _ref.mapHeight,
         mapGridPlane = _ref.mapGridPlane,
+        mapEntityPlane = _ref.mapEntityPlane,
+        onionMode = _ref.onionMode,
         selectedTileType = _ref.selectedTileType,
         selectedLayer = _ref.selectedLayer,
         onCellClicked = _ref.onCellClicked;
 
-    return _react2.default.createElement('div', { id: 'map' }, _react2.default.createElement(_reactDraggable2.default, {
-        handle: '.handle',
-        defaultPosition: { x: 0, y: 0 },
-        position: null,
-        grid: [mapWidth, mapHeight]
-    }, _react2.default.createElement('div', { id: 'map-inner' }, mapGridPlane && mapGridPlane.length ? mapGridPlane.map(function (_ref2, i) {
-        var id = _ref2.id,
-            x = _ref2.x,
-            y = _ref2.y,
-            t = _ref2.t;
+    var layerData = [mapGridPlane, mapEntityPlane];
+    return _react2.default.createElement('div', { id: 'map' }, _react2.default.createElement('div', { id: 'map-inner' }, layerData && layerData.length ? layerData.map(function (layerGrid, layerIndex) {
+        return _react2.default.createElement('div', { className: layerIndex > 0 && onionMode ? 'layer onion' : 'layer', key: layerIndex }, layerGrid.map(function (_ref2, i) {
+            var id = _ref2.id,
+                x = _ref2.x,
+                y = _ref2.y,
+                t = _ref2.t;
 
-        return _react2.default.createElement(_Cell2.default, { id: id, x: x, y: y, t: t, selectedLayer: selectedLayer, key: i, onCellClicked: onCellClicked });
-    }) : _react2.default.createElement('p', null, 'Please generate a base map to begin.'))));
+            return _react2.default.createElement(_Cell2.default, {
+                id: id,
+                x: x,
+                y: y,
+                t: t,
+                selectedLayer: selectedLayer,
+                key: i,
+                onCellClicked: onCellClicked
+            });
+        }));
+    }) : null));
 };
 
 exports.default = GridComponent;
@@ -21948,7 +22031,7 @@ exports.default = GridComponent;
 
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(true)
-		module.exports = factory(__webpack_require__(20), __webpack_require__(0));
+		module.exports = factory(__webpack_require__(21), __webpack_require__(0));
 	else if(typeof define === 'function' && define.amd)
 		define(["react-dom", "react"], factory);
 	else if(typeof exports === 'object')
@@ -24708,7 +24791,7 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _EditorConstants = __webpack_require__(5);
+var _EditorConstants = __webpack_require__(2);
 
 function _interopRequireDefault(obj) {
     return obj && obj.__esModule ? obj : { default: obj };

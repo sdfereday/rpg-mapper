@@ -226,30 +226,8 @@ input[type="text"].focus {
       background: #777;
       color: #fff; }
 
-#previewers {
-  position: absolute;
-  top: 0;
-  left: 0;
-  transition: all 0.2s ease; }
-
-#preview,
-#prop-preview {
-  position: absolute;
-  top: 0;
-  left: 0; }
-
-#prop-preview .sq {
-  padding-top: 0.6em;
-  background: none; }
-
-.grid-outer {
-  position: relative;
-  z-index: 1; }
-
-.active {
-  z-index: 2; }
-  .active.onion {
-    opacity: 0.4; }
+.layer {
+  position: relative; }
 
 #output {
   max-height: 200px;
@@ -325,14 +303,14 @@ input[type="text"].focus {
   background: #9CBA7F;
   cursor: pointer;
   text-align: center;
-  transition: all 0.2s ease; }
+  transition: background-color 0.2s ease; }
 
 .sq:hover {
   background: #555;
   color: #fff; }
 
 .sq.occupied {
-  background: #333;
+  background: #4c9606;
   color: #fff; }
 
 .icon {
@@ -348,6 +326,9 @@ input[type="text"].focus {
   opacity: 0.8; }
   .icon:hover {
     opacity: 1; }
+
+.onion .sq {
+  opacity: 0.8; }
 
 #ui {
   width: 348px;
