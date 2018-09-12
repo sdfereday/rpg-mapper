@@ -4,7 +4,6 @@ export const TILE_TYPES = {
     EMPTY: 0,
     FLOOR_TILE: 1,
     WALL_TILE: 2
-
 };
 
 export const ENTITY_TYPES = {
@@ -12,7 +11,9 @@ export const ENTITY_TYPES = {
     HEALTH: 2,
     ENEMY: 3,
     DOOR: 4,
-    TREASURE: 5
+    TREASURE: 5,
+    START_POINT: 6,
+    END_POINT: 7
 }
 
 export const BLANK = 'blank';
@@ -49,6 +50,20 @@ export const TILE_MAPPINGS = [{
         type: TILE_TYPES.WALL_TILE,
         asset: "wall.png",
         allowedLayer: 0
+    },
+    {
+        id: "start",
+        name: "START",
+        type: ENTITY_TYPES.START_POINT,
+        asset: "start.png",
+        allowedLayer: 1
+    },
+    {
+        id: "end",
+        name: "END",
+        type: ENTITY_TYPES.END_POINT,
+        asset: "end.png",
+        allowedLayer: 1
     },
     {
         id: "KEY",
