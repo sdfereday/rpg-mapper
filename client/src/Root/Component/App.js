@@ -41,6 +41,7 @@ const AppComponent = ({
             </BoxComponent>
         </SidebarComponent>,
         <Grid {...props} key="grid" />
+        // TODO: Shouldn't really be passing everything on props.
     ]
 }
 

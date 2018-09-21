@@ -1,9 +1,13 @@
 import React from 'react';
+import compose from 'recompose/compose';
+import withHandlers from 'recompose/withHandlers';
+import withState from 'recompose/withState';
 
 import {
     TILE_MAPPINGS,
     TILE_SCALE,
-    TILE_TYPES
+    TILE_TYPES,
+    TILE_DECOR_TYPES
 } from '../../../Consts/EditorConstants.js';
 
 const getAssetUrlByType = (t) => {
@@ -12,6 +16,7 @@ const getAssetUrlByType = (t) => {
 };
 
 const CellComponent = ({
+    isSelected,
     id,
     x,
     y,
@@ -25,6 +30,7 @@ const CellComponent = ({
     const cellStyle = {
         top: tileY,
         left: tileX,
+        backgroundColor: isSelected ? '#ccc' : '',
         backgroundUrl: getAssetUrlByType(t)
     };
 
@@ -45,4 +51,9 @@ const CellComponent = ({
     )
 }
 
-export default CellComponent;
+export default compose(
+    withHandlers({
+        onCellClicked: ({ onCellClicked, ...props }) => () =>
+            onCellClicked(props)
+    })
+)(CellComponent);

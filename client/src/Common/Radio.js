@@ -3,7 +3,7 @@ import React from 'react';
 const Radio = ({
     id,
     name,
-    value,
+    value=id,
     checked,
     onChange,
     ...props
@@ -15,7 +15,7 @@ const Radio = ({
                 onChange={onChange}
                 name={name}
                 checked={checked}
-                value={id}
+                value={value}
                 {...props}
             />
             <label htmlFor={id}>{name}</label>

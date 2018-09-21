@@ -16,6 +16,11 @@ export const ENTITY_TYPES = {
     END_POINT: 7
 }
 
+export const TILE_DECOR_TYPES = {
+    NONE: 0,
+    TORCH: 1
+}
+
 export const BLANK = 'blank';
 export const BOX = 'box';
 export const MAZE = 'maze';
@@ -28,6 +33,14 @@ export const GENERATOR_TYPES = {
     MAZE,
     CELLULAR,
     ROOM
+}
+
+export const SELECT = 'select';
+export const PAINT = 'paint';
+
+export const TOOL_TYPES = {
+    SELECT: 0,
+    PAINT: 1
 }
 
 export const TILE_MAPPINGS = [{

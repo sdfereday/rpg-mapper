@@ -1,0 +1,15 @@
+.tools {
+    width: 240px;
+    padding: 1em;
+    position: absolute;
+    right: 1em;
+    top: 1em;
+    background: $grey;
+    border: 1px solid $white;
+    color: $white;
+    z-index: 9999;
+
+    p {
+        margin-bottom: .7em;
+    }
+}

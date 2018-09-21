@@ -4,27 +4,40 @@ import withHandlers from 'recompose/withHandlers';
 import withPropsOnChange from 'recompose/withPropsOnChange';
 import uniqueId from 'lodash/uniqueId';
 import Grid from '../Components/Grid';
-import { TILE_TYPES } from '../../../Consts/EditorConstants';
+import { TILE_TYPES, TOOL_TYPES } from '../../../Consts/EditorConstants';
 
+// I'd suggest using redux to handle this tile stuff, rather than having state everywhere.
 export default compose(
     withHandlers({
+        onTileDecorChanged: () => (data) => {
+            console.log(data);
+        },
+
+        onChangeToolMode: ({ onChangeToolMode }) => (value) =>
+            onChangeToolMode(value),
+
         onCellClicked: ({
+            onCellSelected,
             selectedTileType,
             selectedLayer,
+            toolMode,
             mapGridPlane,
             mapEntityPlane,
             onUpdateGrid
-        }) => ({ target }) => {
+        }) => (tileData) => {
+            const gridData = selectedLayer === 0 ? [].concat(mapGridPlane) : [].concat(mapEntityPlane);
+
+            if (toolMode === TOOL_TYPES.SELECT) {
+                onCellSelected(tileData);
+                return;
+            }
+
             if(mapGridPlane.length === 0) {
                 console.error("Map grid plane should be generated before continuing.");
                 return;
             }
 
-            const targetId = target.id;
-            const gridData = selectedLayer === 0 ? [].concat(mapGridPlane) : [].concat(mapEntityPlane);
-            const existingTile = gridData.find(tile => tile.id === targetId);
-
-            if(gridData.length === 0 || !existingTile) {
+            if(gridData.length === 0 || !tileData) {
                 const tileProps = mapGridPlane.find(tile => tile.id === targetId);
                 gridData.push({
                     id: uniqueId(),

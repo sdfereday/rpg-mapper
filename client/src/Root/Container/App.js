@@ -4,7 +4,9 @@ import withHandlers from 'recompose/withHandlers';
 import App from '../Component/App';
 
 import {
-    TILE_TYPES
+    TILE_TYPES,
+    TOOL_TYPES,
+    SELECT
 } from '../../Consts/EditorConstants.js';
 
 export default compose(
@@ -15,9 +17,11 @@ export default compose(
     withState('exitRequirements', 'setExitRequirements', []),
     withState('selectedLayer', 'setSelectedLayer', 0),
     withState('selectedTileType', 'setSelectedTileType', TILE_TYPES.EMPTY),
+    withState('selectedCellObject', 'setSelectedCellObject', null),
+    withState('toolMode', 'setToolMode', TOOL_TYPES.SELECT),
     withState('onionMode', 'setOnionMode', true),
     withHandlers({
-        onMapGridPlane: ({ setMapGridPlane, setMapEntityPlane, selectedLayer }) => (gridData) => {
+        onMapGridPlane: ({ setMapGridPlane, selectedLayer }) => (gridData) => {
             if(selectedLayer === 0) {
                 setMapGridPlane(gridData);
             }
@@ -31,7 +35,11 @@ export default compose(
         },
         onOnionSelected: ({ setOnionMode, onionMode }) => () => {
             setOnionMode(!onionMode);
-        }
+        },
+        onCellSelected: ({ setSelectedCellObject }) => (cell) =>
+            setSelectedCellObject(cell),
+        onChangeToolMode: ({ setToolMode }) => (mode) =>
+            setToolMode(mode)
     })
 )
 (App);
