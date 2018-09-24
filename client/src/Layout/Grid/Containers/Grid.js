@@ -5,42 +5,54 @@ import Grid from "../Components/Grid";
 import { TILE_TYPES, TOOL_TYPES } from "../../../Consts/EditorConstants";
 
 import { connect } from "react-redux";
-import { updateTile } from "../../../Data/Actions/Actions";
+import { updateTile, updateEntity } from "../../../Data/Actions/Actions";
 
 // I'd suggest using redux to handle this tile stuff, rather than having state everywhere.
 const GridWrapper = compose(
   withHandlers({
-    onTileDecorChanged: () => data => {
-      console.log(data);
-    },
-
     onChangeToolMode: ({ onChangeToolMode }) => value =>
       onChangeToolMode(value),
 
+    onEntityDataChanged: ({ selectedLayer }) => data => {
+      if (selectedLayer === 0) return;
+      console.log(data);
+    },
+
+    onEntityClicked: ({
+      dispatch,
+      toolMode,
+      selectedLayer,
+      selectedTileType,
+      onEntitySelected
+    }) => entityData => {
+      if (selectedLayer !== 1) return;
+
+      if (toolMode === TOOL_TYPES.SELECT) {
+        onEntitySelected(entityData);
+        return;
+      }
+
+      dispatch(
+        updateEntity({
+          ...entityData,
+          updatedEntityType: selectedTileType
+        })
+      );
+    },
+
     onCellClicked: ({
       dispatch,
-      onCellSelected,
-      selectedTileType,
-      selectedLayer,
       toolMode,
-      mapGridPlane,
-      mapEntityPlane,
-      onUpdateGrid
+      selectedLayer,
+      selectedTileType,
+      onCellSelected
     }) => tileData => {
-      // const gridData =
-      //   selectedLayer === 0
-      //     ? [].concat(mapGridPlane)
-      //     : [].concat(mapEntityPlane);
+      if (selectedLayer !== 0) return;
 
       if (toolMode === TOOL_TYPES.SELECT) {
         onCellSelected(tileData);
         return;
       }
-
-      // if (mapGridPlane.length === 0) {
-      //   console.error("Map grid plane should be generated before continuing.");
-      //   return;
-      // }
 
       dispatch(
         updateTile({
@@ -48,50 +60,17 @@ const GridWrapper = compose(
           updatedTileType: selectedTileType
         })
       );
-
-      // if (gridData.length === 0 || !tileData) {
-      //   const tileProps = mapGridPlane.find(tile => tile.id === targetId);
-      //   gridData.push({
-      //     id: uniqueId(),
-      //     ...tileProps,
-      //     selectedLayer,
-      //     t: selectedTileType
-      //   });
-
-      //   if (selectedLayer !== 0) {
-      //     onUpdateGrid(gridData.filter(x => x.t !== TILE_TYPES.EMPTY));
-      //   } else {
-      //     onUpdateGrid(gridData);
-      //   }
-      //   return;
-      // }
-
-      // Note to self: This isn't very optmised, could use quad-trees or something.
-      // const updatedGrid = gridData.map(tile => {
-      //   const { id, ...tileProps } = tile;
-      //   return id === targetId
-      //     ? {
-      //         id,
-      //         ...tileProps,
-      //         selectedLayer,
-      //         t: selectedTileType
-      //       }
-      //     : tile;
-      // });
-
-      // Ensure that empties are removed if not the ground layer (needs a little work this bit)
-      // TODO: use consts please for layers, perhaps make them more dynamic too.
-      // if (selectedLayer !== 0) {
-      //   onUpdateGrid(updatedGrid.filter(x => x.t !== TILE_TYPES.EMPTY));
-      // } else {
-      //   onUpdateGrid(updatedGrid);
-      // }
     }
   })
 )(Grid);
 
-const mapStateToProps = state => ({
-  mapGridPlane: state.map(x => ({ id: uniqueId(), ...x }))
+const mapStateToProps = ({ tileReducer, entityReducer }) => ({
+  mapGridPlane: tileReducer.map(cell => ({
+    ...cell
+  })),
+  mapEntityPlane: entityReducer.map(entity => ({
+    ...entity
+  }))
 });
 
 export default connect(mapStateToProps)(GridWrapper);

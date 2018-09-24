@@ -3,8 +3,6 @@ import withState from "recompose/withState";
 import withHandlers from "recompose/withHandlers";
 import App from "../Component/App";
 
-import { initTiles } from "../../Data/Actions/Actions";
-
 import {
   TILE_TYPES,
   TOOL_TYPES,
@@ -14,7 +12,6 @@ import {
 export default compose(
   withState("mapWidth", "setMapWidth", 15),
   withState("mapHeight", "setMapHeight", 15),
-  withState("mapGridPlane", "setMapGridPlane", []),
   withState("mapEntityPlane", "setMapEntityPlane", []),
   withState("exitRequirements", "setExitRequirements", []),
   withState("selectedLayer", "setSelectedLayer", 0),
@@ -23,31 +20,22 @@ export default compose(
   withState("toolMode", "setToolMode", TOOL_TYPES.SELECT),
   withState("onionMode", "setOnionMode", true),
   withHandlers({
-    onMapGridPlane: ({ setMapGridPlane, selectedLayer }) => gridData => {
-      if (selectedLayer === 0) {
-        // dispatch(
-        //     initTiles({ tileData: gridData })
-        // );
-      }
-    },
-    onUpdateGrid: ({
-      selectedLayer,
-      setMapGridPlane,
-      setMapEntityPlane
-    }) => gridData => {
-        console.log(gridData);
-    //   if (selectedLayer === 0) {
-    //     setMapGridPlane(gridData);
-    //   } else {
-    //     setMapEntityPlane(gridData);
-    //   }
-    },
-    onOnionSelected: ({ setOnionMode, onionMode }) => () => {
-      setOnionMode(!onionMode);
-    },
+    onOnionSelected: ({ setOnionMode, onionMode }) => () =>
+      setOnionMode(!onionMode),
 
     onCellSelected: ({ setSelectedCellObject }) => cell =>
       setSelectedCellObject(cell),
+
+    onEntitySelected: ({ setSelectedCellObject }) => entity =>
+      setSelectedCellObject(entity),
+
+    onLayerSelected: ({
+      setSelectedLayer,
+      setSelectedCellObject
+    }) => layer => {
+      setSelectedLayer(layer);
+      setSelectedCellObject(null);
+    },
 
     onChangeToolMode: ({ setToolMode }) => mode => setToolMode(mode)
   })

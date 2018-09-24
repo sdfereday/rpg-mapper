@@ -1,5 +1,3 @@
-import uniqueId from "lodash/uniqueId";
-
 export default (state = [], action) => {
   if (typeof state === "undefined") {
     return [];

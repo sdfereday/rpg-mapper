@@ -21,8 +21,8 @@ const CellComponent = ({
     x,
     y,
     t,
-    selectedLayer,
-    onCellClicked
+    layer,
+    onClicked
 }) => {
     const tileX = x * TILE_SCALE + 'px';
     const tileY = y * TILE_SCALE + 'px';
@@ -42,10 +42,10 @@ const CellComponent = ({
             t={t}
             x={x}
             y={y}
-            selectedlayer={selectedLayer}
+            layer={layer}
             className={className}
             style={cellStyle}
-            onClick={onCellClicked}>
+            onClick={onClicked}>
                 {t}
         </div>
     )
@@ -53,7 +53,7 @@ const CellComponent = ({
 
 export default compose(
     withHandlers({
-        onCellClicked: ({ onCellClicked, ...props }) => () =>
-            onCellClicked(props)
+        onClicked: ({ onClicked, ...props }) => () =>
+            onClicked(props)
     })
 )(CellComponent);

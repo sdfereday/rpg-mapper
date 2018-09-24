@@ -20,7 +20,7 @@ import {
 } from "../../../Consts/EditorConstants";
 
 import { connect } from "react-redux";
-import { initTiles } from "../../../Data/Actions/Actions";
+import { initTiles, initEntities } from "../../../Data/Actions/Actions";
 
 // TODO: Add ROT generators to utils also.
 const GEN_MAP = {
@@ -120,18 +120,24 @@ const GenerateWrapper = compose(
 
       const baseLayer = GEN_MAP[currentMode]
         .create(mapWidth, mapHeight)
-        .map(tile => {
-          const { t, ...tileProps } = tile;
-          return {
-            id: uniqueId(),
-            t,
-            selectedLayer: // wut
-              t === TILE_TYPES.FLOOR_TILE || t === TILE_TYPES.WALL_TILE ? 0 : 1,
-            ...tileProps
-          };
-        });
+        .map(tile => ({
+          id: uniqueId(),
+          mapType: 0,
+          selectedLayer: 0,
+          ...tile
+        }));
 
       dispatch(initTiles({ tileData: baseLayer }));
+
+      const entityLayer = baseLayer.map(tile => ({
+        id: uniqueId(),
+        mapType: 1,
+        selectedLayer: 1,
+        ...tile,
+        t: tile.t === TILE_TYPES.WALL_TILE ? TILE_TYPES.WALL_TILE : TILE_TYPES.EMPTY
+      }));
+
+      dispatch(initEntities({ entityData: entityLayer }));
     }
   })
 )(Generate);

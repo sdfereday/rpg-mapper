@@ -6,8 +6,8 @@ import Layers from '../Components/Layers';
 
 export default compose(
     withHandlers({
-        onLayerSelected: ({ setSelectedLayer }) => ({ target }) => {
-            setSelectedLayer(parseInt(target.id));
+        onLayerSelected: ({ onLayerSelected }) => ({ target }) => {
+            onLayerSelected(parseInt(target.id));
         }
     })
 )

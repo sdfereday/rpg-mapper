@@ -1,5 +1,6 @@
-import { createStore, applyMiddleware } from "redux";
+import { createStore, applyMiddleware, combineReducers } from "redux";
 import tileReducer from "../../Data/Reducers/TileReducer";
+import entityReducer from "../../Data/Reducers/EntityReducer";
 
 const onStoreUpdate = ({ subscriber }) => ({ getState }) => {
   return next => action => {
@@ -25,4 +26,4 @@ const createTileStore = (reducer, middlware) =>
     ? createStore(reducer, applyMiddleware(middlware))
     : createStore(reducer);
 
-export default createTileStore(tileReducer);
+export default createTileStore(combineReducers({ tileReducer, entityReducer }));
