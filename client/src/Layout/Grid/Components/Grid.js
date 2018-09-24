@@ -9,6 +9,9 @@ import ReactSelect from 'react-select';
 import { TOOL_TYPES, TILE_DECOR_TYPES, SELECT, PAINT } from '../../../Consts/EditorConstants';
 import { withState } from 'recompose';
 
+import { addTile, initTiles, updateTile } from "../../../Data/Actions/Actions";
+import tstore from "../../../Data/Store/Store";
+
 const RadioContainer = compose(
     withHandlers({
         onChange: ({ onChange, value }) => () =>
