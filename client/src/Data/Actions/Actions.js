@@ -9,10 +9,15 @@ export const initTiles = ({ tileData }) => ({
   tileData
 });
 
-export const updateEntity = ({ id, updatedEntityType }) => ({
+export const updateEntity = ({ id, updateProps }) => ({
   type: "UPDATE_ENTITY",
   id,
-  updatedEntityType
+  updateProps
+});
+
+export const setEntityDisabled = ({ x, y, isDisabled }) => ({
+  type: "SET_ENTITY_DISABLED",
+  x, y, isDisabled
 });
 
 export const initEntities = ({ entityData }) => ({

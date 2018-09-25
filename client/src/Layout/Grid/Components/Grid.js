@@ -7,7 +7,6 @@ import Radio from '../../../Common/Radio';
 import LabeledComponent from '../../../Common/LabeledComponent';
 import ReactSelect from 'react-select';
 import { TOOL_TYPES, TILE_DECOR_TYPES, SELECT, PAINT } from '../../../Consts/EditorConstants';
-import { withState } from 'recompose';
 
 const RadioContainer = compose(
     withHandlers({
@@ -21,24 +20,34 @@ const TileInfo = ({
     x,
     y,
     t,
-    mapType,
-    tileDecorType,
-    selectedLayer,
-    onEntityDataChanged
+    mapType
 }) => {
-    const options = Object.entries(TILE_DECOR_TYPES).map((a) => ({
-        label: a[0],
-        value: a[1]
-    }));
     return (
         <ul>
             <li>ID: {id}</li>
             <li>Location: x:{x} | y:{y}</li>
             <li>Cell Type: {t}</li>
             <li>Map Type: {mapType === 0 ? 'Tile' : 'Entity'}</li>
-            {mapType === 1 &&
+        </ul>
+    )
+}
+
+const TileOptions = ({
+    id,
+    tileDecorType,
+    onChange
+}) => {
+    const options = Object.entries(TILE_DECOR_TYPES).map((a) => ({
+        label: a[0],
+        value: a[1]
+    }));
+    return (
+        <div>
+            <p>Options:</p>
+            <ul>
                 <li>Decor Type:
                     <ReactSelect
+                        id={id}
                         value={options.find(({ value }) => value === tileDecorType )}
                         options={options}
                         clearable={false}
@@ -47,72 +56,53 @@ const TileInfo = ({
                             ...base,
                             color: '#333'
                         })}}
-                        onChange={onEntityDataChanged}
+                        onChange={onChange}
                     />
                 </li>
-            }
-        </ul>
+            </ul>
+        </div>
     )
 }
 
-const TileInfoContainer = compose(
-    // This isn't quite right, let's move it to redux.
-    withState('tileDecorType', 'setTileDecorType', TILE_DECOR_TYPES.NONE),
+const TileOptionsContainer = compose(
     withHandlers({
-        onTileDecorChanged: ({ setTileDecorType, id, onDecorChanged }) => ({ value }) =>
-        {
-            setTileDecorType(value);
-            onDecorChanged({
-                id,
-                tileDecorType: value
-            });
-        }
+        onChange: ({ id, onChange }) => ({ value }) => onChange({ id, tileDecorType: value })
     })
-)(TileInfo);
+)(TileOptions);
 
 const CellComponent = ({
-    isSelected,
-    id,
-    x,
-    y,
-    t,
-    mapType,
+    isSelected = false,
+    isDisabled,
     layerIndex,
-    onClicked
+    onClicked,
+    ...props
 }) => {
     return (
         <Cell
+            {...props}
             isSelected={isSelected}
-            id={id}
-            x={x}
-            y={y}
-            t={t}
-            mapType={mapType}
+            isDisabled={isDisabled}
             layer={layerIndex}
             onClicked={onClicked}
         />
     )
 }
 
-const CellWrapper = compose(
-)(CellComponent);
-
-const EntityWrapper = compose(
-)(CellComponent);
-
 const GridComponent = ({
     mapGridPlane,
     mapEntityPlane,
     onionMode,
     selectedLayer,
-    selectedCellObject,
+    selectedTileId,
     toolMode,
     onChangeToolMode,
     onCellClicked,
-    onEntityClicked,
-    onTileDecorChanged
+    onEntityDataChanged
 }) => {
     const layerData = [mapGridPlane, mapEntityPlane];
+    const selectedCellObject = layerData[selectedLayer]
+        .find(d => d.id === selectedTileId);
+
     return (
         <div id="map">
             <div className="tools">
@@ -136,29 +126,35 @@ const GridComponent = ({
                     </LabeledComponent>
                 </div>
                 <div className="tile-properties">
-                    <p>Properties:</p>
                     <div className="well">
                         {selectedCellObject ?
-                            <TileInfoContainer
+                            <TileInfo
                                 {...selectedCellObject}
-                                selectedLayer={selectedLayer}
-                                onDecorChanged={onTileDecorChanged}
                             /> : "No tile selected."
                         }
                     </div>
+                    {selectedLayer === 1 && selectedCellObject &&
+                        <div className="well">
+                            <TileOptionsContainer
+                                {...selectedCellObject}
+                                onChange={onEntityDataChanged}
+                            />
+                        </div>
+                    }
                 </div>
             </div>
             <div id="map-inner">
                 <div className={selectedLayer > 0 && onionMode ? 'layer onion' : 'layer'}>
                 {layerData && layerData.length ?
-                layerData[selectedLayer].map(cellData => {
+                    layerData[selectedLayer].map(cellData => {
                         return (
                             <CellComponent
                                 key={cellData.id}
-                                isSelected={selectedCellObject && selectedCellObject.id === cellData.id}
+                                isSelected={selectedCellObject && selectedTileId === cellData.id}
                                 layerIndex={selectedLayer}
                                 {...cellData}
-                                onClicked={selectedLayer === 0 ? onCellClicked : onEntityClicked}
+                                isDisabled={cellData.isDisabled}
+                                onClicked={onCellClicked}
                             />
                         )
                     }) : null
@@ -168,25 +164,5 @@ const GridComponent = ({
         </div>
     )
 }
-
-// layerData.map((layerGrid, layerIndex) => {
-//     return (
-//         <div className={layerIndex > 0 && onionMode ? 'layer onion' : 'layer'} key={layerIndex}>
-//             {layerGrid.map((cellData) => {
-//                 console.log("Redraw.");
-//                 return (
-//                     <CellComponent
-//                         key={cellData.id}
-//                         isSelected={selectedCellObject && selectedCellObject.id === cellData.id}
-//                         layerIndex={layerIndex}
-//                         {...cellData}
-//                         onClicked={layerIndex === 0 ? onCellClicked : onEntityClicked}
-//                     />
-//                 );
-//             })
-//         }
-//         </div>
-//     )
-// }) : null
 
 export default GridComponent;

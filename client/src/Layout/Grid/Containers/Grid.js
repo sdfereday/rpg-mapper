@@ -1,11 +1,10 @@
 import compose from "recompose/compose";
 import withHandlers from "recompose/withHandlers";
-import uniqueId from "lodash/uniqueId";
 import Grid from "../Components/Grid";
-import { TILE_TYPES, TOOL_TYPES } from "../../../Consts/EditorConstants";
+import { TOOL_TYPES, TILE_TYPES } from "../../../Consts/EditorConstants";
 
 import { connect } from "react-redux";
-import { updateTile, updateEntity } from "../../../Data/Actions/Actions";
+import { updateTile, updateEntity, setEntityDisabled } from "../../../Data/Actions/Actions";
 
 // I'd suggest using redux to handle this tile stuff, rather than having state everywhere.
 const GridWrapper = compose(
@@ -13,9 +12,15 @@ const GridWrapper = compose(
     onChangeToolMode: ({ onChangeToolMode }) => value =>
       onChangeToolMode(value),
 
-    onEntityDataChanged: ({ selectedLayer }) => data => {
-      if (selectedLayer === 0) return;
-      console.log(data);
+    onEntityDataChanged: ({ dispatch }) => data => {
+      dispatch(
+        updateEntity({
+          id: data.id,
+          updateProps: {
+            tileDecorType: data.tileDecorType
+          }
+        })
+      );
     },
 
     onEntityClicked: ({
@@ -28,19 +33,21 @@ const GridWrapper = compose(
       if (selectedLayer !== 1) return;
 
       if (toolMode === TOOL_TYPES.SELECT) {
-        onEntitySelected(entityData);
+        onEntitySelected(entityData.id);
         return;
       }
 
       dispatch(
         updateEntity({
-          ...entityData,
-          updatedEntityType: selectedTileType
+          id: entityData.id,
+          updateProps: {
+            updatedEntityType: selectedTileType
+          }
         })
       );
     },
 
-    onCellClicked: ({
+    onTileClicked: ({
       dispatch,
       toolMode,
       selectedLayer,
@@ -50,7 +57,7 @@ const GridWrapper = compose(
       if (selectedLayer !== 0) return;
 
       if (toolMode === TOOL_TYPES.SELECT) {
-        onCellSelected(tileData);
+        onCellSelected(tileData.id);
         return;
       }
 
@@ -60,17 +67,29 @@ const GridWrapper = compose(
           updatedTileType: selectedTileType
         })
       );
+
+      dispatch(
+        setEntityDisabled({
+          x: tileData.x,
+          y: tileData.y,
+          isDisabled: selectedTileType !== TILE_TYPES.FLOOR_TILE
+        })
+      )
+    }
+  }),
+  withHandlers({
+    onCellClicked: ({
+      selectedLayer,
+      onTileClicked,
+      onEntityClicked
+    }) => data => {
+      if (selectedLayer === 0) {
+        onTileClicked(data);
+      } else {
+        onEntityClicked(data);
+      }
     }
   })
 )(Grid);
 
-const mapStateToProps = ({ tileReducer, entityReducer }) => ({
-  mapGridPlane: tileReducer.map(cell => ({
-    ...cell
-  })),
-  mapEntityPlane: entityReducer.map(entity => ({
-    ...entity
-  }))
-});
-
-export default connect(mapStateToProps)(GridWrapper);
+export default connect()(GridWrapper);

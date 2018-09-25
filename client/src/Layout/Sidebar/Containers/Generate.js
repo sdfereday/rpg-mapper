@@ -1,7 +1,6 @@
 import compose from "recompose/compose";
 import withState from "recompose/withState";
 import withHandlers from "recompose/withHandlers";
-import defaultProps from "recompose/defaultProps";
 import withPropsOnChange from "recompose/withPropsOnChange";
 import uniqueId from "lodash/uniqueId";
 import Generate from "../Components/Generate";
@@ -121,20 +120,22 @@ const GenerateWrapper = compose(
       const baseLayer = GEN_MAP[currentMode]
         .create(mapWidth, mapHeight)
         .map(tile => ({
+          ...tile,
           id: uniqueId(),
           mapType: 0,
-          selectedLayer: 0,
-          ...tile
+          selectedLayer: 0
         }));
 
       dispatch(initTiles({ tileData: baseLayer }));
 
       const entityLayer = baseLayer.map(tile => ({
-        id: uniqueId(),
-        mapType: 1,
-        selectedLayer: 1,
         ...tile,
-        t: tile.t === TILE_TYPES.WALL_TILE ? TILE_TYPES.WALL_TILE : TILE_TYPES.EMPTY
+        id: uniqueId(),
+        selectedLayer: 1,
+        mapType: 1,
+        tileDecorType: 0,
+        t: tile.t === TILE_TYPES.FLOOR_TILE ? TILE_TYPES.EMPTY : tile.t,
+        isDisabled: tile.t !== TILE_TYPES.FLOOR_TILE
       }));
 
       dispatch(initEntities({ entityData: entityLayer }));

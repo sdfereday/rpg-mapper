@@ -9,7 +9,16 @@ export default (state = [], action) => {
         return entity.id === action.id
           ? {
               ...entity,
-              t: action.updatedEntityType
+              ...action.updateProps
+            }
+          : entity;
+      });
+    case "SET_ENTITY_DISABLED":
+      return state.map(entity => {
+        return entity.x === action.x && entity.y === action.y
+          ? {
+              ...entity,
+              isDisabled: action.isDisabled
             }
           : entity;
       });
